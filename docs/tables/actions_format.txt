@@ -1,0 +1,21 @@
+              ACTIONS Table Layout for CallCommander
+
+The ACTIONS_<show> tables holds data concerning each individual phone
+number known by a given show.  Following is the layout of a record in 
+the ACTIONS_<show> tables:
+
+FIELD NAME         TYPE                REMARKS
+-------------------------------------------------------------------
+NUMBER             char(14)            Primary Key
+ROUTE_ACTION       int(11) signed      0=Accept, 1=Warn, 2=Drop
+LABEL_ACTION       int(11) signed      0=Blank, 1=UseFirstKnown,
+                                       2=UseLastKnown,3 =UseSpecified
+WARNING_TEXT       char(255)
+NAME               char(16)
+AGE                int(11) signed
+CITY               char(20)
+STATE              char(2)
+ZIPCODE            char(10)
+GENDER             enum('M','F')
+CELLPHONE          enum('N','Y')
+CALL_COUNT         int(11) signed

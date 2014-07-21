@@ -1,0 +1,9 @@
+;
+; Call Parking Configuration (needed for call holding to work correctly)
+;
+
+[general]
+parkext => 700
+parkpos => 701-712
+context => parkedcalls
+parkingtime => 86400

@@ -1,0 +1,472 @@
+The NEWS file for the Call Commander package.
+
+-------------------------------------------------------------------------------
+v2.1.1 -- 04/26/2013
+
+Changes in this version include:
+
+      Message Box Right-Click Menu.  Added a 'Clear' item to the menu
+      that clears the contents of the Message Box (both local and
+      remote).
+
+      Graphical Cleanups.  Fixed multiple issues with rendering buttons
+      and other graphical elements under various environments (OS X,
+      GNOME).
+
+      Various bugfixes.  The the ChangeLog for specifics.
+-------------------------------------------------------------------------------
+v2.1.0 -- 04/15/2013
+
+Changes in this version include:
+
+      Modified password storage in the database to use cleartext entries.
+      Be sure to clear the password on at least one account with
+      Admin rights before applying the update, then use this account
+      to reset all passwords after the update.
+-------------------------------------------------------------------------------
+v2.0.6 -- 08/24/2012
+
+Changes in this version include:
+
+      System-Wide Connection Manager Entries (Windows only).  It is now
+      possible to configure CallCommander to store and retrieve Connection
+      Manager entries to/from a common system-wide directory, rather than
+      on a per-user basis by changing the value of the registry key
+      \\HKEY_LOCAL_MACHINE\SOFTWARE\SalemRadioLabs\CallCommander\
+      ConnectionManagerScope from 'User' to 'System'.
+-------------------------------------------------------------------------------
+v2.0.1 -- 08/18/2011
+
+Changes in this version include:
+
+      Qt port from 3.x to 4.x.
+
+      Mac OS X Port.
+-------------------------------------------------------------------------------
+v1.5.31 -- 09/08/2009
+
+Changes in this version include:
+
+      Delay Button Display Options.  It is now possible to configure the delay
+      button in ml(1) to display the current delay offset value by use of the
+      'ShowDelay=' option in the [DelayButton] section of ml.conf(5).  The
+      delay button can now be made to flash when the delay offset falls below
+      the value set in 'DelayThreshold='.
+
+      Message Box Changes.  It is now possible to paste large text messages
+      through the message box without having the message split into smaller
+      sections.
+-------------------------------------------------------------------------------
+v1.5.18 -- 05/28/2008
+
+Changes in this version include:
+
+      Asterisk PBX Support (EXPERIMENTAL).  It is now possible to use a
+      suitably configured Asterisk system as a broadcast telephone interface,
+      with CallCommander as the control interface.  Further information can be
+      found in the 'ASTERISK.txt' file.
+
+      Ml.conf(5) configuration directives.  A new 'SendTimeOffset=' parameter
+      has been added to ml.conf(5) to allow cusotmization of the relaying of
+      time offsets between ml(1) instances.  See the ml.conf(5) man page for
+      details.
+-------------------------------------------------------------------------------
+v1.5.3 -- 05/30/2006
+
+This is the fourth beta release of the "new" CallCommander.
+Additional changes over the previous v1.5.2 release include:
+
+      Online Users List.  A new button, titled 'Who's Here?', has been
+      added to the default CallCommander desktop that brings up a
+      modeless dialog showing information regarding all users
+      currently connected.  This button can be configured for custom
+      layouts like any other control -- see the [ClientButton] section
+      of the ml.conf(5) man page for details.
+
+      CallerID Monitoring Tweaks.  The operation of mcidmd(8) has been
+      modified so that connections to the host phone system are made
+      only when a given show is active, so as to avoid exhausting the
+      pool of available connections for certain phone systems
+      (e.g. the Telos TWOx12).
+
+      Caller Metadata Refreshing.  Late-joining ml(1) clients are now
+      automatically refreshed to receive any caller data already
+      entered from other clients.
+
+      Various Bugfixes.  See the ChangeLog for details.
+
+IMPORTANT NOTE:  The v1.5.x series of CallCommander versions are *not*
+backward compatible with the previous 1.3.x and 1.1.x versions.  When
+upgrading from a 1.3.x or 1.1.x version, all server and client
+components should be upgraded simultaneously.
+
+Library Versions:
+   This version requires that, at a minimum, libradio-0.97.0,
+   librhpi-0.94.6 and libtelos2101-1.2.0 be installed.  If installing
+   from RPM, the version of the currently installed libraries can be 
+   determined by doing:
+
+      rpm -q libradio
+      rpm -q libtelos2101
+-------------------------------------------------------------------------------
+v1.5.2 --05/19/2006
+
+This is the third beta release of the "new" CallCommander.
+Additional changes over the previous v1.5.1 release include:
+
+      Ease Of Use Improvements.  The Connection Manager has been
+      tweaked to make building connections to certain phone system
+      types (e.g. Telos TWOx12) easier and more intuitive.
+
+      Robustness Tweaks.  The two server components [mld(8) and
+      mcidmd(8)] have been overhauled with a view to making their
+      operation reliable even in the face of intermittent/rebooted
+      phone system hardware.
+
+      Miscellaneous Bugfixes.  See the ChangeLog for details.
+
+IMPORTANT NOTE:  The v1.5.x series of CallCommander versions are *not*
+backward compatible with the previous 1.3.x and 1.1.x versions.  When
+upgrading from a 1.3.x or 1.1.x version, all server and client
+components should be upgraded simultaneously.
+
+Library Versions:
+   This version requires that, at a minimum, libradio-0.97.0,
+   librhpi-0.94.6 and libtelos2101-1.1.0 be installed.  If installing
+   from RPM, the version of the currently installed libraries can be 
+   determined by doing:
+
+      rpm -q libradio
+      rpm -q libtelos2101
+-------------------------------------------------------------------------------
+v1.5.1 --05/12/2006
+
+This is the second beta release of the "new" CallCommander.
+Additional changes over the previous v1.5.0 release include:
+
+      New System Support.  Support for the following phone hardware
+      has been added:
+         Comrex/Gentner TS-612
+         Telos 100 1A2 Key Interface Module
+         Telos 100 Direct Interface Module
+         Telos ONEx6 System
+
+      Virtual System Support.  The above systems all use serial
+      interfaces for computer control, inherently limiting them to control
+      from a single system.  This release introduces the concept of a
+      "virtual system", by which one or more serial-based phone system(s)
+      can be virtualized so as to allow control from multiple points
+      via TCP/IP networks using the "CallCommander Virtual Phone
+      System".  These virtual systems are configured in the MDbAdmin tool.
+
+      Many Bugfixes.  See the ChangeLog for details.
+
+IMPORTANT NOTE:  The v1.5.x series of CallCommander versions are *not*
+backward compatible with the previous 1.3.x and 1.1.x versions.  When
+upgrading, all server and client components should be upgraded
+simultaneously.
+
+Library Versions:
+   This version requires that, at a minimum, libradio-0.97.0,
+   librhpi-0.94.6 and libtelos2101-1.1.0 be installed.  If installing
+   from RPM, the version of the currently installed libraries can be 
+   determined by doing:
+
+      rpm -q libradio
+      rpm -q libtelos2101
+-------------------------------------------------------------------------------
+v1.5.0 --05/05/2006
+
+This is a preview release of the "new" CallCommander.  Major portions of
+the code have been rewritten with an eye to stability and long-term 
+maintainability.  Some of the highlights include:
+
+      Native Telos 2101 Support.  Communication with the Telos 2101
+      and TWOx12 phone systems now use the fully native 2101 control
+      protocol.  No forwarding of control through the mld(8) daemon is
+      necessary.
+
+      Connection Manager.  A handy connection manager is now included
+      in ml(1) that can be used to build connections on the fly.
+
+      CallerID Logging.  Logging of CallerID data can now be done by
+      means of the mcidmd(8) daemon.  This component acts as just
+      another screener client, passively catching and logging CallerID
+      data.  It can also be configured (via mdbadmin(1)) to get
+      CallerID data from one or more attached WhozzCalling CallerID
+      modem units.
+
+      Configuration Changes.  Configuration for mcidmd(8), mdbadmin(1)
+      and mcallman(1), with the exception of the [mySQL] section, has
+      been moved out of mld.conf(5) and is now done in mdbadmin(1) by
+      means of a point and click interface.  Versions of the
+      ml.conf(5) configuration prepared for previous versions of
+      CallCommander should continue to work properly with the
+      exception of entries in the [Global] section, which have changed
+      so as to work with the new Connection Manager interface.  See
+      the ml.conf(5) man page for details.
+
+As of this version, ONLY the Telos 2101 and TWOx12 systems are
+supported.  Support for the other systems (Telos 100 family and
+Gentner TS-612) will be added back in as the codebase matures.
+
+Library Versions:
+   This version requires that, at a minimum, libradio-0.97.0,
+   librhpi-0.94.6 and libtelos2101-1.1.0 be installed.  If installing
+   from RPM, the version of the currently installed libraries can be 
+   determined by doing:
+
+      rpm -q libradio
+      rpm -q libtelos2101
+
+-------------------------------------------------------------------------------
+v1.3.25 --02/15/2006
+
+This is a bugfix release of CallCommander.  See the ChangeLog for
+details.
+
+-------------------------------------------------------------------------------
+v1.3.24 --01/26/2006
+
+This is a bugfix release of CallCommander.  See the ChangeLog for
+details.
+
+-------------------------------------------------------------------------------
+v1.3.23 --01/03/2006
+
+Changes:
+      Added a 'CallerId<n>Line=' directive to mld.conf(5) that allows
+      use of the WhozzCalling CallerID modem in situations where the
+      line number scheme used by the WhozzCalling unit doesn't match
+      that of the underlying phone system.  See the mld.conf(5) man
+      page for details.
+
+-------------------------------------------------------------------------------
+v1.3.17 -- 8/15/2005
+
+Changes:
+      Kill Device Changes.  Kill devices are now configured on a
+      show-by-show basis, rather then globally across a complete group
+      in mld(8).  See the mld(5) man page for changes in the
+      configuration syntax to reflect this.
+
+      Ml(1) configuration file on Windows.  The configuration file for
+      ml(1) on Windows has been moved.  By default, it is
+      [Program-dir]/ml.ini, where [Program-dir] is the installation
+      directory of the program (normally, 'C:\Program
+      Files\CallCommander\'.
+
+      Bugfixes.  A bunch.  See the ChangeLog for details.
+
+-------------------------------------------------------------------------------
+v1.1.12 -- 4/27/2004
+Private Beta release.
+
+      Major work on Telos Direct Interface Module support.  Full
+      hand-free control of Mitel Superset IV screener phones is now
+      possible by connecting in Producer Mode to VD1 or VD2 (for
+      screener phone #1 or #2 respectively).
+
+      There is no longer a single 'Telos100' protocol for use in the
+      'Protocol=' directive of mld.conf(5), but rather seperate
+      protocols for the various Telos models.  See the mld.conf(5) man
+      page for details.
+-------------------------------------------------------------------------------
+v1.1.10 -- 3/29/2004
+Private Beta release.
+-------------------------------------------------------------------------------
+v1.1.6 -- 8/22/2003
+Private Beta release.  The major highlights:
+
+      On Win32, the network virtualization daemon (mld) is now more integrated 
+      into the Windows environment.  Instead of getting it's configuration
+      from a file, it now reads it from the Registry.  A new program,
+      'mldconf', is used to configure those entries and will start/stop/
+      resync 'mld' as needed.
+-------------------------------------------------------------------------------
+v1.1.5 -- 8/17/2003
+Private Beta release.  The major highlights:
+
+      Win32 support.  The build system uses qmake(1) rather than the
+      GNU Autotools.  Both ml(1) and mld(8) have been ported.
+
+      It's now possible to specify the configuration file for mld(8)
+      to use by passing it as the last argument on the command line.
+
+      Various bugfixes.  See the ChangeLog for details.
+-------------------------------------------------------------------------------
+v1.1.2 -- 6/20/2003
+Public Beta release.  The major highlights:
+
+      It's now possible to assign hotkeys to bring up the Call
+      Information dialog box for each line.  See the ml(1) and 
+      ml.conf(5) man pages for details.
+
+      Font rendering fixes.  This corrects problems seen in certain
+      distros (notably SuSE 8.2) where the screen fonts display
+      abnormally large characters.
+
+      RPM build support is now integrated into Call Commander's build
+      system.  After building the basic system, just do (as root):
+
+	       make rpm
+
+      Miscellaneous minor bugfixes.  See the ChangeLog for details.
+-------------------------------------------------------------------------------
+v1.1.1 -- 4/17/2003
+Beta release.  The major highlights:
+
+      Comrex/Gentner TS-612 support.  Works very similarly to Telos100
+      systems (using mld(8)).  The firmware version installed in the
+      TS-612 is critical for getting things to work right -- you need
+      at least v3.0.
+
+      Call Skimmer (mcs).  This is an audio recorder that can be
+      configured to automatically record calls.  It works with both
+      ALSA and AudioScience sound cards.  See the mcs(1) manpage for
+      details.
+
+      mySQL Database Logging.  In addition to the hard drive, it's now
+      possible to log calls to a table in a mySQL database.  See the
+      [Logging] section in the ml.conf(5) manpage for details.
+
+      And, the usual miscellaneous bugfixes.
+
+-------------------------------------------------------------------------------
+v1.0.1 -- 12/09/2002
+
+      Fixed a bug that was causing the Segment Clock to output
+      incorrect countdown times when used with non-zero offset times.
+-------------------------------------------------------------------------------
+v1.0.0 -- 12/09/2002
+The initial Production Release.
+
+     The name of the package has been changed from 'Mithlond' to
+     'Call Commander'.
+
+     Several bugs that affect Call Commander have been fixed in 
+     'libradio' since the last release.  Be sure you have at least
+     v0.12.3 before building!
+-------------------------------------------------------------------------------
+v0.5.1 -- 11/10/2002
+Release Cadndidate Two
+
+     Fixed the login box in 'ml' so that the 'S' in 'Studio Group' is
+     not clipped.
+
+     Changed the default color of the DUMP button 'ml' from gray to
+     red.
+
+     Several bugs that affect Mithlond have been fixed in 'libradio'
+     since the last release.  Be sure you have at least v0.12.1 before
+     building!
+-------------------------------------------------------------------------------
+v0.5.0 -- 11/06/2002
+Release Candidate One
+
+     Upgraded the source code to compile properly with gcc 3.2.
+
+     Added two new sample configurations:
+        swcons.conf -- Provides the look of a "classic" Telos 100
+                       switch console
+        dks-screen.conf -- Layout used by the Don Kroah Show in
+                           Washington DC.
+
+     Several bugs that affect Mithlond have been fixed in 'libradio'
+     since the last release.  Be sure you have at least v0.12.0 before
+     building!
+-------------------------------------------------------------------------------
+v0.4.0 -- 10/16/2002
+The fourth beta release.
+
+     Numerous stability and bug fixes.  See the ChangeLog for details.
+
+     Added a "Caller Quality" rating flag.  It's now possible to rate
+     each call as being Very Poor, Poor, Fair, Good or Excellent.
+     Each rating puts a characteristic icon into that call's Caller
+     Info box.  A macro has also been added to allow this rating to be
+     logged.
+
+     Added a "Look Up!" feature.  Touching the receive portion of the
+     Message Box widget will turn the widget red with the admonition
+     to "Look Up!" printed upon it in large letters.  After a few
+     seconds (configurable in ml.conf(5)), things go back to normal.
+
+     Overhauled the layout data format in the [CallerBox] section of
+     ml.conf(5).  In addition to specifying position, it's now possible
+     to specify the size of each element as well.  This makes it
+     possible for ml(1) to intelligently word-wrap the elements if
+     they become longer than a single line can hold.  (NOTE: if you've
+     created a custom caller box layout in a previous version, you'll 
+     likely need to tweak it some to make it work.  Default cases
+     should continue to work fine.
+
+     Implemented several internal optimizations to ml(1) to make it
+     run more efficiently and with less screen flicker.
+-------------------------------------------------------------------------------
+v0.3.1 -- 9/19/2002
+
+    Added a custom caller dialog box for Telos 100 systems that allow the
+    screener to place calls into Screened Hold.
+-------------------------------------------------------------------------------
+v0.3.0 -- 9/18/2002
+The third beta release.  More new goodies, including:
+
+    Numerous stability and bug fixes.  See the ChangeLog for details.
+
+    Several "eye-candy" enhancements (check out that record button, 
+    Gertrude...)
+
+    Customizable Caller Box layout.  You can now define exactly what
+    information should appear there, where and with what font and size.
+
+    Settable Caller Box size.
+
+    Removed the STREET caller attribute.
+
+    Added an AGE caller attribute.
+
+    Added a CELLPHONE caller attribute.
+
+    Completely overhauled the Caller Data dialog in light of feedback
+    received from the field.  Layout, presentation and tab order of
+    the fields have all been changed.
+
+    Added Hotkey support.  Every button can now be assigned a shortcut
+    key (settable in the configuration file).
+
+    Added the 'mld' daemon, thus providing support for the Telos 100 line 
+    of telephone systems, including:
+        Telos 100 1A2 Key Interface Module
+        Telos 100 Direct Interface Module
+        Telos ONEx6 Broadcast Telephone Interface
+
+    Added password authentication support.  Doesn't work with the TWOx12
+    (due to non-implementation of their own protocol on Telos' part), but
+    works nicely with 'mld'.
+
+    Added the ability to specify the Studio Group in 'ml'.  Needed to support
+    multiple phone systems in 'mld'.
+
+    Complete documentation in the form of man pages.
+-------------------------------------------------------------------------------
+v0.1.0 -- 9/3/2002
+The first beta release.  Lots of new goodies, including:
+    Geometry can be set in the [Global] section using:
+	     WindowX=
+	     WindowY=
+	     SizeX=
+	     SizeY=
+
+    Ring Timers for calls ringing in
+
+    The displayed time can be offset through use of the TimeOffset=
+    parameter in [Clock].  Units are +/- seconds.
+
+    Each line button can now be assigned a custom label and font size
+    using the Label= and FontSize= parameters in the [LineN] sections.
+-------------------------------------------------------------------------------
+v0.0.1 -- 9/1/2002
+The initial (and hopefully only) ALPHA release.  Feature-complete, but 
+virtually no documentation to speak of.  As for bugs, who knows??
+-------------------------------------------------------------------------------

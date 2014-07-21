@@ -1,0 +1,13 @@
+               CID_MAPS Table Layout for CallCommander
+
+The CID_MAPS table holds data concerning any needed translations of line
+numbers from an external CallerID source to numbers that are correct
+for the target phone system.  Following is the layout of a record in the 
+CID_MAPS table:
+
+FIELD NAME           TYPE              REMARKS
+---------------------------------------------------------------
+ID                   int(11)           Primary Key, Auto Incrementing
+SHOW_CODE            char(3)           From SHOWS.SHOW_CODE
+SOURCE_LINE          int(11)
+TARGET_LINE          int(11)

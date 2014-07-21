@@ -1,0 +1,1 @@
+QT += qt3support

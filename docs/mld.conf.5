@@ -1,0 +1,121 @@
+.TH mld.conf 5 "August 2007" Linux "Linux Audio Manual"
+.SH mld.conf
+mld.conf \- Configuration file for the Call Commander Telephone Screening
+System Virtualization Daemon
+.SH DESCRIPTION
+\fBMld.conf\fP contains the configuration information for the 
+\fBmld\fP program, a component of the Call Commander Telephone Screening
+System.
+
+.SH FILE FORMAT
+The file format consists of \fIsections\fP,
+each of which contain configuration information in the form of keyword/value
+pairs.  Each section begins with with the name of the section in [] brackets,
+followed by zero or more keyword/value pairs, with the keyword and value seperated by an '=' sign.  Lines starting with ; are ignored, as are blank lines.
+
+For example:
+
+.RS
+.RE
+[Section1]
+.RS
+.RE
+Keyword1=value1
+.RS
+.RE
+Keyword2=value2
+.RS
+.RE
+Keyword3=value3
+
+
+.SH SECTIONS/KEYWORDS
+Following are the sections and keywords for \fBmld.conf\fP:
+
+[mySQL]
+.RS
+This section deals with configuration for the SQL server used
+to provide system configuration and call logging.
+
+Hostname=\fI<hostname>\fP
+.RS
+Where \fI<hostname>\fP is a valid DNS or \fB/etc/hosts\fP name for the
+SQL server to be used for caller logging.  This \fImust\fP be a name
+-- a dotted-quad IP address will not work!
+.RE
+
+Loginname=\fI<user-name>\fP
+.RS
+Where \fI<user-name>\fP is the user name of the account on the SQL
+server to be used to access the CallCommander database.  By default,
+this is \fBmluser\fP.
+.RE
+
+Password=\fI<passwd>\fP
+.RS
+Where \fI<passwd>\fP is the password to be used to access the
+\fI<user-name>\fP account on the SQL server.
+.RE
+
+Database=\fI<db-name>\fP
+.RS
+Where \fI<db-name>\fP is the name of the database to use on the SQL
+server.  By default, this is \fBCallCommander\fP.
+.RE
+
+ServerType=\fI<server-type>\fP
+.RS
+where \fI<server-type>\fP is one of the following values corresponding
+to the type of SQL server being employed:
+
+.RS 
+\fBQMYSQL3\fP -- mySQL
+.RE
+
+.RS
+\fBQODBC3\fP -- ODBC-compliant (includes Microsoft SQL Server)
+.RE
+
+.RS
+\fBQOCI8\fP -- Oracle Call Interface
+.RE
+
+.RS
+\fBQOSQL7\fP -- PostgreSQL v6.x and v7.x
+.RE
+
+.RS
+\fBQTDS7\fP -- Sybase Adaptive Server
+.RE
+
+.RS
+\fBQDB2\fP -- IBM DB2, v7.1 or higher
+.RE
+
+By default, this value is \fBQMYSQL3\fP.
+
+NOTE: Settings for SQL servers other than mySQL have not been well tested.
+.RE
+.RE
+
+
+[MCallMan]
+
+.RS
+DetailsRefreshInterval = \fI<interval>\fP
+.RS
+Where \fI<interval>\fP is the interval, in seconds, between automatic
+refreshes of the Call Detail list in MCallMan.  Setting this value to
+\fB0\fP turns off automatic refreshes.  The default value is \fB10\fP.
+.RE
+.RE
+
+
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR callcommander(1),
+.BR mld(8),
+.BR ml(1),
+.BR mcs(1),
+.BR ml.conf(5)

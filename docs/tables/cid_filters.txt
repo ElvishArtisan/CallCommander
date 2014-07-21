@@ -1,0 +1,9 @@
+             CID_FILTERS Table Layout for CallCommander
+
+The CID_FILTERS table holds regex strings used for filtering incoming calls.
+
+FIELD NAME           TYPE              REMARKS
+---------------------------------------------------------------
+ID                   int(11)           Primary Key, Auto Incrementing
+SLOT_ID              int(11)           From SHOW_SLOTS.ID
+FILTER               char(64)

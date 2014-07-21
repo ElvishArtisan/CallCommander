@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Call Commander;
+Encoding=UTF-8
+Name=Call Skimmer
+GenericName=Call Skimmer
+Exec=mskimmer
+Icon=callcommander
+Path=
+Type=Application
+Terminal=false

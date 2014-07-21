@@ -1,0 +1,110 @@
+#!/bin/bash
+
+# make_slack
+#
+# Make a Slackware package.
+#
+# (C) Copyright 2006 Fred Gleason <fredg@paravelsystems.com>
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of version 2 of the GNU General Public License as
+#    published by the Free Software Foundation;
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program; if not, write to the Free Software
+#    Foundation, Inc., 59 Temple Place, Suite 330, 
+#    Boston, MA  02111-1307  USA
+#
+
+#
+# Clean the build tree
+#
+BUILD_DIR=/var/tmp/callcommander-@VERSION@
+rm -rf $BUILD_DIR
+
+#
+# Build the package tree
+#
+mkdir -p $BUILD_DIR/etc/init.d
+cp rc.mld $BUILD_DIR/etc/init.d/mld
+cp samples/default.conf $BUILD_DIR/etc/ml.conf
+cp samples/mld.conf $BUILD_DIR/etc/mld.conf
+mkdir -p $BUILD_DIR@LOCAL_PREFIX@/lib
+cp lib/.libs/librtelco.so.0.1.0 $BUILD_DIR@LOCAL_PREFIX@/lib/
+ln -s @LOCAL_PREFIX@/lib/librtelco.so.0.1.0 $BUILD_DIR@LOCAL_PREFIX@/lib/librtelco.so.0
+ln -s @LOCAL_PREFIX@/lib/librtelco.so.0.1.0 $BUILD_DIR@LOCAL_PREFIX@/lib/librtelco.so
+cp libp/.libs/libml-@VERSION@.so $BUILD_DIR@LOCAL_PREFIX@/lib/
+ln -s @LOCAL_PREFIX@/lib/libml-@VERSION.so $BUILD_DIR@LOCAL_PREFIX@/lib/libml.so
+cp libp/.libs/libml.a $BUILD_DIR@LOCAL_PREFIX@/lib/
+cp libp/.libs/libml.la $BUILD_DIR@LOCAL_PREFIX@/lib/
+mkdir -p $BUILD_DIR@LOCAL_PREFIX@/bin
+cp ml/.libs/ml $BUILD_DIR@LOCAL_PREFIX@/bin/
+cp mcs/.libs/mcs $BUILD_DIR@LOCAL_PREFIX@/bin/
+cp mdbadmin/.libs/mdbadmin $BUILD_DIR@LOCAL_PREFIX@/bin/
+cp mcallman/.libs/mcallman $BUILD_DIR@LOCAL_PREFIX@/bin/
+mkdir -p $BUILD_DIR@LOCAL_PREFIX@/sbin
+cp mld/.libs/mld $BUILD_DIR@LOCAL_PREFIX@/sbin/
+cp docs/callcommander.1 $BUILD_DIR@LOCAL_PREFIX@/man/man1/callcommander.1.gz
+cp docs/ml.1 $BUILD_DIR@LOCAL_PREFIX@/man/man1/ml.1.gz
+cp docs/mcs.1 $BUILD_DIR@LOCAL_PREFIX@/man/man1/mcs.1.gz
+cp docs/ml.conf.5 $BUILD_DIR@LOCAL_PREFIX@/man/man5/ml.conf.5.gz
+cp docs/mld.conf.5 $BUILD_DIR@LOCAL_PREFIX@/man/man5/mld.conf.5.gz
+cp docs/mld.8 $BUILD_DIR@LOCAL_PREFIX@/man/man8/mld.8.gz
+mkdir -p $BUILD_DIR/opt/kde/share/icons/hicolor/16x16/apps
+cp icons/callcommander-16x16.xpm $BUILD_DIR/opt/kde/share/icons/hicolor/16x16/apps/callcommander.xpm
+mkdir -p $BUILD_DIR/opt/kde/share/icons/hicolor/22x22/apps
+cp icons/callcommander-22x22.xpm $BUILD_DIR/opt/kde/share/icons/hicolor/22x22/apps/callcommander.xpm
+mkdir -p $BUILD_DIR/opt/kde/share/icons/hicolor/32x32/apps
+cp icons/callcommander-32x32.xpm $BUILD_DIR/opt/kde/share/icons/hicolor/32x32/apps/callcommander.xpm
+mkdir -p $BUILD_DIR/opt/kde/share/icons/hicolor/48x48/apps
+cp icons/callcommander-48x48.xpm $BUILD_DIR/opt/kde/share/icons/hicolor/48x48/apps/callcommander.xpm
+mkdir -p $BUILD_DIR/usr/share/applications
+cp xdg/ml.desktop $BUILD_ROOT/usr/share/applications/
+cp xdg/mdbadmin.desktop $BUILD_ROOT/usr/share/applications/
+cp xdg/mcallman.desktop $BUILD_ROOT/usr/share/applications/
+mkdir -p $BUILD_DIR/usr/doc/callcommander-@VERSION@
+cp samples/encode_call $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/default.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/dks-screen.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/gallagher-host.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/jpa-host.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/jpa-screener.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/medved.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/mld.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/null.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/ra.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/swcons.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/ts612.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/srn_clock.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+cp samples/ra-auxprod.conf $BUILD_DIRusr/doc/callcommander-@VERSION@/
+mkdir -p $BUILD_DIR/install
+cp slack-desc $BUILD_DIR/install/
+cp slack_doinst.sh $BUILD_DIR/install/doinst.sh
+cp AUTHORS $BUILD_DIR/usr/doc/callcommander-@VERSION@/
+cp ChangeLog $BUILD_DIR/usr/doc/callcommander-@VERSION@/
+cp COPYING $BUILD_DIR/usr/doc/callcommander-@VERSION@/
+cp INSTALL $BUILD_DIR/usr/doc/callcommander-@VERSION@/
+cp NEWS $BUILD_DIR/usr/doc/callcommander-@VERSION@/
+cp README $BUILD_DIR/usr/doc/callcommander-@VERSION@/
+
+#
+# Generate the package
+#
+SOURCE_DIR=`pwd`
+cd $BUILD_DIR
+makepkg --prepend --linkadd y --chown n callcommander.tgz
+cd $SOURCE_DIR
+cp $BUILD_DIR/callcommander.tgz ./callcommander-@VERSION@-i586-@RPM_RELEASE@.tgz
+
+#
+# Clean up and exit
+#
+rm -r $BUILD_DIR
+
+
+# End of make_slack

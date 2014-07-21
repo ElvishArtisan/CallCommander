@@ -1,0 +1,16 @@
+             CID_SOURCES Table Layout for CallCommander
+
+The CID_SOURCES table holds data concerning each CallerID source device
+configured on the system.  Following is the layout of a record in the 
+CID_SOURCES table:
+
+FIELD NAME           TYPE              REMARKS
+---------------------------------------------------------------
+ID                   int(11)           Primary Key, Auto Incrementing
+HOSTNAME             char(255)
+HOST_ID              int(11)           ID Number, relative to host
+TTY_PORT             char(255)
+BAUD_RATE            int(11)
+DATA_BITS            int(11)
+STOP_BITS            int(11)
+PARITY               int(11)

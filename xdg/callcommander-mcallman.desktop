@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Call Commander;
+Encoding=UTF-8
+Name=Call Manager
+GenericName=Call Manager
+Exec=mcallman
+Icon=callcommander
+Path=
+Type=Application
+Terminal=false

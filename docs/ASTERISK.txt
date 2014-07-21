@@ -1,0 +1,36 @@
+CallCommander contains experimental support for controlling the 
+Asterisk Open Source PBX by means of the Asterisk Management Interface.
+Source code and documentation for Asterisk are available at
+http://www.asterisk.org/.
+
+To configure Asterisk to work with CallCommander, you need to:
+
+1) Create the '/etc/asterisk/callcommander.conf' file.  A sample 
+can be found in 'asterisk/callcommander.conf-sample' in the 
+CallCommander source tree.  This file defines which Asterisk channels, 
+contexts and extensions will be used for the various CallCommander
+devices (hybrids and screener stations).  At present, only a single 
+channel device, the OSS Console, is fully supported.
+
+2) Create dialplan rules in '/etc/asterisk/extensions.conf' in
+accordance with the resources defined in 'callcommander.conf'.  A 
+sample can be found in 'asterisk/extensions.conf-sample'.
+
+3) Ensure that an area is defined for parking calls in
+'/etc/asterisk/features.conf' (needed in order for call holding to work
+correctly).  A sample is in 'asterisk/features.conf-sample'.
+
+4) Ensure that incoming trunks are configured to use the correct 
+initial context.  A sample 'asterisk/zaptel.conf-sample' file is 
+provided as an example of how to do this for Zaptel cards.
+
+5) Configure an Asterisk Manager Interface connection profile in
+'/etc/asterisk/manager.conf'.  An example is in
+'asterisk/manager.conf-sample'.
+ 
+6) Restart Asterisk
+
+7) You should now be able to connect using the 'Asterisk Open Source PBX'
+connection type with the appropriate parameters in CallCommander's
+Connection Manager.
+

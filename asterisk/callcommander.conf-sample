@@ -1,0 +1,88 @@
+; callcommander.conf-sample
+;
+;   (C) Copyright 2008 Fred Gleason <fredg@paravelsystems.com>
+;
+;   This program is free software; you can redistribute it and/or modify
+;   it under the terms of the GNU General Public License as
+;   published by the Free Software Foundation; either version 2 of
+;   the License, or (at your option) any later version.
+;
+;   This program is distributed in the hope that it will be useful,
+;   but WITHOUT ANY WARRANTY; without even the implied warranty of
+;   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;   GNU General Public License for more details.
+;
+;   You should have received a copy of the GNU General Public
+;   License along with this program; if not, write to the Free Software
+;   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+;
+;
+; This is the configuration file for the Call Commander Virtual PBX
+; driver for Asterisk.
+;
+; Each 'show' configured in the system gets a section, with the show's name
+; in [] brackets.  [NOTE:  only the 'Asterisk' show is implemented at the
+; moment.]
+;
+
+[Asterisk]
+;
+; This is where the incoming trunks from the PSTN are configured.  These
+; should be set to use the 'cc-incoming' context by default in 'zapata.conf'.
+;
+Line0Channel=Zap/4-1
+Line1Channel=Zap/3-1
+Line2Channel=
+Line3Channel=
+Line4Channel=
+Line5Channel=
+Line6Channel=
+Line7Channel=
+Line8Channel=
+Line9Channel=
+Line10Channel=
+Line11Channel=
+
+;
+; Next, we define screener and hybrid devices.  Up to four
+; of each are currently supported.
+;
+Screener0Channel=SIP/1000
+Screener0Context=screener0
+Screener0Extension=210
+
+Screener1Channel=SIP/1001
+Screener1Context=screener1
+Screener1Extension=211
+
+Screener2Channel=
+Screener2Context=
+Screener2Extension=
+
+Screener3Channel=
+Screener3Context=
+Screener3Extension=
+
+Hybrid0Channel=SIP/1002
+Hybrid0Context=hybrid0
+Hybrid0Extension=200
+
+Hybrid1Channel=SIP/1003
+Hybrid1Context=hybrid1
+Hybrid1Extension=201
+
+Hybrid2Channel=
+Hybrid2Context=
+Hybrid2Extension=
+
+Hybrid3Channel=
+Hybrid3Context=
+Hybrid3Extension=
+
+;
+; Finally, we define the 'parking lot' to use for placing
+; calls on hold.  (See the sample 'extensions.conf' for
+; the available options regarding audio-on-hold.)
+;
+ParkingExtension=700
+ParkingContext=parkedcalls

@@ -1,0 +1,90 @@
+; extensions.conf - the Asterisk dial plan
+;
+; Static extension configuration file, used by
+; the pbx_config module. This is where you configure all your 
+; inbound and outbound calls in Asterisk. 
+; 
+; This configuration file is reloaded 
+; - With the "dialplan reload" command in the CLI
+; - With the "reload" command (that reloads everything) in the CLI
+
+;
+; Boilerplate settings from the default Asterisk config.
+;
+[general]
+static=yes
+writeprotect=yes
+;autofallthrough=no
+clearglobalvars=no
+;priorityjumping=yes
+;userscontext=default
+
+[globals]
+CONSOLE=Console/dsp				; Console interface for demo
+;CONSOLE=Zap/1
+;CONSOLE=Phone/phone0
+IAXINFO=guest					; IAXtel username/password
+;IAXINFO=myuser:mypass
+TRUNK=Zap/g2					; Trunk interface
+TRUNKMSD=1					; MSD digits to strip (usually 1 or 0)
+;TRUNK=IAX2/user:pass@provider
+
+;
+; CallCommander Contexts.
+;
+; We need one for each screener phone and hybrid.  The device
+; (soft or otherwise) needs to be configured to auto-answer 
+; any call from Asterisk.  We also need to be able to get to the 
+; extension for putting calls on hold (see the [parkedcalls]
+; context below for the available options here).
+;
+; These values need to match those used in 'callcommander.conf'.
+;
+[screener0]
+include => parkedcalls
+exten=>210,1,Answer()
+exten=>210,n,Dial(SIP/1000)
+
+[screener1]
+include => parkedcalls
+exten=>211,1,Answer()
+exten=>211,n,Dial(SIP/1001)
+
+[hybrid0]
+include => parkedcalls
+exten=>200,1,Answer()
+exten=>200,n,Dial(SIP/1002)
+
+[hybrid1]
+include => parkedcalls
+exten=>201,1,Answer()
+exten=>201,n,Dial(SIP/1003)
+
+;
+; This context is for all incoming trunks from the PSTN.  Basically,
+; we let 'em sit there and ring until a CC user picks up.
+;
+[cc-incoming]
+exten => s,1,Wait(86400)
+
+[parkedcalls]
+;
+; Two methods of implementing call holding exist, depending on what
+; sort of audio-on-hold is desired.  Most sites will want to be able
+; to feed live audio to callers on hold, in which case we simply 
+; transfer all 'on hold' calls to a conference bridge.  The 
+; [audio-on-hold] context (below) can then be used to connect a device
+; to pipe live audio into the bridge.
+;
+exten => 700,1,MeetMe(600,lq1)
+
+;
+; Alternatively, Asterisk has the ability built-in to play prerecorded
+; audio to calls on hold.  In that case, we simply want to send 'on hold'
+; calls to the parking lot.
+;
+; exten => 700,1,Park()
+
+[audio-on-hold]
+exten => 701,1,Answer()
+exten => 701,n,MeetMe(600,qt1)

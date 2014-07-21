@@ -1,0 +1,13 @@
+           VIRTUAL_SYSTEMS Table Layout for CallCommander
+
+The VIRTUAL_SYSTEMS table holds data concerning each virtual system
+configured on the system.  Following is the layout of a record in the
+VIRTUAL_SYSTEMS table:
+
+FIELD NAME           TYPE              REMARKS
+-----------------------------------------------------------------------
+ID                   int(11)           Primary key, auto increment
+SHOW_NAME            char(64)
+CONNECTION           char(255)         From CONNECTIONS.NAME
+HOSTNAME             char(255)
+LOCATION             char(64)

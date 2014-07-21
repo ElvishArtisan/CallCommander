@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Call Commander;
+Encoding=UTF-8
+Name=Call Screener
+GenericName=Call Screener
+Exec=ml
+Icon=callcommander
+Path=
+Type=Application
+Terminal=false

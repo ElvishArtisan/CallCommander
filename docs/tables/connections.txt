@@ -1,0 +1,21 @@
+             CONNECTIONS Table Layout for CallCommander
+
+The CONNECTIONS table holds data concerning phone system connection 
+parameters used by the mcidmd(8) daemon.  Following is the layout of
+a record in the CONNECTIONS table:
+
+FIELD NAME           TYPE              REMARKS
+---------------------------------------------------------------
+NAME                 char(255)         Primary key
+DESCRIPTION          char(255)
+SYSTEM_TYPE          int(11)
+HOST_NAME            char(255)
+TCP_PORT             unsigned int(10)
+TTY_PORT             char(255)
+USER_NAME            char(64)
+USER_PASSWORD        char(64)
+SHOW_NAME            char(64)
+SHOW_PASSWORD        char(64)
+LOCATION             char(64)
+CONSOLE              int(11)
+CONSOLE_NAME         char(64)

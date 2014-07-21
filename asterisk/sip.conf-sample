@@ -1,0 +1,49 @@
+; sip.conf
+;
+; This is an example file for setting up SIP phones with CallCommander.
+; It is *very* basic, and is designed to get new sites up and running
+; with a minimum of fuss.  Site administrators are STRONGLY
+; encouraged to write fuller versions.  In particular, this configuration
+; PROVIDES NO SECURITY WHATEVER for your SIP phones.
+;
+[general]
+
+;
+; Screener 0
+;
+[1000]
+type=friend
+context=cc-incoming
+host=dynamic
+
+;
+; Screener 1
+;
+[1001]
+type=friend
+context=cc-incoming
+host=dynamic
+
+;
+; Hybrid 0
+;
+[1002]
+type=friend
+context=cc-incoming
+host=dynamic
+
+;
+; Hybrid 1
+;
+[1003]
+type=friend
+context=cc-incoming
+host=dynamic
+
+;
+; Audio-On-Hold Device
+;
+[1004]
+type=friend
+context=audio-on-hold
+host=dynamic

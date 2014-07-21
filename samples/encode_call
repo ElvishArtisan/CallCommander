@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# encode_call
+#
+# Encode a call from the CallCommander Call Skimmer
+#
+# (C) Copyright 2004 Fred Gleason <fredg@paravelsystems.com>
+#
+
+#
+# Arguments
+#
+BASE_NAME=$1
+DEST_DIR=$2
+
+#
+# Paths
+#
+SRC_DIR=/home/fredg/wav/mcs
+
+#
+# Binaries
+#
+LAME=/usr/local/bin/lame
+RM=/bin/rm
+
+$LAME --quiet -m s -q 2 -b 256 "$SRC_DIR/$BASE_NAME.wav" "$DEST_DIR/$BASE_NAME.mp3"
+$RM "$SRC_DIR/$BASE_NAME.wav"
+
+
+# End of encode_call

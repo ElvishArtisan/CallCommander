@@ -1,0 +1,9 @@
+                 VERSION Table Layout for CallCommander
+
+The VERSION table holds data concerning the current version level
+of various CallCommander components.  Following is the layout of a record 
+in the VERSION table:
+
+FIELD NAME           TYPE             REMARKS
+--------------------------------------------------------------------------
+DATABASE             int(11)          Primary key

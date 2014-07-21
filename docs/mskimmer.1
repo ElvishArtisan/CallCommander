@@ -1,0 +1,74 @@
+.TH mskimmer 1 "February 2003" Linux "Linux Audio Manual"
+.SH NAME
+mskimmer \- The Call Commander Call Skimmer
+
+.SH SYNOPSIS
+mskimmer [OPTION] [config-file]
+
+.SH DESCRIPTION
+\fBmskimmer\fP is a specialized audio recorder that uses one or more audio
+adapters to record telephone conversations.  Recordings are done under
+the control of an associated telephone interface, as configured by
+\fBmskimmer\fP's user interface and configuration file.
+
+\fBMskimmer\fP features two recording decks, one for each telephone bank.
+Each deck consists of a set of line buttons, a RECORD button, a STOP
+button, a record timer and a file name display.  Selecting a line
+button has the effect of causing the associated deck to begin
+recording should that line be placed on the air on the appropriate
+bank.  When all selected lines are taken off air (either by being
+placed on hold, or by being hung up), the recording stops.  It is also
+possible to operate the deck manually by means of the associated
+RECORD and STOP buttons.
+
+.SH OPTIONS
+.TP
+.B -v, --version
+output version information and exit.
+
+.SH CONFIGURATION FILE 
+Upon startup, \fBmskimmer\fP will look for a configuration file in the
+following locations/order.
+.RS
+.TP
+Command Line
+The file whose name is passed as the last argument on the command
+line.
+.TP
+$HOME/.mlrc
+The file \fB.mlrc\fP in the user's home directory.
+.TP
+/etc/ml.conf
+The file \fBml.conf\fP in the /etc/ directory.
+.RE
+.RE
+
+If no configuration file is found at any of the above locations,
+\fBmskimmer\fP will use a default configuration compiled into the program.
+When a configuration file is found, further searching
+stops.  The format of this file is documented in the ml.conf(5) man
+page.  This file is also used by the Call Commander user interface
+program, \fBml(1)\fP.  The \fI[Skimmer]\fP section of the
+configuration file is used to control \fBmskimmer(1)\fP's operation.
+
+.SH BUGS
+On the Telos TWOx12, password support is not implemented as of firmware
+version 2.02.  Thus, attempts to connect to this unit should \fIalways\fP
+use an empty password.
+
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR callcommander(1),
+.BR ml(1),
+.BR ml.conf(5),
+.BR mld(8),
+.BR mld.conf(5)
+
+
+
+
+
+
+
+

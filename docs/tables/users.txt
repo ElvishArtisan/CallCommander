@@ -1,0 +1,15 @@
+                   USERS Table Layout for CallCommander
+
+The USERS table holds data concerning each individual user configured
+on the system.  Following is the layout of a record in the USERS
+table:
+
+FIELD NAME           TYPE             REMARKS
+--------------------------------------------------------------------------
+LOGIN_NAME           char(32)         Primary key
+FULL_NAME            char(64)         Indexed
+PHONE_NUMBER         char(14)
+DESCRIPTION          char(64)
+PASSWORD             char(32)         Not-NULL, Hashed
+ADMIN_PRIV           enum('N','Y')
+SCREENER_PRIV        enum('N','Y')

@@ -1,0 +1,47 @@
+.TH mcidmd 1 "August 2007" Linux "Linux Audio Manual"
+.SH NAME
+mcidmd \- The Call Commander Caller ID Monitoring Daemon
+
+.SH SYNOPSIS
+mcidmd [OPTION] [config-file]
+
+.SH DESCRIPTION
+\fBmcidmd\fP is a specialized screener client that monitors and processes
+Caller ID information from incoming calls.  Some of the actions that 
+\fBmcidmd\fP can perform with such data include:
+
+.RS
+Log the caller number and parameters in the database.
+.TP
+Automatically populate data from a previous call into the Caller Box in \fBml(1)\fP.
+.TP
+Generate a warning message in \fBml(1)\fP.
+.TP
+Block a call entirely from ringing.
+.RE
+
+\fBMcidmd\fP is configured by means of the \fPmld.conf\fP configuration
+file and the Call Commander Database Administrator (\fBmdbadmin(1fP).
+See the \fBmld.conf(5)\fP man page for more information.
+
+.SH OPTIONS
+.TP
+.B -v, --version
+output version information and exit.
+
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR callcommander(1),
+.BR ml(1),
+.BR ml.conf(5),
+.BR mld(8),
+.BR mld.conf(5)
+
+
+
+
+
+
+
+

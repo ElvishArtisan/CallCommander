@@ -1,0 +1,1803 @@
+.TH ml.conf 5 "August 2007" Linux "Linux Audio Manual"
+.SH ml.conf
+ml.conf \- Configuration file for the Call Commander Telephone Screening
+System User Interface
+.SH DESCRIPTION
+\fBml.conf\fP contains the configuration information for the 
+\fBml(1)\fP program, a component of the Call Commander Telephone Screening
+System, and \fBmcs(1)\fP, the Call Commander Call Skimmer.
+
+.SH FILE FORMAT
+The file format consists of \fIsections\fP,
+each of which contain configuration information in the form of keyword/value
+pairs.  Each section begins with with the name of the section in [] brackets,
+followed by zero or more keyword/value pairs, with the keyword and value seperated by an '=' sign.  Lines starting with ; are ignored, as are blank lines.
+
+For example:
+
+.RS
+.RE
+[Section1]
+.RS
+.RE
+Keyword1=value1
+.RS
+.RE
+Keyword2=value2
+.RS
+.RE
+Keyword3=value3
+
+.SH COLORS
+The following colors are supported:
+\fBblack\fP, \fBwhite\fP, \fBdarkGray\fP, \fBgray\fP, \fBlightGray\fP,
+\fBred\fP, \fBgreen\fP, \fBblue\fP, \fBcyan\fP, \fBmagenta\fP, \fByellow\fP,
+\fBdarkRed\fP, \fBdarkGreen\fP, \fBdarkBlue\fP, \fBdarkCyan\fP, 
+\fBdarkMagenta\fP, \fBdarkYellow\fP.
+
+.SH KEY BINDINGS
+Virtually every button in \fBml\fP can be assigned a shortcut key.  Keys 
+are specified by a combination of a modifier plus a key name.  Thus, for 
+example, the key binding Control-D would be specified by \fICtrl+D\fP.
+ 
+The following modifiers are supported:
+
+.TP
+.B Alt
+The ALT Key
+.TP
+.B Ctrl
+The CTRL Key
+.TP
+.B Shift
+The SHIFT Key
+
+.RE
+NOTE: Some window managers (\fBkdm(1)\fP, in particular) trap certain
+of these modifier keys, thus making those modifiers unusable with
+\fBml\fP when used under those window managers.
+
+In addition to the printable keys, the following special keys can be
+specified:
+
+.TP
+.B F1 - F12
+The F1 through F12 function keys
+
+.TP
+.B Up, Down, Left, Right
+The arrow keys
+
+.TP
+.B Home, End, Ins, Del 
+The HOME, END, INSERT and DELETE keys
+
+.TP
+.B Tab
+The TAB key
+
+.TP
+.B Esc
+The ESCAPE key
+
+.TP
+.B Backspace
+The BACKSPACE Key
+
+.TP
+.B Enter
+The ENTER key
+
+.TP
+.B Pause
+The PAUSE Key
+
+.TP
+.B Print
+The PRINT SCREEN Key
+
+.TP
+.B Space
+The SPACEBAR key
+
+.SH MACRO EXPANSION
+Certain configuration entries (detailed later) can use one or more of
+the following configuration macros.  These macros are expanded at
+runtime as detailed below:
+.TP
+.B %d
+The day of the month, in the range 01 - 31.
+.TP
+.B %m
+The month of the year, in the range 01 - 12.
+.TP
+.B %Y
+The four-digit year.
+.TP
+.B %k
+The hour, in the range 00 - 23.
+.TP
+.B %M
+The minute, in the range 00 - 59.
+.TP
+.B %S
+The second, in the range 00 - 60.
+.TP
+.B %i
+The Show Code, as defined in the ShowCode= directive.
+.TP
+.B %L
+The line number, in the range 1 - 12.
+.TP
+.B %n
+The name of the caller.
+.TP
+.B %C
+The cellphone flag state.  0 = No, 1 = Yes
+.TP
+.B %q
+The call quality rating.  0 = None, 1 = Very Poor, 2 = Poor, 3 = Fair,
+4 = Good, 5 = Excellent
+.TP
+.B %A
+The age of the caller.
+.TP
+.B %c
+The city address of the caller.
+.TP
+.B %z
+The ZIP code of the caller.
+.TP
+.B %w
+The station of the caller.
+.TP
+.B %g
+The gender of the caller.
+.TP
+.B %p
+The phone number of the caller, as known from Caller ID.
+.TP
+.B %e
+The comment of the caller.
+.TP
+.B %r
+Total number of seconds spent ringing.
+.TP
+.B %a
+Total number of seconds spent on air.
+.TP
+.B %h
+Total number of seconds spent on hold or being screened.
+.TP
+.B %%
+Literal '%'.
+.RE
+
+All other characters are passed through unchanged.
+
+.SH SECTIONS/KEYWORDS
+Following are the sections and keywords for \fBml.conf\fP:
+
+[Global]
+.RS
+ConnectionName = \fI<name>\fP
+.RS
+Where \fI<name>\fP is the name of the connection profile to use.  If
+a leading '/' is not provided, this will be assumed to be relative to
+the $HOME/.callcommander/ directory, whereas a leading '/' will be
+used literally.  If no ConnectionName= entry is provided, or if the
+named profile cannot be opened, \fIml(1)\fP will prompt for the
+connection to use.
+.RE
+
+AnimateIcons = \fIYes|No\fP
+.RS
+Turn icon animation On or Off.  Off might be needed for use on
+older/slower machines.
+.RE
+
+WindowX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of \fBml\fP's main program window at
+startup.
+.RE
+
+WindowY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of \fBml\fP's main program window at
+startup.
+.RE
+
+SizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal width in pixels
+of \fBml\fP's main program window at startup.
+.RE
+
+SizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical height in pixels
+of \fBml\fP's main program window at startup.
+.RE
+
+KeepOnTop = \fIYes\fP|\fINo\fP
+.RS
+Controls whether or not \fBml\fP should put try to remain on top of
+all other windows on the desktop.  Default value is No.
+.RE
+
+SpawnProcess = \fI<command>\fP
+.RS
+Run the command specified by <\fIcommand\fP> when starting up, and stop
+it (by sending it the SIGTERM signal) when shutting down.  See also the
+\fBSpawnOnce\fP directive, below.
+.RE
+
+SpawnOnce = \fIYes\fP|\fPNo\fP
+.RS
+If set to \fIYes\fP, run the command specified in the \fBSpawnProcess\fP
+directive only once.  If \fINo\fP, then the command will be respawned if 
+the initial process
+exits.
+.RE
+
+.RE
+
+
+[ConnectionManager]
+.RS
+DisableNewButton = \fBYes\fP|\fBNo\fP
+.RS
+If set to \fBYes\fP, disable the \fINew\fP button in the connection
+manager.  The default is \fBNo\fP.
+.RE
+
+DisableEditButton = \fBYes\fP|\fBNo\fP
+.RS
+If set to \fBYes\fP, disable the \fIEdit\fP button in the connection
+manager.  The default is \fBNo\fP.
+.RE
+
+DisableDeleteButton = \fBYes\fP|\fBNo\fP
+.RS
+If set to \fBYes\fP, disable the \fIDelete\fP button in the connection
+manager.  The default is \fBNo\fP.
+.RE
+
+DisableOpenButton = \fBYes\fP|\fBNo\fP
+.RS
+If set to \fBYes\fP, disable the \fIOpen\fP button in the connection
+manager.  The default is \fBNo\fP.
+.RE
+.RE
+
+
+
+[Controls]
+.RS
+This section is for enabling/disabling specific control actions.
+These settings can be used to create 'read-only' instances of ml(1).
+
+DisableLineButtons = \fBYes\fP|\fBNo\fP
+.RS
+Enable or disable the ability for the Line Buttons to control to phone
+system.  If disabled, the Buttons will show line status, but pressing
+them will have no effect.
+.RE
+
+DisableLineBoxes = \fBYes\fP|\fBNo\fP
+.RS
+Enable or disable the ability for screening data to be entered.  If
+disabled, the Boxes will show caller data, but double-clicking on them
+will have no effect.
+.RE
+.RE
+
+[Skimmer]
+.RS
+This section configures \fBmcs\fP, the Call Commander Call Skimmer.
+
+AudioRoot = \fI<audio-dir>\fP
+.RS
+Where \fI<audio-dir>\fP is the directory where the audio files should
+be placed.  If a relative path, \fBmcs\fP will take this as being 
+relative to the user's home directory.
+.RE
+
+SampleRate=\fI<samp-rate>\fP
+.RS
+Where \fI<samp-rate>\fP is the sample rate to be used for the
+recording, in samples per second.  \fBMcs\fP will utilize a rate as
+close to that specified as the underlying audio hardware permits.
+.RE
+
+Channels=\fB1\fP|\fB2\fP
+.RS
+Specifies the number of channels to be used for the recording.
+.RE
+
+BitRate=\fI<bit-rate>\fP
+.RS
+Where \fI<bit-rate>\fP is the encoding bit rate to be used for the
+recording, in bits per second.  This parameter is ignored for 
+PCM16 format recordings.
+.RE
+
+Format=\fBPCM16\fP|\fBLayer2\fP|\fBLayer3\fP
+.RS
+Specifies the encoding format to be used for the recording.
+\fBPCM16\fP indicates signed, little-endian, sixteen bit linear 
+sampling, while \fBLayer2\fP or \fBLayer3\fP indicate MPEG
+Layer 2 or Layer 3 encoding, respectively.  (NOTE: MPEG
+encoding is supported only when utilizing an audio adapter with
+native MPEG support (such as an AudioScience 4xxx or 6xxx series)
+as the recording device.
+.RE
+
+MainFileType=\fBWave\fP|\fBRaw\fP
+.RE
+.RS
+ConfFileType=\fBWave\fP|\fBRaw\fP
+.RS
+Specifies whether audio files should be generated with or without a
+WAV header.  PCM16 formatted files will generally want a header.  If
+a header is specified in conjunction with MPEG encoding, the resulting
+files will be Broadcast Wave File (BWF) compliant, but some popular
+audio editors do not recognize this format.
+.RE
+
+MainCard=\fI<card-num>\fP
+.RE
+.RS
+ConfCard=\fI<card-num>\fP
+.RS
+Where \fI<card-num>\fP is the number of the card to be used to record
+for the Main or Conference bank, respectively.
+.RE
+
+MainPort=\fI<port-num>\fP
+.RE
+.RS
+ConfPort=\fI<port-num>\fP
+.RS
+Where \fI<port-num>\fP is the number of the port to be used to record 
+for the Main or Conference bank, respectively.
+.RE
+
+MainStream=\fI<port-num>\fP
+.RE
+.RS
+ConfStream=\fI<port-num>\fP
+.RS
+Synonyms for the \fBMainPort\fP and \fBConfPort\fP directives,
+above.  Use of these directives is deprecated, and supported only for
+backward compatibility.
+.RE
+
+MainFilename=\fI<filename>\fP
+.RE
+.RS
+ConfFilename=\fI<filename>\fP
+.RS
+Where \fI<filename>\fP is the filename to be used for the recordings
+of the Main and Conference bank, respectively.  These entries support
+the use of configuration macros (see the \fBMACRO EXPANSION\fP
+section, above).
+.RE
+
+MainPostCommand=\fI<cmd>\fP
+.RE
+.RS
+ConfPostCommand=\fI<cmd>\fP
+.RS
+Where \fI<cmd>\fP is a shell command to be executed after the completion
+of a recording off of the Main or Conference bank, respectively.
+These entries support the use of configuration macros (see the 
+\fBMACRO EXPANSION\fP section, above).
+.RE
+
+MainMaxLength=\fI<len>\fP
+.RE
+.RS
+ConfMaxLength=\fI<len>\fP
+.RS
+Where \fI<len>\fP is the maximum length, in the format HH:MM:SS, of 
+a recording to be made on the Main or Conference bank, respectively.
+Should the length of a call exceed this value, the recording will be 
+stopped.  If zero, then allow call recordings of indefinete length.
+.RE
+
+MainLevel=\fI<level>\fP
+.RE
+.RS
+ConfLevel=\fI<level>\fP
+.RS
+Where \fI<level>\fP is the reference input level in 1/100's dBu of the 
+analog audio inputs of the Main or Conference bank, respectively.  The
+range of possible levels is -2000 to 800 --i.e. -20.0 to +8.0 dBu.
+These options have effect only when used with the AudioScience HPI
+driver.
+.RE
+
+MainInputType=\fBAnalog\fP|\fBDigital\fP
+.RE
+.RS
+ConfInputType=\fBAnalog\fP|\fBDigital\fP
+.RS
+Specifies whether the input type should be analog or digital (AES3)
+for the audio inputs of the Main or Conference bank, respectively.
+These options have effect only when used with the AudioScience HPI
+driver.
+.RE
+
+EnableMain\fI<n>\fP=\fBYes\fP|\fBNo\fP
+.RE
+.RS
+EnableConf\fI<n>\fP=\fBYes\fP|\fBNo\fP
+.RS
+Specifies the initial state of recording for line \fI<n>\fP at startup 
+for the Main or Conference bank, respectively. \fBYes\fP means 
+to enable recording, and \fBNo\fP means to disable it.
+.RE
+
+.RE
+[Colors]
+.RS
+This section sets the colors for the system.
+
+Idle = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of a line button when in \fBIDLE\fP
+mode.
+.RE
+
+InUse = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of a line button when in \fBELSEWHERE\fP
+mode.
+.RE
+
+OnAir = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of a line button when in \fBONAIR\fP
+mode.
+.RE
+
+OffHook = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of a line button when in \fBOFFHOOK\fP
+mode.
+.RE
+
+OnHold = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of a line button when in \fBONHOLD\fP
+mode.
+.RE
+
+ScreenedHold = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of a line button when in \fBSCREENED\fP
+mode.
+.RE
+
+ReadyNext = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of a line button when in \fBNEXT\fP
+mode.
+.RE
+
+Ringing = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of a line button when in \fBRINGING\fP
+mode.
+.RE
+
+Busy = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of a line button when in \fBBUSYOUT\fP
+mode.
+.RE
+
+CallerBox = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of the Caller Data widgets.  See the
+[Line\fIN\fP] section below.
+.RE
+
+MessageBox = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of the Message Box widget.  See the
+[MessageBox] section below.
+.RE
+
+DumpButton = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of the DUMP button.  See the
+[DumpButton] section below.
+.RE
+
+RecordButton = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of the RECORD button.  See the
+[RecordButton] section below.
+.RE
+
+NextButton = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of the NEXT button.  See the
+[NextButton] section below.
+.RE
+
+KeypadButton = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of the KEYPAD button.  See the
+[KeypadButton] section below.
+.RE
+
+ScreenButton = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of the Screen button.  See the
+[ScreenButton] section below.
+.RE
+
+MuteButton = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of the Mute button.  See the
+[MuteButton] section below.
+.RE
+
+ConfButton = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of the Conf button.  See the
+[ConfButton] section below.
+.RE
+
+VipButton = \fI<color>\fP
+.RS
+Where \fI<color>\fP is the color of the VIP button.  See the
+[VipButton] section below.
+.RE
+
+.RE
+
+
+[MessageBox]
+.RS
+This section deals with configuration of the Message Box Widget.
+
+ShowMessageBox = \fBYes\fP|\fBNo\fP
+.RS
+Enable/disable display of the Message Box Widget.
+.RE
+
+MessageBoxX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the widget.
+.RE
+
+MessageBoxY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the widget.
+.RE
+
+SizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal width in pixels
+of the widget.
+.RE
+
+SizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical height in pixels
+of the widget.
+.RE
+
+Nickname = \fI<nick>\fP
+.RS
+Where \fI<nick>\fP is the name to use for messages sent.  If this
+parameter is missing or blank, the login name of the user will be used
+for the nick.
+.RE
+
+SendLines = \fI<lines>\fP
+.RS
+Where \fI<lines>\fP is the number of lines in the send section of the widget.
+.RE
+
+ScrollbackLines = \fI<lines>\fP
+.RS
+Where \fI<lines>\fP is the number of lines to save in the scrollback
+buffer of the widget.
+.RE
+
+HangTime = \fI<msecs>\fP
+.RS
+Where \fI<msecs>\fP is the number of milliseconds to display the "Look Up!"
+message when touching the widget.
+.RE
+
+FontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use for the message
+box widget.
+.RE
+
+FontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use for the message box widget.
+.RE
+
+FontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the message box widget.
+.RE
+
+.RE
+
+[Clock]
+.RS
+This section deals with configuration for the clock display.
+
+Orientation = \fBVertical\fP|\fBHorizontal\fP
+.RS
+Displays the Time and Segment counters one above the other (Vertical)
+or side-by-side (Horizontal).
+.RE
+
+ShowClock = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Segment Clock Widget.
+.RE
+
+TimeOffset = \fI<offset>\fP
+.RS
+Where \fI<offset>\fP is the number of seconds to offset the time and
+segment displays.  This can be useful in situations where a profanity
+delay is employed.
+.RE
+
+SendTimeOffset = \fBYes\fP|\fBNo\fP
+.RS
+If set to \fBYes\fP, send the current \fITimeOffset\fP value (see above) 
+to newly-joining \fIml(1)\fP clients.
+.RE
+
+ClockX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the widget.
+.RE
+
+ClockY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the widget.
+.RE
+
+ShowHour = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Hour field on the clock.
+Disabling display of the hour can be useful in certain situations
+where the program is heard in more than one time zone.
+.RE
+
+MilitaryFormat = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the time in twenty-four hour military
+format.
+.RE
+
+.RE
+
+
+[Segments]
+.RS
+This section is for configuring the Segment Countdown Timer in the
+Segment Clock Widget.
+
+Segment\fIN\fP = \fI<start-time>\fP,\fI<end-time>\fP,\fI<label>\fP
+.RS
+Make a segment time entry, where \fIN\fP is a sequence number starting
+at '1', \fI<start-time>\fP is the start time of the segment in the
+format HH:MM:SS,  \fI<end-time>\fP is the end time of the segment in the
+format HH:MM:SS and \fI<label>\fP is the label as it should appear on
+the status line of the Segment Clock Widget.
+.RE
+
+.RE
+
+[BusyButton]
+.RS
+This section deals with configuration for the busy-out control button.
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Busy Out Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+
+[DumpButton]
+.RS
+This section deals with configuration for the delay dump control button.
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Delay Dump Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+ShowDelay = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the delay offset time on the Delay Dump Button.
+.RE
+
+DelayThreshold = \fI<msecs>\fP
+.RS
+Where \fI<msecs>\fP is the value of the delay offset time (in milliseconds) below which the delay button will start flashing.
+.RE
+
+.RE
+
+
+
+[RecordButton]
+.RS
+This section deals with configuration for the record control button.
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Record Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+
+[NextButton]
+.RS
+This section deals with configuration for the next call control button.
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Take Next Call Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+
+[KeypadButton]
+.RS
+This section deals with configuration for the DTMF Keypad button (see
+the BUGS section below, though).
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the DTMF Keypad Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+
+[FlashButton]
+.RS
+This section deals with configuration for the Flash button.
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Flash Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+
+[ScreenButton]
+.RS
+This section deals with configuration for the Screen button.
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Screen Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+
+[MuteButton]
+.RS
+This section deals with configuration for the Mute button.
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Mute Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+
+[ConfButton]
+.RS
+This section deals with configuration for the Conf button.
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Conf Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+
+[VipButton]
+.RS
+This section deals with configuration for the VIP button.
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the VIP Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+
+[ClientButton]
+.RS
+This section deals with configuration for the Client List ("Who's Here?") 
+button.
+
+ShowButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Client List Button.
+.RE
+
+ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button.
+.RE
+
+Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button.
+See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+
+[Bank<b>]
+.RS
+This section deals with configuration for the HOLD and DROP buttons for
+Bank <b>.
+
+ShowHoldButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Main Hold Button.
+.RE
+
+HoldButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the Main Hold button.
+.RE
+
+HoldButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the Main Hold button.
+.RE
+
+HoldKey = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the Main
+Hold button.  See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+ShowDropButton = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Main Drop Button.
+.RE
+
+DropButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the Main Drop button.
+.RE
+
+DropButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the Main Drop button.
+.RE
+
+DropKey = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the Main
+Drop button.  See \fBKEY BINDINGS\fP for a description of available keys.
+.RE
+
+.RE
+
+
+[MainBank]
+.RS
+.RE
+[ConfBank]
+.RS
+These sections are synonyms for the [Bank1] and [Bank2] sections, 
+respectively.  Their use is deprecated, and continue to be supported solely 
+to keep old configurations working.
+.RE
+
+.RE
+
+
+[CallerBox]
+.RS
+This section configures the exact appearance of the Caller Data Box,
+including what fields get displayed, where and with what font.
+
+SizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal width in pixels
+of the Caller Data Box.
+.RE
+
+SizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical height in pixels
+of the Caller Data Box.
+.RE
+
+ShowFrame = \fBYes\fP|\fBNo\fP
+.RS
+Controls whether or not to display frames around the various caller fields.
+Useful primarily for debugging.
+.RE
+
+EnableWarningMessages = \fBYes\fP|\fBNo\fP
+.RS
+Controls whether or not to display line warning messages as configured in 
+\fImcallman(1)\fP.
+.RE
+
+ShowName = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the NAME attribute in the Caller
+Data Box.
+.RE
+
+NameX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the NAME field.
+.RE
+
+NameY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the NAME field.
+.RE
+
+NameSizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal size in pixels
+of the of the NAME field.
+.RE
+
+NameSizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical size in pixels
+of the of the NAME field.
+.RE
+
+NameFontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use to display the
+NAME attribute.
+.RE
+
+NameFontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use to display the NAME attribute.
+.RE
+
+NameFontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the NAME attribute.
+.RE
+
+ShowAge = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the AGE attribute in the Caller
+Data Box.
+.RE
+
+AgeX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the AGE field.
+.RE
+
+AgeY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the AGE field.
+.RE
+
+AgeSizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal size in pixels
+of the of the AGE field.
+.RE
+
+AgeSizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical size in pixels
+of the of the AGE field.
+.RE
+
+AgeFontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use to display the
+AGE attribute.
+.RE
+
+AgeFontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use to display the AGE attribute.
+.RE
+
+AgeFontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the AGE attribute.
+.RE
+
+ShowCityState = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the CITYSTATE attribute in the Caller
+Data Box.
+.RE
+
+CityStateX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the CITYSTATE field.
+.RE
+
+CityStateY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the CITYSTATE field.
+.RE
+
+CityStateSizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal size in pixels
+of the of the CITYSTATE field.
+.RE
+
+CityStateSizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical size in pixels
+of the of the CITYSTATE field.
+.RE
+
+CityStateFontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use to display the
+CITYSTATE attribute.
+.RE
+
+CityStateFontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use to display the CITYSTATE attribute.
+.RE
+
+CityStateFontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the CITYSTATE attribute.
+.RE
+
+ShowZip = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the ZIP attribute in the Caller
+Data Box.
+.RE
+
+ZipX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the ZIP field.
+.RE
+
+ZipY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the ZIP field.
+.RE
+
+ZipSizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal size in pixels
+of the of the ZIP field.
+.RE
+
+ZipSizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical size in pixels
+of the of the ZIP field.
+.RE
+
+ZipFontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use to display the
+ZIP attribute.
+.RE
+
+ZipFontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use to display the ZIP attribute.
+.RE
+
+ZipFontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the ZIP attribute.
+.RE
+
+ShowPhone = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the PHONE attribute in the Caller
+Data Box.
+.RE
+
+PhoneX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the PHONE field.
+.RE
+
+PhoneY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the PHONE field.
+.RE
+
+PhoneSizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal size in pixels
+of the of the PHONE field.
+.RE
+
+PhoneSizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical size in pixels
+of the of the PHONE field.
+.RE
+
+PhoneFontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use to display the
+PHONE attribute.
+.RE
+
+PhoneFontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use to display the PHONE attribute.
+.RE
+
+PhoneFontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the PHONE attribute.
+.RE
+
+ShowStation = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the STATION attribute in the Caller
+Data Box.
+.RE
+
+StationX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the STATION field.
+.RE
+
+StationY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the STATION field.
+.RE
+
+StationSizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal size in pixels
+of the of the STATION field.
+.RE
+
+StationSizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical size in pixels
+of the of the STATION field.
+.RE
+
+StationFontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use to display the
+STATION attribute.
+.RE
+
+StationFontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use to display the STATION attribute.
+.RE
+
+StationFontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the STATION attribute.
+.RE
+
+ShowGender = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the GENDER attribute in the Caller
+Data Box.
+.RE
+
+GenderX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the GENDER field.
+.RE
+
+GenderY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the GENDER field.
+.RE
+
+GenderSizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal size in pixels
+of the of the GENDER field.
+.RE
+
+GenderSizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical size in pixels
+of the of the GENDER field.
+.RE
+
+GenderFontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use to display the
+GENDER attribute.
+.RE
+
+GenderFontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use to display the GENDER attribute.
+.RE
+
+GenderFontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the GENDER attribute.
+.RE
+
+ShowComment = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the COMMENT attribute in the Caller
+Data Box.
+.RE
+
+CommentX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the COMMENT field.
+.RE
+
+CommentY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the COMMENT field.
+.RE
+
+CommentSizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal size in pixels
+of the of the COMMENT field.
+.RE
+
+CommentSizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical size in pixels
+of the of the COMMENT field.
+.RE
+
+CommentLines = \fI<lines>\fP
+.RS
+Where \fI<lines>\fP is the number of lines of text of the COMMENT field
+to display.
+.RE
+
+AllowScrolling = \fBYes\fP|\fBNo\fP
+.RS
+When set to \fBYes\fP, this will cause scroll bars to be displayed for
+the COMMENT field when the amount of text exceeds the the amount of space
+configured to display it.
+.RE
+
+CommentFontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use to display the
+COMMENT attribute.
+.RE
+
+CommentFontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use to display the COMMENT attribute.
+.RE
+
+CommentFontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the COMMENT attribute.
+.RE
+
+ShowCallCounter = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the CALLCOUNTER attribute in the Caller
+Data Box.
+.RE
+
+CallCounterX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the CALLCOUNTER field.
+.RE
+
+CallCounterY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the CALLCOUNTER field.
+.RE
+
+CallCounterSizeX = \fI<x-size>\fP
+.RS
+Where \fI<x-size>\fP is the horizontal size in pixels
+of the of the CALLCOUNTER field.
+.RE
+
+CallCounterSizeY = \fI<y-size>\fP
+.RS
+Where \fI<y-size>\fP is the vertical size in pixels
+of the of the CALLCOUNTER field.
+.RE
+
+CallCounterFontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use to display the
+CALLCOUNTER attribute.
+.RE
+
+CallCounterFontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use to display the CALLCOUNTER attribute.
+.RE
+
+CallCounterFontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the CALLCOUNTER attribute.
+.RE
+
+ShowCell = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the CELLPHONE icon in the Caller
+Data Box.
+.RE
+
+CellX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the CELLPHONE icon.
+.RE
+
+CellY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the CELLPHONE icon.
+.RE
+
+
+ShowQuality = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the CALL QUALITY icon in the Caller
+Data Box.
+.RE
+
+QualityX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the upper left-hand corner of the CALL QUALITY icon.
+.RE
+
+QualityY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the upper left-hand corner of the CALL QUALITY icon.
+.RE
+
+
+ShowTimer = \fBYes\fP|\fBNo\fP
+.RS
+Configure whether or not to display the call timer in the Caller
+Data Box.
+.RE
+
+TimerX = \fI<x-pos>\fP
+.RS
+Where \fI<x-pos>\fP is the horizontal position in pixels
+of the lower left-hand corner of the call timer.
+.RE
+
+TimerY = \fI<y-pos>\fP
+.RS
+Where \fI<y-pos>\fP is the vertical position in pixels
+of the lower left-hand corner of the call timer.
+.RE
+
+TimerFontFace = \fI<font-face>\fP
+.RS
+Where \fI<font-face>\fP is the name of the font to use to display the
+call timer.
+.RE
+
+TimerFontSize = \fI<font-size>\fP
+.RS
+Where \fI<font-size>\fP is the vertical size in pixels of the font to
+use to display the call timer.
+.RE
+
+TimerFontWeight = \fBLight\fP|\fBNormal\fP|\fBDemiBold\fP|\fBBold\fP|\fBDark\fP
+.RS
+Sets the type weight to use to display the call timer.
+.RE
+
+.RE
+
+
+[Line\fI<N>\fP]
+.RS
+This section deals with configuration for the individual line control
+buttons, where \fI<N>\fP is the number of the corresponding line and
+\fI<B>\fP is the number of the corresponding bank.  Several directives 
+in this section have older, alternative forms whose use are now 
+deprecated, these are noted where appropriate.
+
+ShowBank<B>Button = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the button for line \fI<N>\fP in bank
+\fI<B>\fP.
+.RS
+.RE
+Deprecated Synonyms:
+.RS
+ShowMainButton = ShowBank1Button
+.RS
+.RE
+ShowConfButton = ShowBank2Button
+.RE
+.RE
+
+Bank<B>ButtonX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the button for line \fI<N>\fP in
+bank \fI<B>\fP.
+.RS
+.RE
+Deprecated Synonyms:
+.RS
+MainButtonX = Bank1ButtonX
+.RS
+.RE
+ConfButtonX = Bank2ButtonX
+.RE
+.RE
+
+Bank<B>ButtonY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the button for line \fI<N>\fP in
+bank \fI<B>\fP.
+.RS
+.RE
+Deprecated Synonyms:
+.RS
+MainButtonY = Bank1ButtonY
+.RS
+.RE
+ConfButtonY = Bank2ButtonY
+.RE
+.RE
+
+Bank<B>Key = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to the button 
+for line \fI<N>\fP in bank \fI<B>\fP.  See \fBKEY BINDINGS\fP for a description of 
+available keys.
+.RS
+.RE
+Deprecated Synonyms:
+.RS
+MainKey = Bank1Key
+.RS
+.RE
+ConfKey = Bank2Key
+.RE
+.RE
+
+ShowCallerBox = \fBYes\fP|\fBNo\fP
+.RS
+Enables/disables the display of the Caller Information Box for line \fI<N>\fP.
+.RE
+
+CallerBoxX = \fI<x-position>\fP
+.RS
+Where \fI<x-position>\fP is the horizontal position in pixels at which
+to locate the upper left-hand corner of the Caller Information Box for
+line \fI<N>\fP.
+.RE
+
+CallerBoxY = \fI<y-position>\fP
+.RS
+Where \fI<y-position>\fP is the vertical position in pixels at which
+to locate the upper left-hand corner of the Caller Information Box for
+line \fI<N>\fP.
+.RE
+
+CallerKey = \fI<key-binding>\fP
+.RS
+Where \fI<key-binding>\fP is the shortcut key to assign to bring up
+the caller information dialog for line \fI<N>\fP.  See \fBKEY
+BINDINGS\fP for a description of available keys.
+.RE
+
+Label = \fI<label>\fP
+.RS
+Where \fI<label>\fP is the text of the label to be applied to the buttons
+for line \fI<N>\fP. 
+.RE
+
+FontSize = \fI<size>\fP
+.RS
+Where \fI<size>\fP is the size of the font in points to use for the
+buttons for line \fI<N>\fP.
+.RE
+.RE
+
+
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR callcommander(1),
+.BR ml(1),
+.BR mcs(1),
+.BR mld(8),
+.BR mld.conf(5)
+
+
+
+
+
+
+
+
+

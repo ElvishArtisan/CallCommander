@@ -1,0 +1,42 @@
+This is the README file for the Call Commander package.
+
+This software comes with ABSOLUTELY NO WARRANTY.  See the file 
+COPYING for details.
+
+This is the Call Commander Call Screener System, a Qt-based program for
+managing live radio talk programs.  It currently supports the following
+broadcast telephone systems:
+
+    Comrex/Gentner TS-612
+    Telos 100 1A2 Key Interface Module
+    Telos 100 Direct Interface Module
+    Telos ONEx6 System
+    Telos 2101 Multistudio Telephone System
+    Telos Nx12 Digital Telephone System
+    Telos TWOx12 Digital Telephone System
+
+Call Commander was designed to be easily extensible to additional types of
+telephone systems.  If you don't see your hardware on this list, e-mail
+me!
+
+See the INSTALL file for installation instructions.
+
+IMPORTANT NOTE:  The v1.5.x and v2.x series of CallCommander versions are *not*
+backward compatible with the previous 1.3.x and 1.1.x versions.  When
+upgrading, all server and client components should be upgraded
+simultaneously.
+
+A full set of documentation exists in the form of man pages.  Type
+'man callcommander' at a shell prompt after installation to get started.
+
+You will probably want to create a configuration file.  Call Commander
+supports several options with regard to file location, see the ml(1)
+man page for details.  To create a configuration, start by copying the
+file 'samples/default.conf' in the source directory to the proper
+location and then modify it as necessary.  The full format is
+documented in the ml.conf(5) man page.
+
+Good Luck!
+
+
+Fred Gleason <fredg@paravelsystems.com>

@@ -1,0 +1,10 @@
+              USERS_PERMS Table Layout for CallCommander
+
+The USER_PERMS table defines which users have access to which shows.
+Following is the layout of a record in the USERS table:
+
+FIELD NAME           TYPE             REMARKS
+--------------------------------------------------------------------------
+ID                   int(10) unsigned Primary key, auto increment
+LOGIN_NAME           char(8)          From USERS.LOGIN_NAME
+SHOW_CODE            char(3)          From SHOWS.SHOW_CODE

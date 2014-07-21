@@ -1,0 +1,135 @@
+#!/bin/sh
+
+# make_bundle.sh
+#
+#   (C) Copyright 2011 Fred Gleason <fredg@paravelsystems.com>
+#
+#   Create DMG packages for OS-X
+#
+#      $Id: make_bundle.sh.in,v 1.7 2011/08/25 23:41:48 cvs Exp $
+#
+#    This program is free software; you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License version 2 as
+#    published by the Free Software Foundation.
+# 
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public
+#    License along with this program; if not, write to the Free Software
+#    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+# 
+
+function ApplyLibraryPaths
+{
+   TARGET=$1
+
+     install_name_tool -change @LOCAL_PREFIX@/lib/libml-@VERSION@.dylib @executable_path/../Frameworks/libml-@VERSION@.dylib temp/CallCommander/$BUNDLE_NAME.app/Contents/$TARGET
+    install_name_tool -change /usr/lib/libssl.0.9.8.dylib @executable_path/../Frameworks/libssl.0.9.8.dylib temp/CallCommander/$BUNDLE_NAME.app/Contents/$TARGET
+    install_name_tool -change libmysqlclient.18.dylib @executable_path/../Frameworks/libmysqlclient.18.dylib temp/CallCommander/$BUNDLE_NAME.app/Contents/$TARGET
+   install_name_tool -change $QTDIR/lib/Qt3Support.framework/Versions/4/Qt3Support @executable_path/../Frameworks/Qt3Support temp/CallCommander/$BUNDLE_NAME.app/Contents/$TARGET
+    install_name_tool -change $QTDIR/lib/QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore temp/CallCommander/$BUNDLE_NAME.app/Contents/$TARGET
+    install_name_tool -change $QTDIR/lib/QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui temp/CallCommander/$BUNDLE_NAME.app/Contents/$TARGET
+    install_name_tool -change $QTDIR/lib/QtNetwork.framework/Versions/4/QtNetwork @executable_path/../Frameworks/QtNetwork temp/CallCommander/$BUNDLE_NAME.app/Contents/$TARGET
+    install_name_tool -change $QTDIR/lib/QtSql.framework/Versions/4/QtSql @executable_path/../Frameworks/QtSql temp/CallCommander/$BUNDLE_NAME.app/Contents/$TARGET
+    install_name_tool -change $QTDIR/lib/QtXml.framework/Versions/4/QtXml @executable_path/../Frameworks/QtXml temp/CallCommander/$BUNDLE_NAME.app/Contents/$TARGET
+}
+
+function MakeBundle
+{
+    BUNDLE_NAME=$1
+    BUNDLE_BINARY=$2
+    BUNDLE_PLIST=$3
+
+    #
+    # Directories
+    #
+    mkdir -p temp/CallCommander/$BUNDLE_NAME.app
+    mkdir -p temp/CallCommander/$BUNDLE_NAME.app/Contents
+    mkdir -p temp/CallCommander/$BUNDLE_NAME.app/Contents/MacOS
+    mkdir -p temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks
+    mkdir -p temp/CallCommander/$BUNDLE_NAME.app/Contents/Resources
+    cp $BUNDLE_PLIST temp/CallCommander/$BUNDLE_NAME.app/Contents/Info.plist
+
+    #
+    # Application Stuff
+    #
+    cp $BUNDLE_BINARY/.libs/$BUNDLE_BINARY temp/CallCommander/$BUNDLE_NAME.app/Contents/MacOS/$BUNDLE_BINARY
+    ApplyLibraryPaths "MacOS/$BUNDLE_BINARY"
+
+    cp libp/.libs/libml-@VERSION@.dylib temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/
+    install_name_tool -id @executable_path/../Frameworks/libml-@VERSION@.dylib temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/libml-@VERSION@.dylib
+    ApplyLibraryPaths "Frameworks/libml-@VERSION@.dylib"
+
+    cp icons/CallCommander.icns temp/CallCommander/$BUNDLE_NAME.app/Contents/Resources/$BUNDLE_NAME.icns
+
+    #
+    # Open SSL
+    #
+    cp /usr/lib/libssl.0.9.8.dylib temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/
+    install_name_tool -id @executable_path/../Frameworks/libssl.0.9.8.dylib temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/libssl.0.9.8.dylib
+
+    #
+    # MySQL
+    #
+    cp /usr/lib/libmysqlclient.18.dylib temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/
+    install_name_tool -id @executable_path/../Frameworks/libmysqlclient.18.dylib temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/libmysqlclient.18.dylib
+
+    #
+    # Qt4
+    #
+    cp -r $QTDIR/lib/Qt3Support.framework/Versions/4/Qt3Support temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/Qt3Support
+    install_name_tool -id @executable_path/../Frameworks/Qt3Support temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/Qt3Support
+    ApplyLibraryPaths "Frameworks/Qt3Support"
+
+    cp -r $QTDIR/lib/QtCore.framework/Versions/4/QtCore temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/QtCore
+    install_name_tool -id @executable_path/../Frameworks/QtCore temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/QtCore
+    ApplyLibraryPaths "Frameworks/QtCore"
+
+    cp -r $QTDIR/lib/QtGui.framework/Versions/4/QtGui temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/QtGui
+    install_name_tool -id @executable_path/../Frameworks/QtGui temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/QtGui
+    ApplyLibraryPaths "Frameworks/QtGui"
+    cp -r $QTDIR/lib/QtGui.framework/Versions/4/Resources/qt_menu.nib temp/CallCommander/$BUNDLE_NAME.app/Contents/Resources/
+
+    cp -r $QTDIR/lib/QtNetwork.framework/Versions/4/QtNetwork temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/QtNetwork
+    install_name_tool -id @executable_path/../Frameworks/QtNetwork temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/QtNetwork
+    ApplyLibraryPaths "Frameworks/QtNetwork"
+
+    cp -r $QTDIR/lib/QtSql.framework/Versions/4/QtSql temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/QtSql
+    install_name_tool -id @executable_path/../Frameworks/QtSql temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/QtSql
+    ApplyLibraryPaths "Frameworks/QtSql"
+
+    cp -r $QTDIR/lib/QtXml.framework/Versions/4/QtXml temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/QtXml
+    install_name_tool -id @executable_path/../Frameworks/QtXml temp/CallCommander/$BUNDLE_NAME.app/Contents/Frameworks/QtXml
+    ApplyLibraryPaths "Frameworks/QtXml"
+
+    #
+    # Configurations
+    #
+    if test ! -z $CALLCOMMANDER_CONFIGS ; then
+	cp $CALLCOMMANDER_CONFIGS/ml.conf temp/CallCommander/$BUNDLE_NAME.app/Contents/Resources/
+	cp $CALLCOMMANDER_CONFIGS/*.ccc temp/CallCommander/$BUNDLE_NAME.app/Contents/Resources/
+    fi
+}
+
+#
+# First, build the Screener-only package
+#
+rm -rf temp
+MakeBundle "CallScreener" "ml" "ml/CallScreener-Info.plist"
+hdiutil create -ov -srcfolder temp/CallCommander callcommander-screener-@VERSION@-@RPM_RELEASE@.dmg
+
+#
+# Then, the complete package
+#
+MakeBundle "CallManager" "mcallman" "mcallman/CallManager-Info.plist"
+MakeBundle "CallAdministrator" "mdbadmin" "mdbadmin/CallAdministrator-Info.plist"
+hdiutil create -ov -srcfolder temp/CallCommander callcommander-@VERSION@-@RPM_RELEASE@.dmg
+
+#
+# Clean up
+#
+rm -rf temp
+

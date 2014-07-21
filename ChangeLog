@@ -1,0 +1,2617 @@
+2002-8-21 Fred Gleason <fredg@wava.com>
+	* Initial package creation
+	* Stubbed out basic application structure.
+2002-8-22 Fred Gleason <fredg@wava.com>
+	* Did basic work to try to get RTelosTwoX12 working.  Not
+	successful.
+2002-8-25 Fred Gleason <fredg@wava.com>
+	* Did more basic work.
+2002-8-26 Fred Gleason <fredg@wava.com>
+	* Basic button commands now working.  Still lots of work to do!
+	* Added Icons for all line modes except RINGING and READY/NEXT.
+2002-8-27 Fred Gleason <fredg@wava.com>
+	* Added icon animation.
+	* Added caller screening dialog and per-line caller info display.
+	Program is about functional, but still needs lots of tweaking.
+2002-8-28 Fred Gleason <fredg@wava.com>
+	* Added a segment clock.  Still needs SegList support.
+	* Added a message box area.
+2002-8-29 Fred Gleason <fredg@wava.com>
+	* Added a Busy Button
+	* Added a Dump Button
+	* Added a Record Button
+	* Added an Air Timer
+	* Added a Hold Timer
+	* Fixed a double begin() bug.
+	* Added a Next Button
+2002-8-30 Fred Gleason <fredg@wava.com>
+	* Added caller-data replication between program instances.
+	* Added automatic caller-data resynchronization for late-joining
+	program instances.
+	* Added the 'Message' class for the MessageBox widget.
+	* Added message-data replication between program instances.
+	* Added automatic message-data resynchronization for late-joining
+	program instances.
+2002-8-31 Fred Gleason <fredg@wava.com>
+	* Fixed a bug that was causing mithlond to segfault when starting
+	with the 'MessageBox=No' in the configuration file.
+	* Created a 'samples/' directory as a repository for example
+	configuration files.
+	* Created a 'samples/default.conf' configuration that displays all
+	available screen widgets.
+	* Created a 'samples/jpa.conf' configuration for Janet Parshall's
+	America.
+2002-9-01 Fred Gleason <fredg@wava.com>
+	* Fixed a bug that was causing part of the line number digit to be
+	clipped for line numbers higher than '9'.
+	* Changed the startup process so as to look for a configuration
+	file in the following locations/order:  command line, '$HOME/.mlrc',
+	'/etc/mithlond.conf'
+	* Changed the name of the mithlond binary from 'mithlond' to 'ml'.
+2002-9-02 Fred Gleason <fredg@wava.com>
+	* Added an 'AskBox=Yes|No' parameter to the [Global] section of
+	the configuration file.  If set to yes, a dialog will be presented
+	at program startup for entering connection parameters.
+	* Programmed the built-in defaults to sane values.
+2002-9-03 Fred Gleason <fredg@wava.com>
+	* Added a 'Caption=' parameter to the [Global] section of the
+	configuration file, for setting the caption of the main
+	application window.
+	* Added a 'Mode=' parameter to the [Global] section of the
+	configuration file, for specifying the mode ('Talent' or
+	'Producer') of the specified virtual director.
+	* Added 'WindowX=', 'WindowY=', 'SizeX=' and 'SizeY=' parameters
+	to the [Global] section of the configuration file for specifying
+	the geometry of the main application window.
+	* Added a ring timer to the caller data boxes.
+	* Added 'Label=' and 'FontSize=' parameters to each [LineN]
+	section to allow customization of line button labels.
+2002-9-05 Fred Gleason <fredg@wava.com>
+	* Fixed a bug whereby Caller Information boxes were not clearing
+	when the associated line state transitioned from ON HOLD to BUSY
+	ALL.
+	* Fixed a bug whereby 'ml' would segfault upon startup if
+	configured to display a line button without it's corresponding
+	caller information box.
+	* Fixed a bug whereby the call timers would appear even when the
+	appropriate Caller Information box had been disabled.
+	* Fixed a bug whereby the message box would fail to scroll down to
+	display a new message.
+	* Added a DTMF keypad.  Currently not working, as the TWOx12
+	doesn't seem to respond to the 'DialKey' command.
+	* Moved 'CallData' and 'MessageData' classes to Libradio (as
+	'RTelosCaller' and 'RTelosMessage').
+	* Combined the 'RTelosTwoX12::Reply' enum into
+	'RTelosTwoX12::Command', as required to support the change in
+	Libradio.
+	* Reorganized the file layout so that 'ml' is now in its own 'ml/'
+	subdirectory.
+	* Stubbed out structure for the 'mld' server daemon.
+2002-9-06 Fred Gleason <fredg@wava.com>
+	* Added a caption to the caller screening dialog.
+	* Added a '[Debug]' section to the configuration file containing
+	the following parameters:  'DisableWatchdog=',
+	'DisableStatusSync=', 'DisableCallerSync=' and
+	'DisableMessageSync='.
+	* Changed the 'SendCallData()' method in ml so as to send caller
+	information split into two seperate packets.  Needed to work
+	around the 126 byte payload limitation of the TWOx12.
+2002-9-07 Fred Gleason <fredg@wava.com>
+	* Fixed a bug whereby back message traffic was not being resynced
+	to late-joining clients if the total size of the message buffer
+	was more than 126 bytes.
+	* Fixed a bug whereby timer data was not being resynced to
+	late-joining clients.
+2002-9-08 Fred Gleason <fredg@wava.com>
+	* Stubbed out support for disk logging.  Still buggy.
+2002-9-09 Fred Gleason <fredg@wava.com>
+	* Changed the default behavior for assigning nicknames.  The
+	contents of the "USER" environment variable are now used as the
+	default nick.
+	* Debugged disk logging.
+	* Added man pages for ml(1) and ml.conf(5).
+	* Removed watchdog code from 'ml'.  This functionality will be
+	moved to 'RTelosTwoX12'.
+	* Released as v0.2.0
+2002-9-10 Fred Gleason <fredg@wava.com>
+	* Fixed several typos in 'ml.conf.5' and 'ml.1' manpages.
+	* Added a description of the default configuration to the 'ml.1'
+	manpage.
+	* Fixed a bug in 'ml' that was causing the 'NEXT', 'DUMP' and
+	'KEYPAD' buttons display in the incorrect color.
+	* Removed the header check for 'rnamespace.h' from 'configure.h'.
+	Apparently, this macro is broken in Autoconf 2.53.
+	* Added 'depcomp' for compatibility with Autoconf-2.53.
+	* Updated 'missing' script for compatibility with Automake-1.5.
+2002-9-13 Fred Gleason <fredg@wava.com>
+	* Fixed a bug in 'ml' that was causing the Dump button to display
+	incorrect color.
+	* Fixed a bug in 'ml' that was causing the Record button to display
+	incorrect color.
+	* Added the ability to specify the layout of the Caller Data Box
+	in the [CallerBox] section of the config file.
+	* Documented the [CallerBox] section in the 'ml.conf(5)' manpage.
+	* Added the AGE and CELLPHONE fields to the Caller Data Box.
+	* Completely overhauled the Caller Data dialog box.
+	* Documented the changes in 'ml.conf.5'.
+	* Fixed a bug that was allowing caller data to be entered for
+	non-available lines.
+	* Moved the default defines into the 'defaults.h' file.
+	* Updated the default configuration to use the new Caller Attributes.
+	* Updated the 'default.conf' file to use the new Caller Attributes.
+	* Removed the STREET [%s] macro from the disk logging module.
+	* Added the AGE [%A] and CELLPHONE [%C] macros to the disk logging
+	module.
+	* Updated the 'default.conf' file to use the new macros.
+2002-9-14 Fred Gleason <fredg@wava.com>
+	* Added hot key support to 'ml', configurable from the configuration
+	file.
+	* Updated the 'default.conf' file to use hotkeys.
+	* Documented the hotkey programming parameters in 'ml.conf.5'.
+	* Fixed a bug where the cell icons was appearing in *all* caller
+	data boxes if set to appear in any.
+	* Fixed an incorrect default placement for the cell icon.
+2002-9-15 Fred Gleason <fredg@wava.com>
+	* Fixed a bug whereby the Record Button hotkey would turn on, but not
+	turn off the button.
+	* Started work on 'mld'.  Still a long way to go.
+2002-9-16 Fred Gleason <fredg@wava.com>
+	* Fixed a bug in whereby 'ml' was incorrectly sending line number
+	'1' to request the a line status update for all lines.
+	* More work on mld.
+2002-9-17 Fred Gleason <fredg@wava.com>
+	* More work on 'mld'.  Still totally buggy and unusable.
+	* Got 'mld' mostly working.  Still no line lock support, and
+	needs lots of testing.
+2002-9-18 Fred Gleason <fredg@wava.com>
+	* Added line lock support to 'mld'.
+	* Added Studio Group support to 'ml'.
+	* Added 'Studio Group' and 'Password' fields to the startup dialog
+	for 'ml'.
+	* Debugged 'mld'.  Everything appears to work.
+	* Added a 'mld.conf' file to the 'samples/' directory.
+	* Corrected some types in 'ml.1'.
+	* Released as v0.3.0.
+2002-9-19 Fred Gleason <fredg@wava.com>
+	* Changed the caller dialog in 'ml' so that lines can be placed
+	into Screened Hold or Regular Hold when used with 'mld'.
+	* Modified 'Message' to use Qt's new 'QTextEdit' class instread of
+	'QMultiLineEdit'.
+	* Released as v0.3.1.
+2002-9-20 Fred Gleason <fredg@wava.com>
+	* Added code to 'mld' to check for duplicate tty config entries at
+	startup.
+	* Added code to 'mld' to detach from the controlling tty if not
+	given the '-d' option.
+	* Released as v0.3.2
+2002-9-25 Fred Gleason <fredg@wava.com>
+	* Fixed a bug in 'ml' that was causing a segfault when started
+	with one or more line buttons disabled.
+2002-9-26 Fred Gleason <fredg@wava.com>
+	* Added sample configs 'jpa-screener.conf', jpa-host.conf' and
+	'gallagher-host.conf'.
+	* Fixed a bug that was causing 'ml' to bypass display of the
+	connection information dialog box even if the 'Hostname='
+	parameter was blank.
+	* Released as v0.3.3.
+2002-10-11 Fred Gleason <fredg@wava.com>
+	* Added a 'samples/ra.conf' file, a configuration for Radio
+	America.
+2002-10-14 Fred Gleason <fredg@wava.com>
+	* Fixed a bug in 'mld' that was setting the Telos 100 tty
+	connection to an incorrect default speed.
+	* Fixed a bug in 'ml' that was causing the caller dialog box to
+	fail to appear when doubleclicked in certains areas of the caller
+	information box.
+	* Fixed a bug in 'ml' that was clipping the beginning of the
+	'Comment' label in the Call Info dialog box.
+	* Overhauled the caller info box display so as to properly
+	word-wrap long fields.
+2002-10-15 Fred Gleason <fredg@wava.com>
+	* Fixed a bug in 'ml' that was failing to update the caller
+	information box when a remote instance updated the data.
+	* Fixed a bug in 'ml' that was causing remote instances to fail to
+	clear a field in the Caller Info boxes.
+	* Added a Call Quality Rating attribute to 'ml'.
+	* Added a "Look Up!" alarm to the Message Box.
+2002-10-16 Fred Gleason <fredg@wava.com>
+	* Fixed a bug in 'ml' where the Caller Data boxes were not being
+	updated when joining an already established ml group.
+	* Fixed a bug in 'ml' where the Caller Data was being corrupted
+	when connecting to a system in BusyOut mode.
+	* Fixed a bug in 'ml' where the Message Box would not update when
+	joining an already established ml group.
+	* Released as v0.4.0.
+	* Changed the link parameters to link against 'libqt', rather than
+	'libqui'.
+	* Fixed a nasty bug in the the top-level 'Makefile.am' that was
+	causing *all* ordinary files to be deleted upon execution of
+	'make maintainer-clean'.
+	* Released as v0.4.1.
+2002-10-24 Fred Gleason <fredg@wava.com>
+	* Added 'samples/swcons.conf', a classic Telos 100 Switch Console
+	layout.
+2002-10-30 Fred Gleason <fredg@wava.com>
+	* Removed parameter defaults from the function headers.  Needed to
+	make things compile with gcc 3.2.
+2002-11-05 Fred Gleason <fredg@wava.com>
+	* Added 'samples/dks-screen.conf', a sample configuration for the
+	Don Kroah Show screener system.
+	* Added some 'SizeX=' and 'SizeY=' entries to the Age, Phone and
+	Zip sections of [CallerBox] in 'default.conf'.
+	* Brought INSTALL, NEWS and README up to date.
+	* Released as v0.5.0 (Release Candidate 1).
+2002-11-08 Fred Gleason <fredg@wava.com>
+	* Fixed a bug in 'ml' that was causing the first letter of the
+	'Studio Group' label in the connection dialog box to be clipped.
+	* Changed the default color for the Dump button from gray to red.
+	* Brought INSTALL and NEWS files up to date.
+	* Released as v0.5.1 (Release Candidate 2).
+2002-12-05 Fred Gleason <fredg@wava.com>
+	* Changed the official name of the system from 'Mithlond' to 'Call
+	Commander'.
+	* Released as v1.0.0.
+	* Fixed a bug that was causing the Segment Clock to produce
+	incorrect countdown values when used with non-zero offset times.
+	* Released as v1.0.1.
+2003-01-21 Fred Gleason <fredg@salemradiolabs.com>
+	* Stubbed out 'mcs', the Call Commander Call Skimmer.
+2003-01-25 Fred Gleason <fredg@salemradiolabs.com>
+	* More work on 'mcs'.  Basic record functions and the user
+	interface work.  Still needed are filename wildcarding and tweaks.
+2003-01-26 Fred Gleason <fredg@salemradiolabs.com>
+	* Finished basic work on 'mcs'.  Ready for testing.
+2003-01-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'configure.in' that was causing the build to fail
+	when configured for HPI.
+2003-01-31 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed numerous bugs in 'mcs' that was causing it to segfault
+	when used with a TWOx12.
+2003-02-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Renamed the 'wildcard' capability to 'configuration macros' and
+	gave it it's own section in the ml.conf(5) man page.
+	* Added a [Skimmer] section to the ml.conf(5) man page.
+	* Added a [Skimmer] section to 'samples/default.conf'.
+2003-02-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'mcs.1' manpage.
+	* Updated all man pages to show revised author's e-mail address,
+	date and mcs(1) references.
+	* Created a 'scripts/' directory.
+	* Created 'scripts/cc_create_db', a script for creating and
+	initializing a Call Commander database.
+	* Stubbed out support for mySQL-based call logging.
+	* Documented the new entries to support Sql type logging in the
+	ml.conf(5) manpage.
+2003-02-03 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed layout in 'mcs' to be correct when running with a meter.
+	* Fixed a bug in the Autoconf configuration that was causing
+	metadata from Qt's Meta Object Compiler (moc) to be included in
+	tarball distributions.
+2003-02-04 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'Show Code' configuration macro.
+	* Updated 'cc_create_db' to add 'RING_TIMER', 'HOLD_TIMER' and
+	'AIR_TIMER' fields to the 'CALLS' table.
+	* Sql call logging now working.
+2003-03-07 Fred Gleason <fredg@salemradiolabs.com>
+	* Changed 'mld/Makefile.am' and 'mcs/Makefile.am' to link to
+	libqui rather than libqt.
+2003-03-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in /ml/log_disk.cpp' that was overwriting all log
+	lines in the disk log except the last one.
+	* Fixed a bug in 'mcs/mcs.cpp' that was causing a segfault upon
+	startup if used with a 'AskHost=No' directive.
+2003-03-20 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mcs/mcs_widget.cpp' that was causing the
+	adjacent background of an alph-blended button to assume the same
+	color as the button itself.
+2003-03-26 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mcs/mcs.cpp' that was causing a corrupt 'group'
+	value to be sent on the TCP/IP interface.
+2003-04-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Modified the button color allocation scheme in 'ml' so as to
+	work properly with alphablended buttons.
+2003-04-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'mld/ts612.cpp'.
+	* Added priliminary support for the Genter/Comrex TS-612 telephone
+	interface.  Still lots of work to do!
+2003-04-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/ml' that was causing a 'Failed to initialize
+	logging' error at startup when logging was disabled in the config
+	file.
+	* Added a 'samples/ts612.conf' file, a sample configuration for
+	the Gentner/Comrex TS-612.
+	* Updated man pages to reflect addition of TS-612 support.
+2003-04-16 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mcs/mcs_widget.cpp' that was causing hangup on
+	one bank to stop both audio decks.
+2003-04-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Completed work on TS-612 support.  Ready for testing.
+	* Released as v1.1.1.
+2003-04-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mcs/mcs_widget.cpp' where a relative path
+	provided to 'AudioRoot=' would be ignored.
+2003-06-09 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed several memory leaks in 'ml/mithlond.cpp'.
+2003-06-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed up font code in 'ml/askbox.cpp' to properly select the
+	correct font.
+2003-06-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed up font code in 'ml/drawcaps.cpp' to properly select the
+	correct font.
+	* Fixed up font code in 'ml/callers.cpp' to properly select the
+	correct font.
+	* Fixed up font code in 'ml/message.cpp' to properly select the
+	correct font.
+	* Fixed up font code in 'ml/keybox.cpp' to properly select the
+	correct font.
+	* Fixed up font code in 'ml/mithlond.cpp' to properly select the
+	correct font.
+	* Fixed up font code in 'ml/config.cpp' to properly select the
+	correct font.
+	* Changed the default value for the 'DisableAutoDetect=' parameter
+	in the [Debug] section of 'ml.conf' to 'true'.
+	* Fixed up font code in 'mcs/askbox.cpp' to properly select the
+	correct font.
+	* Fixed up font code in 'mcs/mcs_widget.cpp' to properly select the
+	correct font.
+	* Fixed up font code in 'mcs/mcs.cpp' to properly select the
+	correct font.
+	* Added code to 'ml' to allow hot keys to be assigned for
+	bringing up a caller information dialogs.
+	* Documented the 'CallerKey=' directive in the [LineN] section of
+	'docs/ml.conf.5'.
+	* Added a note to 'docs/ml.conf.5' concerning the propensity of
+	certain window managers to trap modifier keys.
+	* Added 'CallerKey=' directives to the [Line1] - [Line12] sections
+	of 'samples/default.conf'.
+	* Added 'CallerKey=' directives to the [Line1] - [Line12] sections
+	of 'samples/ts612.conf'.
+2003-06-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Added the default key bindings for Caller Information dialog box
+	to 'docs/ml.1'.
+2003-06-20 Fred Gleason <fredg@salemradiolabs.com>
+	* Renamed the package from 'mithlond' to 'callcommander'.
+2003-06-20 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'callcommander.spec.in'.
+	* Added code to 'configure.in' and 'Makefile.am' to implement an
+	'rpm' make target.
+	* Released as v1.1.2.
+2003-07-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'callcommander.pro'.
+	* Added 'ml/ml.pro'.
+2003-07-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Removed some superfluous includes from 'ml/message.h',
+	'ml/log_disk.h' and 'ml/log_sql.h'.
+	* Tweaked 'ml/ml.pro' as as to build properly under Qt-Windows.
+2003-08-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing a command-line
+	specified configuration file to fail to be used under Qt/Windows.
+2003-08-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Rewrote 'ml/config.cpp' to use the 'RProfile' class for loading
+	configuration values.
+2003-08-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml\defaults.cpp' that was causing an incorrect
+	geometry to be used under Windows.
+2003-08-16 Fred Gleason <fredg@salemradiolabs.com>
+	* Rewrote 'mld/config.cpp' to use 'RProfile'.
+	* Created 'mld/mld.pro'.
+2003-08-16 Fred Gleason <fredg@salemradiolabs.com>
+	* Started porting 'mld' to Windows.
+2003-08-16 Fred Gleason <fredg@salemradiolabs.com>
+	* Rewrote 'mld/telos100.cpp' to use 'RProfile'.
+	* Rewrote 'mld/ts612.cpp' to use 'RProfile'.
+2003-08-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a Windows icon in 'ml/ml.ico'.
+	* Fixed a bug in 'ml.config.cpp' that caused a segfault if
+	the program was started with no HOME variable set in the
+	envrionment.
+	* Released as v1.1.3.
+2003-08-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Added login to 'mld/mld.cpp' to enable the configuration file to
+	specified on the command line.
+	* Updated 'INSTALL' with instructions for building on Windows.
+	* Updated 'NEWS'.
+	* Bumped the version number to '1.1.4'.
+2003-08-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'ml/ml.ico'
+2003-08-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Released as v1.1.4.
+2003-08-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'callcommander.pro', 'ml/ml.pro', 'ml/ml.ico', 'ml/ml.res'
+	and 'mld/mld.pro' to EXTRA_DISTS.
+	* Released as v1.1.5'.
+2003-08-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Modified 'ml/config.cpp' to use the Windows Registry for
+	configuration data.
+	* Modified 'ml/telos100.cpp' to use the Windows Registry for
+	configuration data.
+	* Modified 'ml/ts612.cpp' to use the Windows Registry for
+	configuration data.
+	* Modified 'mld/mld.cpp' to inherit from 'QWidget' rather than
+	'QObject' as a temporary debugging measure.
+2003-08-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Stubbed out 'MldConf' in 'mldconf/mldconf.cpp'.
+	* Added a 'SystemConf' class in 'mldconf/systemconfig.cpp'.
+2003-08-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Moved data initialization for 'MldConf' and 'SystemConf' out of
+	the constructors and into the 'exec()' methods.
+	* Move the 'main()' function from 'mldconf/mldconf.cpp' to
+	'mldconf/main./cpp'.
+	* Added 'mldconf/mldconf.pro'.
+2003-08-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'BuildCommList()' method in 'mldconf/mldconf.cpp'.
+2003-08-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Added to 'mld' the ability to restart upon receipt of SIGHUP.
+2003-08-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Added to 'mld' the ability to restart or exit upon reciept of
+	a message via //./pipe/mld.
+2003-08-20 Fred Gleason <fredg@salemradiolabs.com>
+	* Changed 'mld' back to inherit from 'QObject'.
+2003-08-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the 'NEWS' file.
+	* Released as v1.1.6.
+2003-12-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'autogen.sh' file.
+	* Removed 'depcomp'.
+	* Removed 'install-sh'.
+	* Removed 'missing'.
+	* Removed 'mkinstalldirs'.
+2004-01-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an init script for mld(8) in 'rc.mld'.
+	* Added logic to 'configure.in' to determine the correct utility
+	to call to build RPMs.
+	* Incremented the version to v1.1.7.
+2004-02-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a package naming typo in 'rc.mld'.
+	* Updated 'callcommander.spec.in' to use configurable RPM build
+	level.
+	* Added '/etc/ml.conf' and '/etc/mld.conf' to the %files list in
+	'callcommander.spec.in.
+	* Incremented the RPM build version to 2.
+	* Incremented version number to v1.1.8.
+2004-03-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Added signal handlers for SIGINT and SIGHUP to 'mld/mld.cpp'.
+2004-03-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the version to '1.1.9'.
+2004-03-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Added support for Mitel IV Superset screener phones in
+	'mld/mld.conf' and 'mld/telos100.cpp'.
+2004-03-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'ShowHour=' directive to the [Clock] section of
+	ml.conf(5).
+	* Added a 'MilitaryFormat=' directive to the [Clock] section of
+	ml.conf(5).
+2004-03-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'FontFace=', 'FontSize=' and 'FontWeight=' directives to
+	the [MessageBox] section of ml.conf(5).
+	* Updated the ml.conf(5) man page to include the new directives.
+	* Incremented the version to 1.1.10.
+2004-03-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'Orientation=' directive to the [Clock] section of
+	ml.conf(5).
+	* Updated the ml.conf(5) man page to include the new directive.
+	* Incremented the version to 1.1.11.
+2004-04-26 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'message.cpp' that broke the 'LookUp' function.
+	* Removed 'ml/lookup.cpp' and 'ml/lookup.h'.
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing an invalid
+	console ID to be sent when clicking the right-hand Conference Hold
+	button.
+	* Added code to 'mld/telos100.cpp' to allow remote DTMF dialing
+	from Mitel screener sets.
+2004-04-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Added values 'Telos1A2' and 'TelosDIM' for the 'Protocol='
+	directive in mld.conf(5).  The value 'Telos100' is now deprecated,
+	but remains as a synonym for 'Telos1A2'.
+	* Incremented the version to v1.1.12.
+2004-04-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed in bug in 'callcommander.spec.in' that was causing the RPM
+	to install '/etc/init.d/mld' with the incorrect permissions.
+	* Incremented the RPM build version to '3'.
+	* Changed the minimum required firmware version for a Telos DIM to
+	'1.48' in 'INSTALL'.
+	* Added 'samples/srn_clock.conf', a sample configuration for the
+	SRN News booth clocks.
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing the lower
+	half of the Clock Widget segment description text to be clipped
+	when set to horizontal orientation.
+	* Added a 'KeepOnTop=' directive to the [Globals] section of
+	'ml.conf'.
+	* Added a command line switch to display the version number to
+	'ml/mithlond.cpp'.
+	* Added a command line switch to display the version number to
+	'mld/mld.cpp'.
+	* Added a command line switch to display the version number to
+	'mcs/mcs.cpp'.
+	* Incremented the version to 1.1.13.
+2004-04-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed bugs in 'ml/mithlond.cpp', 'mld/mld.cpp' and 'mcs/mcs.cpp'
+	that were causing the build to break;
+2004-05-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'TelosOnex6' protocol to the 'Protocol=' option in
+	mld.conf(5).
+	* Added configuration instructions for a Gentner TS-612 to
+	'INSTALL'.
+2004-05-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the version number to 1.1.14.
+2004-05-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the required libradio version to 0.20.2.
+	* Incremented the version to 1.1.15.
+2004-05-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mld/telos100.cpp' that was causing incorrect
+	line drops.
+	* Fixed a bug in 'mld/telos100.cpp' that was causing lines to be
+	placed on hold incorrectly.
+	* Incremented the version to 1.1.16.
+2004-05-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a sample configuration for RadioAmerica's AuxProd in
+	'samples/ra-auxprod.conf'.
+2004-05-28 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a sample configuration in 'samples/ra-auxprod.conf'.
+	* Incremented the version to 1.1.17.
+	* Incremented the RPM build level to 4.
+2004-06-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Changed mcs(1) to use librhpi.
+	* Fixed a bug in 'mcs/mcs_widget.cpp' that was causing record STOP
+	commands to be ignored.
+2004-06-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Added metering support to MCS.
+2004-06-26 Fred Gleason <fredg@salemradiolabs.com>
+	* Moved the telco classes from the 'libradio' package to the
+	'libs/' directory.
+2004-07-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'MainPostCommand=' and 'ConfPostCommand=' directives to
+	ml.conf(5).
+2004-07-08 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mcs/mcs_widget.cpp' that was causing post
+	commands to fail when recordings were manually started or stopped.
+	* Incremented the version to v1_1_19.
+2004-07-09 Fred Gleason <fredg@salemradiolabs.com>
+	* Added the 'samples/encode_call' script.
+	* Incremented the RPM release level to 5.
+2004-07-09 Fred Gleason <fredg@salemradiolabs.com>
+	* Added the 'MainLevel=' and 'ConfLevel=' directives to
+	* Added 'MainMaxLength=' and 'ConfMaxLength=' directives to
+	ml.conf(5).
+	* Incremented version to 1.1.20
+2004-11-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'autogen.sh' to EXTRA_DIST.
+	* Added OggVorbis detection to 'configure.in'.
+	* Incremented the package version to 1.1.21.
+	* Changed the RPM release level to 1.
+2004-11-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'RCallerIdTrap' in 'lib./rcalleridtrap.cpp', a
+	serial driver for CallerID.com format devices.
+	* Added 'RCallerIdDetail' in 'lib./rcalleriddetail.cpp', a
+	container class for Caller ID data.
+	* Added 'CallerIdSource=' and 'CallerIdPort=' directives to
+	mld(5).
+2004-11-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'docs/tables' directory.
+	* Added table definitions for 'SHOWS' and 'VERSION'.
+	* Added a Database Administrator application in 'mdbadmin/'.
+	* Added a private library directory 'libp/'.
+	* Added system-wide values in 'libp/ml.h'.
+	* Added a configuration class for mld(8) in 'lib/mldconfig.cpp'.
+	* Added a mySQL login widget in 'mdbadmin/mysql_login.cpp'.
+	* Added a 'ListDirectory' dialog in 'mdbadmin/list_directory.cpp'
+	* Added an 'EditDirectory' dialog in 'mdbadmin/edit_directory.cpp'
+	* Added an 'AddDirectory' dialog in 'mdbadmin/add_directory.cpp'
+	* Added a 'ListShows' dialog in 'mdbadmin/list_shows.cpp'
+	* Added an 'EditShow' dialog in 'mdbadmin/edit_show.cpp'
+	* Added an 'AddShow' dialog in 'mdbadmin/add_show.cpp'
+2004-12-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Added code to manage ACTION_<show> and DETAILS_<show> tables in
+	'libp/shows.cpp'.
+	* Added a 'SHOWS.DEFAULT_LABEL_ACTION' field to the database.
+	* Added 'MldConfig::LabelAction' and 'MldConfig::RouteAction'
+	enumerations to 'libp/mldconfig.h'.
+	* Added a 'Default Labeling' column to the 'ListShows' dialog in
+	'mdbadmin/list_shows.cpp'.
+	* Added a 'Default Label' control to the 'EditShow' dialog in
+	'mdbadmin/edit_show.cpp'.
+	* Added 'USERS' and 'USER_PERMS' tables to the database.
+	* Added a 'ListUsers' dialog in 'mdbadmin/list_users.cpp'
+	* Added an 'EditUser' dialog in 'mdbadmin/edit_user.cpp'
+	* Added an 'AddUser' dialog in 'mdbadmin/add_user.cpp'
+	* Added a 'ChangePassword' dialog in 'libp/change_password.cpp'.
+	* Added a 'Login' dialog in 'libp/login.cpp'.
+	* Added logic to 'mdbadmin/list_users.cpp' to prevent the current
+	user from being deleted.
+	* Added logic to 'mdbadmin/edit_user.cpp' to prevent
+	administrative privileges from being revoked for the current user.
+	* Added a 'SystemInfo' dialog in 'mdbadmin/system_info.cpp'.
+2004-12-03 Fred Gleason <fredg@salemradiolabs.com>
+	* Rewrote mld(8) to use the new 'MldConfig' class.
+	* Removed the 'mld/config.cpp' file.
+	* Removed Win32 support from mld(8).
+	* Removed the 'mld/mld.pro' file.
+	* Removed the 'mldconf/' directory from the build and
+	distribution.
+	* Added a 'commandText()' method to RTelosTwoX12 in
+	'lib/rtelostwox12.cpp'.
+	* Added a 'LocalAreaCode=' directive in the [Group<n>] section of
+	mld.conf(5).
+	* Added an 'MldShow' container class in 'libp/mldshow.cpp'.
+	* Added a 'Show<x>=' directive in the [Group<n>] section of
+	mld.conf(5).
+	* Added a 'DETAILS_<show>.ID_NAME' field to the database.
+2004-12-03 Fred Gleason <fredg@salemradiolabs.com>
+	* Created a 'CallManager' application in 'mcallman/'.
+	* Added a 'SelectOperation' dialog in
+	'mcallman/select_operation.cpp'.
+	* Added a 'ListActions' dialog in 'mcallman/list_actions.cpp'.
+	* Added an 'EditAction' dialog in 'mcallman/edit_action.cpp'.
+	* Added an 'AddAction' dialog in 'mcallman/add_action.cpp'.
+2004-12-06 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'startDateTime()' and 'setStartDateTime()' methods to the
+	'RTelosCaller' class in 'lib/rteloscaller.cpp'.
+	* Added 'age()', 'setAge()', 'quality()', 'setQuality()',
+	'cellphone()' and 'setCellphone()' methods to
+	'lib/rteloscaller.cpp'.
+2005-01-07 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'Makefile.am' that was causing the build to break
+	when run for the first time on a machine.
+	* Updated 'samples/mld.conf' to include the new caller ID
+	configuration parameters.
+	* Updated 'docs/mld.conf.5' to include the new caller ID
+	configuration parameters.
+	* Fixed a bug in 'mdbadmin/mdbadmin.cpp' that was failing to use
+	the 'ServerType=' directive from mld.conf(5).
+	* Fixed a bug in 'mdbadmin/opendb.cpp' that was failing to create
+	a new database on a remote SQL server.
+2005-01-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mld.cpp' that was causing the Caller ID Name to
+	fail to be logged.
+	* Fixed a bug in 'libp/shows.cpp' that was limiting call logging
+	to only a single instance from each number.
+	* Added 'GROUP_NUMBER' and 'LINE_NUMBER' fields to the DETAILS
+	table format.
+2005-01-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'Group' and 'Line' column to the call detail display
+	widget.
+2005-01-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'DIRECTORY.CUSTOM' field to the database.
+	* Added a 'PurgeDirectory' dialog in
+	'mdbadmin/purge_directory.cpp'.
+	* Implemented the ability to import data into the Directory from
+	the NANPA database.
+2005-01-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mdbadmin/opendb.cpp' that was causing creation
+	of a new database on a local mySQL server to fail.
+2005-01-11 Fred Gleason <fredg@salemradiolabs.com>
+	* Optimized the SQL select query for faster dialog startup in
+	'mdbadmin/list_directory.cpp'.
+	* Added a 'CELLPHONE' field to the ACTIONS table format.
+	* Added a 'Cellphone' column to the ListActions dialog in
+	'mcallman/list_actions.cpp'.
+	* Implemented the Label Action logic in mld(8).
+2005-01-12 Fred Gleason <fredg@salemradiolabs.com>
+	* Moved the DirectorMode enum from 'mld/mld.h' to
+	'libp/mldconfig.h'.
+2005-01-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Implemented 'Drop' Route Action logic in mld(8).
+2005-01-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'ROUTE_ACTION' field to the DETAILS table format.
+	* Added an 'Action' column to the details dialog in
+	'mcallman/list_details.cpp'.
+	* Added a '[MCallMan]' section to mld.conf(5).
+	* Added a 'DetailsRefreshInterval=' directive to the '[MCallMan]'
+	section of mld.conf(5).
+2005-01-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'Caller::RadioReturnLineWarning' to 'lib/rtelostwox12.h'.
+	* Implemented 'Warn' Route Action logic in mld(8).
+	* Added a 'LineWarning' dialog in 'ml/line_warning.cpp'.
+2005-01-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Added logic to display the current connection mode and console
+	on the title bar of ml(1).
+2005-01-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mcallman/select_operation.cpp' in which the
+	'Configure Actions' button was made the default.
+	* Added a configuration container class for ml(1) in
+	'libp/mlconfig.cpp'.
+2005-01-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'CITY_NAMES' table to the database.
+	* Added a 'NameSub' class in 'mdbadmin/name_sub.cpp'.
+2005-01-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'lib/lib.pro' file.
+	* Added a 'libp/libp.pro' file.
+	* Added an 'InputType' enum to MlConfig in 'libp/mlconfig.h'.
+	* Added an 'mdbadmin/mdbadmin.pro' file.
+2005-02-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'mcallman/mcallman.pro' file.
+2005-02-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Added MDbAdmin, MCallMan and libml to 'callcommander.spec.in'.
+	* Incremented the package version to 1.3.1.
+2005-02-03 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'samples/ml.ini' and 'samples/mld.ini' files.
+2005-02-04 Fred Gleason <fredg@salemradiolabs.com>
+	* Added '*.ini' to the EXTRA_DIST rule in 'samples/Makefile.am'.
+	* Rewrote ml(1) to use the MlConfig class.
+2005-02-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'lib/rcalleridtrap.cpp' that was causing the
+	build to break.
+2005-02-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.2.
+2005-02-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing call timers to
+	fail to update correctly.
+	* Fixed a bug in 'libp/mlconfig.cpp' that was causing the 'Mode='
+	directive fail to fail to load properly.
+	* Incremented the package version to 1.3.3.
+2005-02-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' and 'ml/drawcaps.cpp' that
+	broke icon animation.
+2005-02-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a FilterDialog dialog box in 'mcallman/filter_dialog.cpp'.
+	* Added a 'CALL_DATE' field to the details table format.
+	* Added a 'CALL_TIME' field to the details table format.
+	* Removed the 'CALL_DATETIME' field from the details table format.
+	* Incremented the database version to 2.
+2005-02-21 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.4.
+2005-02-21 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'ldconfig' to the '%post' rule in 'callcommander.spec.in'.
+2005-02-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Changed the default values of the caller parameter fields in
+	then ACTIONS and DETAILS table format to "".
+	* Incremented the database version to 3.
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing the Ring Timer
+	to fail to be reset for a new call.
+	* Incremented the package version to 1.3.4.
+2005-02-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Adjusted font sizes in 'ml/callers.cpp' for proper display on
+	SuSE 9.2.
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing caller data to
+	be cleared upon a ring in.
+	* Incremented the package version to 1.3.6.
+2005-02-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'Telos212Init()', 'Telos212Free()' and 'Telos212Receive()'
+	classes in 'mld/telos212.cpp'.
+	* Added 'Hostname=' and 'TcpPort=' directives to the [Group<n>]
+	sections of mld.conf(5).
+	* Updated the mld.conf(5) man page.
+	* Added the phone number to the caption of the Caller dialog box
+	in 'ml/caller.cpp'.
+	* Added a hack in 'mdbadmin/list_directory.cpp' to properly
+	associate 'Washington' with 'DC' in the directory database.
+2005-02-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Implemented the 'Drop' route action for the Telos TWOx12.
+2005-02-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.7.
+2005-02-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'lib/rts612.cpp' that was causing system commands
+	to fail.
+	* Fixed a bug in 'mld/ts612.cpp' that was causing BusyAll to
+	intermittently fail.
+	* Updated 'docs/mld.conf.5'.
+	* Updated 'docs/ml.conf.5'.
+	* Incremented the package version to 1.3.8.
+2005-02-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'lib/rts612.cpp' that was causing the build to
+	break under Windows.
+2005-02-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.9.
+2005-02-28 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'REPORTS' table to the database.
+	* Incremented the database version to 4.
+	* Created a 'ListReports' dialog in 'mcallman/list_reports.cpp'.
+	* Created a 'PrintReport' dialog in 'mcallman/print_report.cpp'.
+2005-03-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a Standard Age Report in 'mcallman/standard_age_report.cpp'.
+2005-03-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a PegCounter class in 'mcallman/peg_counter.cpp'.
+	* Added an Area Code Report in 'mcallman/area_code_report.cpp'.
+	* Added a 'CALL_COUNT' field to the ACTIONS_ tables in the database.
+	* Incremented the database version to 5.
+	* Added code to 'mld/mld.cpp' to increment the 'CALL_COUNT' field
+	in the ACTIONS_ tables.
+	* Added a 'Calls' column to the ListActions dialog in
+	'mcallman/list_actions.cpp'.
+2005-03-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'callCount()' and 'setCallCount()' methods to RTelosCaller
+	in 'lib/rteloscaller.cpp'.
+	* Added 'ShowCallCounter=', 'CallCounterX=', 'CallerCounterY=',
+	'CallCounterSizeX=', 'CallCounterSizeY=', 'CallCounterFontFace=',
+	'CallCounterFontSize=' and 'CallCounterFontWeiht=' directives to
+	ml.conf(5).
+2005-03-04 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version 1.3.9.
+2005-03-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/mldconfig.cpp' that was causing a
+	'Protocol=Telos100' directive in mld.conf(5) to fail to be
+	recognized.
+2005-03-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'lib/rtelos100.cpp' that was causing flaky
+	operation when using more than one instance of RTelos100 class
+	in a process.
+	* Fixed a bug in 'lib/rtelostwox12.cpp' that was causing flaky
+	operation when using more than one instance of RTelosTwoX12 class
+	in a process.
+	* Fixed a bug in 'libp/mlconfig.cpp' that was causing the
+	'AskHost=' directive in 'ml.conf(5) to be ignored.
+2005-03-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.10.
+2005-03-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml'mithlond.cpp' that was causing the main
+	window caption to be absent.
+2005-03-11 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'group' parameter to the RTelosTwoX12::openConnection()
+	method in 'lib/rtelostwox12.cpp'.
+	* Added a 'group' parameter to the MlConfig::password() method in
+	'libp/mlconfig.cpp'.
+	* Added a 'Password=' directive to the [Group<n>] section in
+	mld.conf(5).
+	* Fixed bugs in 'mdbadmin/mdbadmin.cpp', 'mcallman/mcallman.cpp'
+	and 'mld/mld.cpp' that was causing the ml login password to be
+	used for authentication against the mySQL server.
+	* Updated the mld.conf(5) man page.
+2005-03-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed bug in 'lib/rtelostwox12.cpp' that was causing login to
+	hang when connecting to mld(8) with no password specified.
+2005-03-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing random crashes
+	when connecting to a group with one or more member clients.
+2005-03-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Rewrote the report geneation code in MCallMan to better support
+	multi-page reports.
+2005-03-16 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.11.
+2005-03-16 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/callers.cpp' that was causing the Cellphone
+	flag to fail to be loaded/saved.
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing the Cellphone,
+	Age and Quality parameters to fail to be propagated.
+	* Fixed a bug in 'lib/rteloscaller.cpp' that was causing the
+	Cellphone parameter to fail to be proper loaded and saved in
+	buffers.
+	* Incremented the package version to 1.3.12.
+2005-03-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in lib/rtelos100.cpp' that was causing redundant
+	LineState updates to be emitted.
+2005-03-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp that was causing redundant
+	LineState updates to be processed.
+	* Disabled the code to generate and process MessageBox resend
+	messages.
+	* Incremented the package version to 1.3.13.
+2005-03-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'mcs/globals.h' file.
+	* Moved 'ml/askbox.cpp' to 'libp/askbox.cpp'.
+	* Moved 'ml/askbox.h' to 'libp/askbox.h'.
+	* Moved 'ml/askdata.cpp' to 'libp/askdata.cpp'.
+	* Moved 'ml/askdata.h' to 'libp/askdata.h'.
+	* Rewrote mcs(1) to use the MlConfig configuration class.
+2005-03-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Documented the 'BitRate=' directive in the ml.conf(5) man page.
+	* Fixed a bug in 'lib/rtelostwox12.cpp' that was causing duplicate
+	'authenticated()' signals to be emitted.
+2005-03-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the package version to 1.3.14.
+2005-06-03 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/callers.cpp' that was causing the call gender
+	to always be displayed as 'Male' (Mantis bug #11).
+2005-06-06 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' where moving a call between
+	banks was not properly updating it's status in ml(1) (Mantis bug
+	#17).
+2005-06-06 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a RCallerIdDetail::numberIsValid() method to
+	'lib/rcalleriddetail.cpp'.
+	* Fixed a bug in 'mld/mld.cpp' that was causing incoming calls to
+	always have the cellphone flag set regardless of their origin when
+	using the TwoX12 protocol (Mantis bug #18).
+2005-06-06 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/mldconfig.cpp' that was causing invalid
+	day of the week specifications to be permitted in 'Show='
+	directives.
+	* Updated the mld(5) manpage to reflect the proper day-of-the-week
+	numbering (Mantis bug #13).
+2005-06-06 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing the Warning
+	dialog to appear in the incorrect position (Mantis bug #49).
+2005-06-06 Fred Gleason <fredg@salemradiolabs.com>
+	* Added the active show to the recievedCallIdData() debug dump
+	(Mantis feature request #16).
+2005-06-07 Fred Gleason <fredg@salemradiolabs.com>
+	* Added debugging output to 'mld/telos212.cpp' to show connection
+	states.
+	* Added debugging output to 'lib/rtelostwox12.cpp' to catch
+	corrupt packets.
+	* Incremented the library version to 1:0:1.
+	* Incremented the package version to 1.3.15.
+2005-06-07 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a RTelos2101 driver in 'lib/rtelos2101.cpp'.
+	* Created a 'tests/' directory.
+	* Created a 'test2101' program in 'tests/test2101.cpp'.
+2005-06-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Added basic protocol for the Telos 2101.
+2005-06-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Removed the 'Mode' control from the Login dialog in
+	'libp/askbox.cpp'.
+	* Changed the 'Group' control in the Login dialog in
+	'libp/askbox.cpp' to use a QComboBox.
+	* Changed the 'Port' control in the Login dialog in
+	'libp/askbox.cpp' to use a QSpinBox.
+	* Removed the 'MlConfig::mode()' and 'MlConfig::setMode()' methods
+	from 'libp/mlconfig.cpp'.
+	* Removed the 'AskData::mode()' and 'AskData::setMode()' methods
+	from 'libp/askdata.cpp'.
+	* Added code to 'ml/mithlond.cpp' to autodetect the operating mode
+	of the associated Desktop Director.
+	* Consolidated the 'VD1' through 'VD8' directors into a single
+	'Virtual' director.
+2005-06-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed numerous bugs in the Telos2101 implementation to make it
+	stable.
+	* Changed the implementation of the Dump function in ml(1) to make
+	it momentary toggle instead of fixed-width pulse.
+2005-06-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Documented the 'TelosUser=', 'TelosUserPassword=', 'TelosShow='
+	and 'TelosShowPassword=' parameters in the mld.conf(5) man page.
+2005-06-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Implemented native CallerId support for the Telos 2101.
+2005-06-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Implemented watchdog functionality for the Telos2101.
+2005-06-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Added code to 'mld/mld.cpp' to report watchdog events in debug
+	mode.
+2005-06-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed bugs in 'mld/telos100.cpp' and 'mld/mld.cpp' that was
+	causing connections associated with a screener phone to be handled
+	as being in Talent mode.
+	* Fixed a bug in 'lib/rtelos100.cpp' that was causing an off-hook
+	condition on one screener phone to be erronoeously reported in
+	ml(1) as being on both.
+2005-06-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'RTelos2101::SelectDesktopDirector' and
+	'RTelos2101::DirectorPhoneExists' to 'lib/rtelos2101.h'.
+2005-06-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed bugs in 'lib/rtelos2101.cpp' and 'mld/telos2101.cpp' that
+	were causing commands to fail when using a non-zero group number.
+2005-06-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'lib/rtelos100.cpp' that was causing the Dump
+	button in ml(1) to be stuck in the down position.
+2005-06-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed multiple bugs to make Telos 2101 support work properly.
+	* Added a 'TelosStudio=' directive to mld.conf(5).
+2005-07-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the package version to 1.3.16.
+2005-07-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed an error in an example shown in the mld.conf(5) man page
+	(Mantis bug #56).
+2005-07-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/message.cpp' in which attempting to send a
+	very long text message string would cause the transmission to
+	silently fail (Mantis bug #65).
+2005-08-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mdbadmin/createdb.cpp' that was causing creation
+	of a new database to fail.
+2005-08-12 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a formatting error in the 'samples/mld.conf' and
+	'samples/mld.ini' example files.
+	* Removed the direct Telos TWOx12 support from mld(8).
+	* Changed the Kill Device handling to be configured on a per-show
+	basis.
+2005-08-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed bugs in 'mld/mld.cpp' that had broken Kill Device support
+	in the Telos 2101 protocol.
+2005-08-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the mld.conf(5) man page.
+	* Updated the mld(8) man page.
+2005-08-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing caller
+	Warnings to be displayed if the the corresponding caller info box
+	was disabled.
+2005-08-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Added code to 'ml/mithlond.cpp' to use a default configuration
+	file of '[Install-dir]/ml.ini' on Windows.
+2005-08-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.17.
+	* Updated the 'INSTALL' file.
+	* Updated the 'NEWS' file.
+	* Updated the 'README' file.
+2005-08-16 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing ml(1) to
+	use the default configuration file even when told to override it
+	by specifying a name on the command line under Windows.
+2005-08-16 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.18.
+2005-09-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'lib/rtelos2101.cpp' that was causing multiple
+	emissions of the 'idReceived()' signal for a single call.
+2005-09-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.19.
+2005-09-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'MldConnection' class in 'mld/mld_connection.cpp'.
+	* Rewrote mld(8) to eliminate the MAX_CONNECTIONS limitation.
+2005-09-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing the Record
+	button intermittently default to active.
+2005-09-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.20.
+2005-10-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated 'samples/ra.conf'.
+2005-10-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Changed the 'CFLAGS' variable in 'AM_CPPFLAGS' in
+	'mld/Makefile.am'.
+	* Changed the 'CFLAGS' variable to 'AM_CPPFLAGS' in
+	'lib/Makefile.am'.
+	* Changed the 'AM_CFLAGS' variable to 'AM_CPPFLAGS' in
+	'libp/Makefile.am'.
+	* Changed the 'CFLAGS' variable to 'AM_CPPFLAGS' in
+	'mcallman/Makefile.am'.
+	* Changed the 'CFLAGS' variable to 'AM_CPPFLAGS' in
+	'mdbadmin/Makefile.am'.
+	* Cleaned up warnings in 'lib/rtelostwox12.cpp'.
+	* Cleaned up warnings in 'lib/rtelosmessage.cpp'.
+	* Cleaned up warnings in 'lib/rteloscaller.cpp'.
+	* Cleaned up warnings in 'lib/rtelos2101.cpp'.
+	* Removed 'moc_rtelosmessage.cpp' and 'moc_rteloscaller.cpp' from
+	the nodist sources in 'lib/Makefile.am'.
+	* Cleaned up warnings in 'libp/mld_config.cpp'.
+	* Cleaned up warnings in 'mld/mld.cpp'.
+	* Cleaned up warnings in 'mld/telos100.cpp'.
+	* Cleaned up warnings in 'mld/telos2101.cpp'.
+	* Cleaned up warnings in 'mcallman/list_actions.cpp'.
+	* Cleaned up warnings in 'mcallman/edit_action.cpp'.
+	* Cleaned up warnings in 'mcallman/add_action.cpp'.
+	* Cleaned up warnings in 'mcallman/list_reports.cpp'.
+	* Cleaned up warnings in 'mcallman/print_report.cpp'.
+	* Cleaned up warnings in 'mcallman/peg_counter.cpp'.
+	* Cleaned up warnings in 'mcallman/standard_age_report.cpp'.
+	* Cleaned up warnings in 'mcallman/area_code_report.cpp'.
+	* Cleaned up warnings in 'mdbadmin/createdb.cpp'.
+	* Cleaned up warnings in 'mdbadmin/opendb.cpp'.
+	* Cleaned up warnings in 'mdbadmin/list_directory.cpp'.
+	* Cleaned up warnings in 'mdbadmin/list_shows.cpp'.
+	* Cleaned up warnings in 'mdbadmin/list_users.cpp'.
+	* Cleaned up warnings in 'mdbadmin/edit_user.cpp'.
+	* Cleaned up warnings in 'mdbadmin/name_sub.cpp'.
+2005-11-03 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'DisableLineButtons=' and 'DisableLineBoxes=' directive in
+	the [Controls] section of ml.conf(5).
+2005-11-03 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'icons/' directory.
+	* Added icons in 'icons/callcommander-16x16.xpm',
+	'icons/callcommander-22x22.xpm','icons/callcommander-32x32.xpm',
+	'icons/callcommander-48x48.xpm'.
+	* Bound an icon to mcallman(1) in 'mcallman/mcallman.cpp'.
+	* Bound an icon to mcs(1) in 'mcs/mcs.cpp'.
+	* Bound an icon to ml(1) in 'ml/mithlond.cpp'.
+	* Bound an icon to mdbadmin(1) in 'mdbadmin/mdbadmin.cpp'.
+2005-11-03 Fred Gleason <fredg@salemradiolabs.com>
+	* Incremented the package version to 1.3.21.
+2005-11-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'xdg/' subdirectory.
+	* Added an XDG entry for ml(1) in 'xdg/ml.desktop'.
+	* Added an XDG entry for mdbadmin(1) in 'xdg/mdbadmin.desktop'.
+	* Added an XDG entry for mcallman(1) in 'xdg/mcallman.desktop'.
+	* Incremented the package version to 1.3.22.
+2005-11-28 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mdbadmin/opendb.cpp' that was causing creation
+	of a new mySQL database to fail.
+2005-12-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Added RCallerIdTrap::lineMap()' and
+	'RCallerIdTrap::setLineMap()' methods in 'lib/rcallertrap.cpp'.
+2006-01-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Added the 'CallerId<n>Line=' directive to mld.conf(5).
+	* Documented the 'CallerId<n>Line=' directive in the mld.conf(5)
+	man page.
+2006-01-04 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the 'NEWS' file.
+	* Updated the package version to 1.3.23.
+2006-01-26 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/mldconfig.cpp' that was failing to properly
+	parse mld.conf(5) 'Show<n>=' directives containing show code with
+	less than three letters.
+2006-01-26 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the 'NEWS' file.
+	* Updated the package version to 1.3.24.
+2006-01-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'slack_doinst.sh', 'make_slack.in' and 'slack-desc.in'
+	files.
+	* Added 'make slack' and 'make slax' build targets.
+2006-02-06 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'rc.mld' that was causing the script to
+	fail to detect the presence of the LSB Init functions.
+2006-02-08 Fred Gleason <fredg@salemradiolabs.com>
+	* Modified 'rivendell.spec.in' and 'make_slack.in' to use the
+	install paths provided by Autoconf.
+2006-02-09 Fred Gleason <fredg@salemradiolabs.com>
+	* Added logic in 'mld/mld.cpp' to deal with situations where
+	CallerID data arrives after the incoming call has started ringing.
+2006-02-14 Fred Gleason <fredg@salemradiolabs.com>
+	* Modified the 'make rpm' target in 'Makefile.am' to properly
+	clean up the RPM build tree after the build.
+	* Modified the 'make rpm' target in 'Makefile.am' to move the
+	finished RPMs to the top source directory.
+2006-02-15 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the 'NEWS' file.
+	* Updated the package version to 1.3.25.
+2006-02-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'make zip' target in 'Makefile.am'.
+2006-02-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'BusDriver' abstract class in 'libp/bus_driver.cpp'.
+	* Added a 'Telos2x12Driver' class in 'libp/telos2x12_driver.cpp'.
+2006-02-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Began rewriting ml(1) to use the new bus driver classes.
+2006-02-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Further work on the new bus driver classes.
+2006-02-20 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'ShowData' container class in 'libp/show_data.cpp'.
+	* Added a 'ConsoleData' container class in 'libp/console_data.cpp'.
+	* Added a 'ListConnections' dialog in 'libp/list_connections.cpp'.
+	* Added a 'ListDevices' dialog in 'libp/list_devices.cpp'.
+2006-02-20 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'EditConnection' dialog in 'libp/edit_connection.cpp'.
+2006-02-21 Fred Gleason <fredg@salemradiolabs.com>
+	* Finished the connection manager widgets.
+2006-02-21 Fred Gleason <fredg@salemradiolabs.com>
+	* Got the basic line control functions in ml(1) working with the
+	new bus driver.
+2006-02-21 Fred Gleason <fredg@salemradiolabs.com>
+	* Cleaned up mcs(1) so that it will build with the new bus driver.
+2006-02-21 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/telos2101_driver.cpp' that was causing
+	duplicate console entries to appear in the List Consoles dialog.
+2006-02-21 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'BusDriver::sendString()' method in
+	'libp/bus_driver.cpp'.
+	* Added a 'BusDriver::receivedString() signal in
+	'libp/bus_driver.cpp'.
+2006-02-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'CallMetaData' class in 'libp/call_meta_data.cpp'.
+	* Added a 'MessageData' class in 'libp/message_data.cpp'.
+2006-02-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the ml.conf(5) man page.
+2006-02-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Implemented the 'ConnectionName=' directive in ml.conf(5).
+	* Updated all the sample configurations to use the
+	'ConnectionName=' directive.
+2006-02-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Implemented a connection watchdog for the Telos2101 bus driver.
+2006-02-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Stubbed out a caller id monitoring daemon in 'mcidmd/'.
+	* Added 'SHOWS.CID_CONNECTION', 'SHOWS.CID_TTY_PORT',
+	'SHOWS.START_TIME', 'SHOWS.END_TIME', 'SHOWS.SUN', 'SHOWS.SUN',
+	'SHOWS.MON', 'SHOWS.TUE', 'SHOWS.WED', 'SHOWS.THU', 'SHOWS.FRI',
+	'SHOWS.LOCAL_AREA_CODE','SHOW.IS_ACTIVE' and 'SHOWS.KILL_CALLS'
+	fields to the database.
+	* Incremented the database version to 6.
+	* Added 'ConnectionData::startConnection()',
+	'ConnectionData::setStartConnection()',
+	'ConnectionData::offerStartConnection()', and
+	'ConnectionData::setOfferStartConnection()' methods in
+	'libp/connection_data.cpp'.
+2006-02-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'CidMonitor' class in 'mcidmd/cid_monitor.cpp'.
+2006-02-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'SHOWS.CID_HOSTNAME', 'SHOWS.CIT_BAUD_RATE',
+	'SHOWS.CID_DATA_BITS', 'SHOWS.CID_STOP_BITS' and
+	'SHOWS.CID_PARITY' fields to the database.
+	* Incremented the database version to 7.
+2006-02-27 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'TtySettings' class in 'libp/ttysettings.cpp'.
+	* Added an 'EditTtySettings' dialog in 'libp/edit_ttysettings.cpp'.
+2006-03-04 Fred Gleason <fredg@salemradiolabs.com>
+	* Added code to debug callbacks in 'libp/telos2101_callbacks.cpp'.
+2006-03-04 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/telos2101_driver.cpp' that was causing a
+	segfault during the building of a new connection.
+2006-03-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'id3lib' and 'libFLAC' to the list of libraries linked
+	against.
+2006-03-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'ConnectionData::ttySpeed()',
+	ConnectionData::setTtySpeed()', 'ConnectionData::ttyWordLength()',
+	'ConnectionData::setTtyWordLength()',
+	'ConnectionData::ttyStopBits()',
+	'ConnectionData::setTtyStopBits()', 'ConnectionData::ttyParity()'
+	and 'ConnectionData::setTtyParity()' methods in
+	'libp/connection_data.cpp'.
+2006-03-10 Fred Gleason <fredg@salemradiolabs.com>
+	* More work on mcidmd(8).
+2006-04-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'CID_SOURCES' table to the database.
+	* Added a 'SHOWS.CID_SOURCE_ID' field to the database.
+	* Removed the 'SHOWS.CID_TTY_PORT', 'SHOWS.CID_BAUD_RATE',
+	'SHOWS.CID_DATA_BITS', 'SHOWS.CID_STOP_BITS' and
+	'SHOWS.CID_PARITY' fields from the database.
+	* Incremented the database version to 8.
+	* Added a 'ListCallerIdSources' dialog in
+	'mdbadmin/list_callerid_sources.cpp'.
+	* Added an 'EditCallerIdSource' dialog in
+	'mdbadmin/edit_callerid_source.cpp'.
+	* Added a 'SelectCallerIdSource' dialog in
+	'mdbadmin/select_callerid_source.cpp'.
+2006-04-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Added code to process CallerID events in
+	'mcidmd/process_id.cpp'.
+2006-04-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed various bugs in 'mcidmd/process_id.cpp'.
+2006-04-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Implemented Label Actions and Route Actions in mcidmd(8).
+	* Implemented Call Logging in mcidmd(8).
+2006-04-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed bugs in 'mcallman/list_details.cpp' that were causing the
+	Quality and Age fields to fail to display.
+2006-04-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mcidmd/mcidmd.cpp' that was causing calls to be
+	processed outside of a Show's active time range.
+2006-04-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'CID_MAPS' table to the database.
+	* Incremented the database version to 9.
+	* Added an 'Edit Map' dialog in 'mdbadmin/edit_map.cpp'.
+	* Added an 'AddMapLine' dialog in 'mdbadmin/add_map_line.cpp'.
+	* Added 'CidMonitor::cidLineMap()' and
+	'CidMonitor"::setCidLineMap()' methods in
+	'mcidmd/cid_monitor.cpp'.
+2006-04-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'SHOWS.CID_CONNECTION_PATH' field to the database.
+	* Added code to allow mcidmd(8) to use an absolute path location
+	for the CID connection data.
+2006-04-20 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an init script for mcidmd(8) in 'rc.mcidmd.in'.
+2006-04-20 Fred Gleason <fredg@salemradiolabs.com>
+	* Cleaned up the error logging in 'mcidmd/mcidmd.cpp' and
+	'mcidmd/process_id.cpp'.
+2006-04-20 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated 'mdbadmin/mdbadmin.pro'.
+	* Updated 'libp/libp.pro'.
+	* Updated 'mdbadmin/mdbadmin.pro'.
+2006-05-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Changed the stub methods in 'libp/bus_driver.cpp' to be pure
+	virtual.
+2006-05-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing the route
+	warning dialog to appear in the incorrect position.
+2006-05-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'DetailListView widget in
+	'mcallman/detail_listview.cpp'.
+	* Added a 'DetailListViewItem class in
+	'mcallman/detail_listviewitem.cpp'.
+	* Implemented an 'Edit Action Record' right-click menu item in the
+	List Call Details dialog.
+2006-05-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'CallerIdDetail::simplifiedNumber()' and
+	'CallerIdDetail::formattedNumber()' methods in
+	'libp/calleriddetail.cpp'.
+2006-05-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Modified the Telos2101 driver to use the TCP Port parameter in
+	'libp/telos2101_driver.cpp'.
+2006-05-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'ConnectionData::location()' and
+	'ConnectionData::setLocation()' methods in
+	'libp/connection_data.cpp'.
+2006-05-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mcallman/edit_action.cpp' that caused updated
+	records to fail to be saved.
+2006-05-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'CidMonitor::timer()', 'CidMonitor::setTimer()' and
+	'CidMonitor::clearTimers()' methods in 'mcidmd/cid_monitor.cpp'.
+	* Implemented call timers in mcidmd(8).
+2006-05-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Disabled call metadata version checking in
+	'libp/call_meta_data.cpp'.
+2006-05-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that broke the call timers.
+2006-05-03 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'SHOW_SLOTS' table to the database.
+	* Incremented the database version to 10.
+	* Moved the 'DetailListView' widget in
+	'mcallman/detail_listviewitem.h/cpp' to 'MlListViewItem' in
+	'libp/ml_listviewitem.h/cpp'.
+	* Added an 'MlTimeslot' class in 'libp/ml_timeslot.cpp'.
+	* Added an 'MlTimeslotList' class in 'libp/ml_timeslotlist.cpp'.
+	* Added an 'EditShowSlot' dialog in 'mdbadmin/edit_show_slot.cpp'.
+2006-05-04 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'CONNECTIONS' table to the database.
+	* Incremented the database version to 11.
+	* Refactored the 'ConnectionData' class in
+	'libp/connection_data.cpp' to allow configuration
+	data storage on both the local filesystem and the database.
+2006-05-04 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'EditConnectionData' dialog in
+	'libp/edit_connection_data.cpp'.
+2006-05-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Added support for reading/writing connection data to/from the
+	Windows registry in 'libp/connection_data.cpp'.
+2006-05-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/connection_data.cpp' that was causing the
+	ConnectionData::load()' method to fail to read the ConsoleName
+	parameter correctly when using the Database storage type.
+	* Added a parameter to the 'ListConnections()' contructor in
+	'libp/list_connections.cpp' to allow the text of the 'OK' button
+	to be specified.
+2006-05-05 Fred Gleason <fredg@salemradiolabs.com>
+	* Removed 'lib/' 'mcs/' and 'mld/' from the build rules.
+	* Updated the 'callcommander.spec.in' file.
+	* Updated the 'INSTALL' file.
+	* Updated the 'NEWS' file.
+	* Updated the 'README' file.
+	* Updated the package version to 1.5.0.
+2006-05-08 Fred Gleason <fredg@salemradiolabs.com>
+	* Stubbed out a bus driver for the Telos 100 in
+	'libp/telos100_driver.cpp.
+2006-05-08 Fred Gleason <fredg@salemradiolabs.com>
+	* More work on the Telos 100 driver in 'libp/telos100_driver.cpp'.
+2006-05-09 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'Telos100States' container class in
+	'libp/telos100_states.cpp'.
+	* Completed the Telos 100 driver in 'libp/telos100_driver.cpp'.
+2006-05-09 Fred Gleason <fredg@salemradiolabs.com>
+	* Implemented a bus driver for the Gentner TS-612 in
+	'libp/ts612_driver.cpp.
+2006-05-09 Fred Gleason <fredg@salemradiolabs.com>
+	* Added 'DisableNewButton=', 'DisableEditButton=',
+	DisableDeleteButton=' and 'DisableOpenButton=' directives in a new
+	'[ConnectionManager]' section in ml.conf(5).
+	* Updated the example configurations in 'samples/' to contain a
+	'[ConnectionManager]' section.
+	* Updated the ml.conf(5) man page.
+2006-05-09 Fred Gleason <fredg@salemradiolabs.com>
+	* Implemented a connection watchdog in 'libp/telos100_driver.cpp'.
+2006-05-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/telos100_driver.cpp' that was causing line
+	holds and drops to fail for any line other than 1.
+2006-05-10 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'VIRTUAL_SYSTEMS' table to the database.
+	* Added code to add a 'SHOWS.CID_HOSTNAME' field to the database.
+	* Incremented the database version to 12.
+	* Added a 'ListSystems' dialog in 'mdbadmin/list_systems.cpp'.
+	* Added a 'AddSystem' dialog in 'mdbadmin/add_system.cpp'.
+	* Added a 'EditSystem' dialog in 'mdbadmin/edit_system.cpp'.
+	* Added an 'MldSystem' container class in 'mld/mld_system.cpp'.
+2006-05-11 Fred Gleason <fredg@salemradiolabs.com>
+	* Completed mld(8).
+	* Added a 'VirtualDriver' bus driver in 'libp/virtual_driver.cpp'.
+2006-05-12 Fred Gleason <fredg@salemradiolabs.com>
+	* Added escape code to permit processing of strings containing
+	'\', ' ' and '!' in 'libp/virtual_driver.cpp' and 'mld/mld.cpp'.
+	* Added code to permit empty passwords to be properly processed in
+	'libp/virtual_driver.cpp' and 'mld/mld.cpp'.
+2006-05-12 Fred Gleason <fredg@salemradiolabs.com>
+	* Restored the mld(8) init script.
+	* Added support for the Telos100, TS-612 and Virtual Bus drivers
+	to mcidmd(8) in 'mcidmd/mcidmd.cpp'.
+2006-05-12 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/telos2101_driver.cpp' that caused lines on
+	screened hold to display as being on regular hold.
+2006-05-12 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/virtual_driver.cpp' that was causing the
+	build to break under Windows.
+	* Fixed a bug in 'mdbadmin/msdbadmin.pro' that was causing the
+	build to break under Windows.
+2006-05-12 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the 'NEWS' file.
+	* Updated the 'README' file.
+	* Incremented the package version to 1.5.1.
+2006-05-17 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'callcommander.spec.in' whereby the init script
+	for mcidmd(8) was being installed in place of the proper one for
+	mld(8).
+2006-05-18 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/telos2101_driver.cpp' that caused the
+	watchdog restore to break.
+2006-05-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Added heartbeat support to mld(8) in 'mld/mld.cpp'.
+	* Added two 'BusDriver::connect()' methods to the bus drivers.
+	* Modified mcidmd(8) to support operation even if started before
+	the target phone systems are online.
+2006-05-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'mcidmd/process_id.cpp' that was causing call
+	logging to fail on SuSE 9.0.
+2006-05-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Added syslog notification for connection state changes by
+	mcidmd(8) in 'mcidmd/mcidmd.cpp'.
+2006-05-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Added syslog notification for connection state changes by
+	mld(8) in 'mcidmd/mcidmd.cpp'.
+2006-05-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Simplified the Connection Manager screens building a connection
+	to the Telos TWOx12 in 'libp/list_shows.cpp',
+	'libp/edit_connection.cpp' and 'libp/list_devices.cpp'.
+	* Reordered and relabeled the list of supported hardware in
+	'libp/list_devices.cpp'.
+2006-05-19 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the 'NEWS' file.
+	* Incremented the package version to 1.5.2.
+2006-05-22 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/telos2101_driver.cpp' that was causing the
+	Telos2101Driver::connect()' method to fail when using Virtual
+	Director mode.
+2006-05-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Restored mcs(1) in 'mcs/'.
+2006-05-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an XDG entry for mcs(1) in 'xdg/mcs.desktop'.
+	* Added an 'audio' subpackage in 'callcommander.spec.in'.
+2006-05-23 Fred Gleason <fredg@salemradiolabs.com>
+	* Removed the contents of the 'lib/' directory.
+	* Removed 'libp/telos2x12_driver.cpp' and
+	'libp/telos2x12_driver.h'.
+2006-05-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Removed dead code from 'libp/mldconfig.cpp' and
+	'libp/mldconfig.h'.
+2006-05-24 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'disconnect()' method to the bus drivers in
+	'libp/telos100_driver.cpp', 'libp/telos2101_driver.cpp',
+	'libp/ts612_driver.cpp' and 'libp/virtual_driver.cpp'.
+2006-05-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Rewrote mcidmd(8) to open and close bus driver connections
+	dynamically.
+2006-05-25 Fred Gleason <fredg@salemradiolabs.com>
+	* Added a 'ClientData' container class in 'libp/client_data.cpp'.
+2006-05-26 Fred Gleason <fredg@salemradiolabs.com>
+	* Added an 'MlConfig::ClientButtonColor' value to
+	'MlConfig::ColorRole' in 'libp/mlconfig.h'.
+	* Added an 'MlConfig::ClientButton' value to
+	'MlConfig::ButtonRole' in 'libp/mlconfig.h'.
+	* Added a client list button to ml(1) in 'mithlond.cpp'.
+	* Added a 'ListClients' dialog in 'ml/list_clients.cpp'.
+2006-05-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Modified code in 'libp/client_data.cpp' to use GMT the Login
+	Time parameter in client status update messages.
+2006-05-29 Fred Gleason <fredg@salemradiolabs.com>
+	* Implemented call metadata refreshing in 'ml/mithlond.cpp'.
+2006-05-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/telos2101_driver.cpp' that was causing
+	emission of the 'currentConsole()' signal to be supressed when
+	connecting to virtual consoles.
+2006-05-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed bugs in 'libp/telos100_driver.cpp' that was causing
+	incomplete information to be populated into the client list.
+	* Fixed a bug in 'libp/virtual_driver.cpp' that was causing the
+	current console mode to fail to appear in the client list.
+2006-05-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/virtual_driver.cpp' that was causing the
+	'VirtualDriver::connect()' method to fail.
+2006-05-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed bugs in 'libp/telos100_driver.cpp' that was causing
+	incomplete information to be populated into the client list.
+2006-05-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/virtual_driver.cpp' that was causing the
+	'currentConsole()' signal to fail to be emitted.
+2006-05-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Removed debugging instrumentation from 'ml/mithlond.cpp'.
+2006-05-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/client_data.cpp' that was causing remote
+	system login times to be in error when daylight savings time was
+	in effect.
+2006-05-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlomd.cpp' that was causing the Cellphone
+	Icon to always be set to On.
+2006-05-30 Fred Gleason <fredg@salemradiolabs.com>
+	* Updated the 'INSTALL' file.
+	* Updated the 'NEWS' file.
+	* Incremented the package version to 1.5.3.
+2006-06-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/telos2101_driver.cpp' that was causing
+	watchdog reconnects to fail.
+2006-06-01 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/callers.cpp' that was causing the cellphone
+	flag to be incorrectly updated.
+2006-06-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing line buttons
+	to display with no color when starting up with a locked line.
+2006-06-12 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'libp/ml_timeslotlist.cpp' that was causing
+	events scheduled for Monday to fail.
+2006-06-12 Fred Gleason <fredg@salemradiolabs.com>
+	* Fixed a bug in 'ml/mithlond.cpp' where the caller data was not
+	being cleared when a line was busied out.
+2006-06-13 Fred Gleason <fredg@salemradiolabs.com>
+	* Tweaked the application names in 'xdg/ml.desktop',
+	'xdg/mdbadmin.desktop' and 'xdg/mcallman.desktop'.
+2006-08-02 Fred Gleason <fredg@salemradiolabs.com>
+	* Added syslog entries to log caller id messages with invalid
+	checksums in 'libp/calleridtrap.cpp'.
+2006-08-16 Fred Gleason <fredg@salemradiolabs.com>
+	* Added logic in 'ml/list_clients.cpp' to automatically set the
+	initial width of the dialog upon startup.
+2007-02-22 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'configure.in' that was causing the build to
+	break when compiling without sound support.
+2007-02-22 Fred Gleason <fredg@paravelsystems.com>
+	* Updated e-mail contact address in the copyright notices.
+2007-08-06 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'Data Dump' button to the List Details dialog in
+	'mcallman/list_details.cpp'.
+2007-08-06 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the parameters of the 'USERS.PASSWORD' field to fix a
+	bug where logins would fail.
+	* Incremented the database version to 13.
+2007-08-06 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mcidmd/mcidmd.cpp' that was causing CallerId
+	connections to be started/stopped on the incorrect day of thw eek.
+2007-08-06 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the semantics of the 'SHOWS.CID_HOSTNAME' field in
+	'mcidmd/mcidmd.cpp' to use the fully qualified domain name instead
+	of just the host part.
+2007-08-06 Fred Gleason <fredg@paravelsystems.com>
+	* Added an 'MlSendReloadPacket()' function in
+	'libp/ml_reload_packet.cpp'.
+	* Added code in 'mcidmd/mcidmd.cpp', 'mdbadmin/edit_show.cpp' and
+	'mdbadmin/mdbadmin.cpp'	to automatically reload the mcidmd(8)
+	configuration when changed.
+	* Added code in 'mld/mld.cpp' and 'mdbadmin/edit_system.cpp' to
+	automatically reload the mld(8) configuration when changed.
+	* Changed the semantics of the 'CONNECTIONS.HOST_NAME' field in
+	'mld/mld.cpp' to use the fully qualified domain name instead
+	of just the host part.
+2007-08-06 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'USERS.SCREENER_PRIV' field to the database.
+	* Incremented the database version to 14.
+	* Added a 'User Can Screen Calls' control to the Edit User dialog
+	in 'mdbadmin/edit_user.cpp'.
+	* Added a 'Screener' column to the user list in
+	'mdbadmin/list_users.cpp'.
+	* Fixed a bug in 'mld/mld.cpp' that was causing ml(1) logins to
+	fail with a password.
+2007-08-06 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'ml_reload_packet.cpp' and 'ml_reload_packet.h' to
+	'libp/libp.pro'.
+2007-08-07 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/list_devices.cpp',
+	'libp/edit_connection.cpp', 'libp/list_shows.cpp',
+	'list_consoles.cpp' and 'libp/save_connection.cpp' that was
+	causing the default button to be incorrectly set.
+	* Added 'BusDriver::totalConnectionSteps()' virtual method in
+	'libp/bus_driver.h'.
+	* Added a 'BusDriver::connectionStepChanged()' signal in
+	'libp/bus_driver.h'.
+	* Added a connection progress dialog in
+	'libp/edit_connection.cpp'.
+2007-08-07 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the 'Serial Port' control in the System Connection
+	dialog from a Line Edit to a Combo Box in
+	'libp/edit_connection.cpp'.
+2007-08-08 Fred Gleason <fredg@paravelsystems.com>
+	* Added a sample configuration for a four-hybrid system in
+	'samples/four-bank.conf'.
+	* Added '[Bank<b>]' sections as synonyms for the '[MainBank]' and
+	'[ConfBank]' sections of ml.conf(5) in 'libp/mlconfig.cpp'.
+	* Added 'ShowBank<b>Button=' directives in the '[Line<n>]'
+	sections of ml.conf(5) as synonyms for 'ShowMainButton=' and
+	'ShowConfButton=' directives.
+	* Added 'Button<b>X=' directives in the '[Line<n>]'
+	sections of ml.conf(5) as synonyms for 'MainButtonX=' and
+	'ConfButtonX=' directives.
+	* Added 'Button<b>Y=' directives in the '[Line<n>]'
+	sections of ml.conf(5) as synonyms for 'MainButtonY=' and
+	'ConfButtonY=' directives.
+	* Added 'Bank<b>Key=' directives in the '[Line<n>]'
+	sections of ml.conf(5) as synonyms for 'MainKey=' and
+	'ConfKey=' directives.
+	* Changed 'MAX_BANKS' in 'libp/ml.h' from '2' to '4'.
+	* Modified 'ml/mithlond.cpp' and ml/mithlond.h' so as to properly
+	handle Telos 2101 systems with up to four hybrids per studio.
+2007-08-09 Fred Gleason <fredg@paravelsystems.com>
+	* Updated the ml.conf(5) man page.
+	* Updated the callcommander(1) man page.
+	* Updated the ml(1) man page.
+	* Updated the mld(8) man page.
+	* Updated the mld.conf(5) man page.
+	* Added an mcidmd(8) man page in 'docs/mcidmd.8'.
+2007-08-10 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'Serial Port' and 'System Type' fields to the 'Edit
+	Connection' dialog in 'libp/edit_connection_data.cpp'.
+2007-08-10 Fred Gleason <fredg@paravelsystems.com>
+	* Increased the width of the 'Select a Phone System Type' dialog
+	in 'libp/list_Devices.cpp'.
+2007-08-10 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the data type of the 'USERS.LOGIN_NAME' field in the
+	database from 'char(8) to 'char(32)'.
+	* Incremented the database version to 15.
+	* Increased the max length of the 'Login Name:' control in
+	'mdbadmin/add_user.cpp' to 32.
+	* Increased the max length of the 'User Name:' and 'Password:'
+	controls in 'libp/login.cpp' to 32.
+2007-08-10 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'NumberList' class in 'libp/number_list.cpp'.
+	* Added a 'RedialDialog' dialog in 'ml/redial_dialog.cpp'.
+	* Fixed a bug in 'libp/telos100_driver.cpp' that was causing
+	corrupt DTMF tones to be sent when keys were send in rapid
+	succession.
+2007-08-13 Fred Gleason <fredg@paravelsystems.com>
+	* Added a header for CallCommander Logic Modules in 'mlm/mlm.h'.
+	* Implemented a Logic Module host in 'mlmh/'.
+2007-08-13 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlm/mlm.h' that was causing mlmh(8) to fail to
+	load.
+	* Fixed a bug in 'mlmh/mlmh.cpp' that was causing connections
+	utilizing a serial port to fail to be initialized correctly.
+	* Implemented the 'MLMStartup()' and 'MLMShutdown()' callbacks
+	in 'mlmh/mlmh.cpp'.
+2007-08-13 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'Manage Logic Modules' button in
+	'mdbadmin/mdbadmin.cpp'.
+	* Added a 'LOGIC_MODULES' table to the database.
+	* Incremented the database version to 16.
+	* Added a 'List Logic Modules' dialog in
+	'mdbadmin/list_modules.cpp'.
+	* Added an 'Edit Logic Module' dialog in
+	'mdbadmin/edit_module.cpp'.
+2007-08-13 Fred Gleason <fredg@paravelsystems.com>
+	* Added a Logic Module Host Launcher Daemon mlmld(8) in 'mlmld/'.
+	* Added an mlmld(8) init script in 'rc.mlmld.in'.
+2007-08-13 Fred Gleason <fredg@paravelsystems.com>
+	* Added Logic Module support to 'callcommander.spec.in'.
+2007-08-14 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the file extension for Logic Modules to '.mlm'.
+	* Added 'MLMCallerIdReceived()', 'MLMChatMessageReceived()',
+	'MLMCallerElementReceived()', 'MLMUdpReceived()' and
+	'MLMSerialReceived()' Logic Module callbacks in 'mlm/mlm.h'.
+	* Added 'MLMSendChatMessage()', 'MLMSendUdp()', 'MLMOpenUdp()',
+	'MLMCloseUdp()', 'MLMOpenSerial()', 'MLMSendSerial()' and
+	'MLMCloseSerial()' Logic Module functions in
+	'lmlh/mlm_functions.cpp'.
+2007-08-14 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.4.
+2007-08-14 Fred Gleason <fredg@paravelsystems.com>
+	* Put temporary code into 'libp/calleridtrap.cpp' to log raw
+	CallerID strings to the syslog.
+2007-08-14 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed bugs in 'libp/libp.pro' and 'mdbadmin/mdbadmin.pro' that
+	broke the build under Windows.
+	* Added code to enable the select buttons for the Module Path and
+	Log Path in MDbAdmin->EditModules only when the hostname matches
+	that of the local machine.
+2007-08-15 Fred Gleason <fredg@paravelsystems.com>
+	* Added an include for 'stdint.h' to 'mlm/mlm.h'.
+	* Added caller element definitions in 'mlm/mlm.h'.
+	* Added a 'ClientData::TypeLogicModule' value to the
+	'ClientData::ClientType' enum in 'libp/client_data.h'.
+2007-08-15 Fred Gleason <fredg@paravelsystems.com>
+	* Added an 'MLMSendLineWarning()' function in
+	'mlmh/mlm_functions.cpp'.
+2007-08-15 Fred Gleason <fredg@paravelsystems.com>
+	* Added code in 'mcidmd/mcidmd.cpp' to remap invalid CallerID
+	numbers to a null number (defined by ML_CALLERID_NULL_NUMBER is
+	'libp/ml.h') and then process them.
+2007-08-15 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'MLMVGuestOpen()', 'MLMVGuestClose()',
+	'MLMVGuestPulse()', 'MLMVGuestTurnOn()','MLMVGuestTurnOff()',
+	'MLMVGuestSetInputAssign()', 'MLMVGuestSetInputMode()',
+	'MLMVGuestSetFaderLevel()' and 'MLMVGuestWriteText()' functions in
+	'mlmh/mlm_functions.cpp'.
+	* Added a Logitek vGuest driver in 'mlmh/vguest.cpp'.
+2007-08-16 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlm/Makefile.am' that was causing the build to
+	break.
+2007-08-16 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'MLMVGuestPulseReceived()', 'MLMVGuestTurnOnReceived()',
+	'MLMVGuestTurnOffReceived()', 'MLMVGuestSetInputAssignReceived()',
+	'MLMVGuestSetInputModeReceived()' and
+	'MLMVGuestSetFaderLevelReceived()' callbacks in 'mlm/mlm.h'.
+2007-08-16 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlmh/Makefile.am' that was causing the build to
+	break.
+	* Fixed a bug in 'mlmh/mlm_functions.cpp' that was causing the
+	build to break.
+2007-08-16 Fred Gleason <fredg@paravelsystems.com>
+	* Added an example Makefile in 'mlm/Makefile-example'.
+	* Added a 'devel' package in 'callcommander.spec.in'.
+2007-08-17 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlmh/vguest.cpp' where data structures were not
+	being properly initialized.
+2007-08-17 Fred Gleason <fredg@paravelsystems.com>
+	* Added a Logic Module plugin for the Logitek Remora control
+	surface in 'mlm/mlm_remora.c'.
+2007-08-17 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing ringing lines
+	to fail to have their state cleared properly.
+2007-08-17 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.5.
+2007-08-20 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlmh/mlmh.cpp' that was causing mlmh(8) to exit
+	on SIGINT/SIGTERM before posting pending vGuest packets to the
+	socket connection.
+	* Tweaked the flashing time values in 'mlm/mlm_remora.c'.
+2007-08-20 Fred Gleason <fredg@paravelsystems.com>
+	* Enabled code in 'mlm/mlm_remora.c' to allow display of line
+	number over active phone fader.
+2007-08-20 Fred Gleason <fredg@paravelsystems.com>
+	* Added code int 'mlm/mlm_remora.c' to read current delay time
+	from an AirTools 6100 delay unit.
+2007-08-20 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.6.
+2007-08-22 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'BusDriver::DelayOffsetGlobalElement' to the
+	'BusDriver::Element' enum in 'libp/bus_driver.h'.
+	* Added 'MLMDelayOffset()' and 'MLMSendDelayOffset()' functions in
+	'mlmh/mlm_functions.cpp'.
+	* Added an 'MLMDelayOffsetChanged()' callback in 'mlm/mlm.h'.
+	* Added delay offset packet support in 'ml/mithlond.cpp'.
+	* Added a Logic Module for the AirTools 6100 Broadcast Audio Delay
+	in 'mlm/mlm_airtools.c'.
+	* Added an 'MLMMetadataUpdateRequested()' callback in 'mlm/mlm.h'.
+	* Added an offset parameter to the 'MLMDateTime()' function in
+	'mlmh/mlm_functions.cpp'.
+2007-08-22 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.7.
+2007-08-22 Fred Gleason <fredg@paravelsystems.com>
+	* Added code to request a metadata update when starting new Logic
+	Modules in 'mlmh/mlmh.cpp'.
+2007-08-22 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.8.
+2007-08-22 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlmh/mlmh.cpp' that was allowing
+	'MLMTimerExpired()' callback to be executed after 'MLMShutdown()'.
+2007-08-22 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/list_clients.cpp' that was causing the List
+	Clients dialog to appear without a title bar on Windows.
+2007-08-24 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'Change Nickname' dialog in
+	'mithlond/change_nickname.cpp'.
+2007-08-24 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'LOGIC_MODULES.MODULE_ARGS' field to the database.
+	* Incremented the database version to 17.
+	* Added a 'Module Args:' control in 'mdbadmin/edit_module.cpp'.
+	* Added a 'Module Args' column in 'mdbadmin/list_modules.cpp'.
+	* Added a 'const char *args' parameter to the 'MLMStartup()'
+	callback in 'mlm/mlm.h'.
+	* Added 'MLMGetIntegerValue()', 'MLMGetHexValue()',
+	'MLMGetBooleanValue()' and 'MLMGetStringValue()' functions in
+	'mlmh/mlm_functions.cpp'.
+	* Modified 'mlm/mlm_remora.c' and 'mlm/mlm_airtools.c' to use
+	dynamic configuration.
+	* Added 'sample/mlm_remora.conf' and 'sample/mlm_airtools.conf'
+	sample configuration files.
+2007-08-24 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlmld/mlmld.cpp' that was causing startup of
+	Logic Modules to fail.
+	* incremented the package version to 1.5.9.
+2007-08-24 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/ml.pro' that caused the build to break under
+	Windows.
+2007-08-24 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.10.
+2007-08-27 Fred Gleason <fredg@paravelsystems.com>
+	* Added '***' highlights to on-air call entries on Logitek
+	Remora surfaces in 'mlm/mlm_remora.c'.
+2007-08-27 Fred Gleason <fredg@paravelsystems.com>
+	* Added code in 'mlmh/vguest.cpp' to limit the maximum length of
+	strings sent to supervisor to 60.
+2007-08-27 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package versiont to 1.5.11.
+2007-08-28 Fred Gleason <fredg@paravelsystems.com>
+	* Restored flashing capability to on-air calls in
+	'mlm/mlm_remora.c'.
+2007-09-03 Fred Gleason <fredg@paravelsystems.com>
+	* Imported the 'RTTYDevice', 'RProfile', 'RProfileLine',
+	'RProfileSection', 'RWaveFile', 'RWaveData', 'RSegClock',
+	'RSegList', 'RDateDialog', 'RDatePicker', 'RTransportButton',
+	'RTimeEngine', 'RTimeEvent', 'RPlayMeter', 'RSegMeter',
+	'RListSelector', 'RLabel' and 'RLicense' classes into libml from
+	the LibRadio package.
+	* Imported the 'LibTelos2101' library into libml.
+	* Imported the LibRHpi library into a new 'libmlhpi' library.
+2007-09-04 Fred Gleason <fredg@paravelsystems.com>
+	* Imported 'libp/mlttydevice_win32.cpp' and
+	'libp/html_gpl2_win32.cpp' from LibRadio.
+	* Fixed a bug in 'callcommander.spec.in' that caused building RPMs
+	to break.
+2007-09-04 Fred Gleason <fredg@paravelsystems.com>
+	* Added an Install Shield setup in 'callcommander.ism'.
+2007-09-05 Fred Gleason <fredg@paravelsystems.com>
+	* Added ClientData::version()', 'ClientData::versionString()' and
+	'ClientData::setVersion()' methods in 'libp/client_data.cpp'.
+	* Added a 'Version' column to the List Clients window in
+	'ml/list_clients.cpp'.
+2007-09-06 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'BusDriver::ClientKillGlobalElement' value in the
+	'BusDriver::Element' enum in 'libp/bus_driver.h'.
+	* Added 'ClientListView' and 'ClientListViewItem' classes in
+	'ml/client_listview.cpp' and 'ml/client_listviewitem.cpp'.
+	* Added an 'AllowClientKill=' directive in ml.conf(5).
+2007-09-06 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'BusDriver::LastCallDatetimeElement' value to the
+	'BusDriver::Element enum in 'libp/bus_driver.h'.
+	* Implemented the 'BusDriver::LastCallDatetimeElement' element in
+	'mcidmd/process_id.cpp'.
+	* Implemented the 'BusDriver::LastCallDatetimeElement' element in
+	'ml/caller.cpp'.
+	* Added a 'VERSION' file.
+	* Added 'helpers/win32_frag1.txt' and 'helpers/win32_frag2.txt'
+	files.
+2007-11-06 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mcs/mcs_widget.cpp' that broke MPEG recording.
+2007-11-20 Fred Gleason <fredg@paravelsystems.com>
+	* Added an 'acinclude.m4' file.
+	* Added a 'get_target.sh' file.
+	* Added 'AR_GCC_TARGET' and 'BNV_HAVE_QT' macros in
+	'acinclude.m4'.
+	* Refactored the build system to use the 'BNV_HAVE_QT' macro to
+	detect Qt rather than $QTDIR.
+	* Moved 'mlwavefile.h', 'mlwavefile.cpp', 'mlwavedata.h' and
+	'mlwavedata.cpp' from 'libp/' to 'mlhpi/'.
+2007-11-20 Fred Gleason <fredg@paravelsystems.com>
+	* Added code in 'ml/mithlond.cpp' to change the glyph on the
+	conference on hold button to a check mark when the connection is
+	in Producer mode.
+2007-11-20 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/callers.cpp' that was causing the 'Last
+	Called' field to have an incorrect date/time.
+2007-11-20 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'LocalAreaCodeElement' value to 'BusDriver::Element' in
+	'lib/bus_driver.h'.
+	* Added code to 'mcidmd/mcidmd.cpp' to propagate the local area
+	code after each new connection.
+	* Added code in 'ml/keybox.cpp' to propagate the phone number of
+	originating calls.
+2007-11-20 Fred Gleason <fredg@paravelsystems.com>
+	* Implemented an 'EnableWarningMessages=' directive for
+	ml.conf(5).
+	* Updated the 'ml.conf(5) man page.
+2007-11-20 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/libp.pro' that broke the build under Windows.
+	* Incremented the package version to 1.5.13.
+2007-11-21 Fred Gleason <fredg@paravelsystems.com>
+	* Adjusted the QSettings scope to ensure proper registry storage
+	location for connection data under Windows in 'ml/mithlond.cpp',
+	'libp/connection_data.cpp' and 'mldconfig.cpp'.
+2007-11-21 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'mscvr71.dll' and 'msvcp71.dll' libraries to the Win32
+	installation in 'callcommander.ism'.
+2007-11-21 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the default installation directory under Windows to
+	'C:\Program Files\CallCommander'.
+	* Incremented the package version to 1.5.14.
+2007-11-21 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed bugs in 'mlmh/Makefile.am', 'mlmh/globals.h' and
+	'mlmh/mlmh.cpp' that broke the build.
+2007-12-14 Fred Gleason <fredg@paravelsystems.com>
+	* Modified 'Makefile.am', 'configure.in' and 'callcommander.spec.in'
+	to support building on x86_64 architecture.
+2007-12-17 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed the library symlink path for x86_64 architecture.
+2007-12-17 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlm/Makefile.am' that broke the build under
+	x86_64 architecture.
+	* Incremented the package version to 1.5.15.
+2007-12-24 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed font size mismatches in 'libp/list_devices.cpp,
+	'libp/list_connections.cpp', 'libp/list_consoles.cpp' and
+	'libp/list_shows.cpp'.
+2007-12-26 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'DEMO_INTERVAL' define in 'ml/mithlond.h'.
+2007-12-26 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a typo in 'ml/mithlond.cpp'.
+2008-01-08 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/tlsaplib.cpp' that caused 2101 connections
+	to fail on x86_64 architecture.
+2008-01-08 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.16.
+2008-02-06 Fred Gleason <fredg@paravelsystems.com>
+	* Added an Asterisk module in 'asterisk/'.
+	* Added a bus driver for Asterisk in 'libp/asterisk_driver.cpp'.
+2008-02-08 Fred Gleason <fredg@paravelsystems.com>
+	* Stubbed out a 'CallCommander' Asterisk application in
+	'asterisk/pbx_callcommander.c'.
+2008-02-12 Fred Gleason <fredg@paravelsystems.com>
+	* Added an 'MLAmi' connector class in 'libp/mlami.cpp'.
+	* Added an 'MLAsteriskConfig' class in
+	'libp/mlasteriskconfig.cpp'.
+	* Rewrote the Asterisk bus driver in 'libp/asterisk_driver.cpp' to
+	use the Asterisk Manager Interface for call control.
+2008-02-13 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/asterisk_driver.cpp' that was preventing
+	line seizures from being recognized when using a SIP phone as the
+	screener device.
+	* Fixed a bug in 'libp/list_devices.cpp' that was causing the
+	incorrect default TCP port to be displayed when create a new
+	Asterisk connection.
+	* Added code in 'mcs/mcs.cpp' to properly handle direct
+	connections to Asterisk.
+	* Added code in 'mcidmd/mcidmd.cpp' to properly handle direct
+	connections to Asterisk.
+	* Added code in 'mlmh/mlmh.cpp' to properly handle direct
+	connections to Asterisk.
+	* Added code in 'mld/mld.cpp' to properly handle direct
+	connections to Asterisk.
+	* Fixed a bug in 'mdbadmin/createdb.cpp' that was causing creation
+	of a new database to fail.
+	* Implemented CallerID detection for the Asterisk driver in
+	'libp/asterisk_driver.cpp'.
+2008-02-14 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/asterisk_driver.cpp' that was prevending
+	CallerID data from being read properly from an incoming call.
+2008-02-14 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'SpawnProcess=' and 'SpawnOnce=' directives to ml.conf(5)
+	in 'libp/mlconfig.cpp'.
+	* Updated the ml.conf(5) manpage.
+2008-02-19 Fred Gleason <fredg@paravelsystems.com>
+	* Added skeleton configuration files for twinkle(1) in
+	'scripts/twinkle.sys' and 'scripts/twinkle.cfg'.
+	* Added soft hybrid scripts for twinkle in
+	'scripts/twinkle_hybrid.sh' and 'scripts/twinkle_answer.sh'.
+2008-02-19 Fred Gleason <fredg@paravelsystems.com>
+	* Added a soft hybrid script for twinkle in
+	'scripts/twinkle_call.sh'.
+	* Updated the 'asterisk/callcommander.conf-sample' file.
+	* Updated the 'asterisk/zapata.conf-sample' file.
+	* Updated the 'asterisk/extensions.conf-sample' file.
+	* Added an 'asterisk/sip.conf-sample' file.
+2008-02-19 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a typo in the usage description in
+	'scripts/twinkle_hybrid.sh.in'.
+2008-04-10 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug that was causing the build to break under
+	hpklinux-3.08.04.
+2008-05-08 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing DelayOffset
+	transmissions to fail for non-zero values.
+	* Added a 'SendTimeOffset=' parameter to the '[Clock]' section of
+	ml.conf(5).
+	* Updated the ml.conf(5) man page.
+2008-05-08 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.17.
+2008-05-28 Fred Gleason <fredg@paravelsystems.com>
+	* Added a link statement for 'libeay32' in 'ml/ml.pro',
+	'mdbadmin/mdbadmin.pro' and 'mcallman/mcallman.pro'.
+	* Added a Windows license file in 'docs/win32_license.rtf'.
+	* Added 'libeay32.dll' to 'callcommander.ism'.
+	* Updated the 'INSTALL' file.
+	* Updated the 'NEWS' file.
+2008-05-28 Fred Gleason <fredg@paravelsystems.com>
+	* Added an include statement in 'libp/mlami.cpp' to work around a
+	bug in the 'md5.h' header from OpenSSL.
+	* Updated the package version to 1.5.18.
+2008-06-27 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlconfig.cpp' that caused incorrect Input
+	Type to be used by mcs(1).
+	* Added 'MainFileType=' and 'ConfFileType=' directives to the
+	[Skimmer] section of ml.conf(5).
+	* Updated the 'ml.conf(5) man page.
+2008-07-15 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.19.
+2008-07-18 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'MLKernString()' function in 'libp/mlconfi.cpp'.
+	* Added code in 'libp/message_data.cpp' to properly handle strings
+	in the Message Widget that are longer than the maximum string
+	message packet length.
+2008-07-21 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.20.
+2008-07-22 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that caused a segfault when
+	starting with the Hold buttons disabled.
+2008-07-22 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.21.
+2008-10-21 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that was causing invalid icons
+	to be displayed when lines were in use elsewhere with a TWOx12.
+2008-10-21 Fred Gleason <fredg@paravelsystems.com>
+	* Updated the package version to 1.5.22.
+2008-10-21 Fred Gleason <fredg@paravelsystems.com>
+	* The the Telos Nx12 Talk Show System to the device menu in
+	'libp/list_devices.cpp'.
+2008-10-24 Fred Gleason <fredg@paravelsystems.com>
+	* Removed the 'MlConfig::LogType' enumeration in
+	'libp/mlconfig.h'.
+	* Removed the 'MlConfig::logSqlServer()', MlConfig::logSqlDb()',
+	'MlConfig::logDbUsername()' and 'MlConfig::logDbPassword()'
+	methods from 'libp/mlconfig.cpp'.
+	* Deleted 'ml/log_sql.cpp'.
+	* Updated the ml.conf(5) man page.
+	* Deleted 'scripts/cc_create_db'.
+2008-10-24 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'icons/client.xpm', 'icons/logic.xpm', 'icons/monitor.xpm'
+	and 'icons/recorder.xpm'.
+	* Implemented icons to indicate connection type in the 'Currently
+	Online' dialog in 'ml/list_clients.cpp'.
+2008-11-11 Fred Gleason <fredg@paravelsystems.com>
+	* Removed 'MLTimeSynced()' function from 'libp/mlconf.cpp'.
+2008-11-11 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'helpers/cwrap.cpp' that was causing a zero array
+	size to be generated under OS X.
+2008-11-11 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'ltmain.sh'.
+	* Modified 'autogen.sh' so to not call 'libtoolize'.
+2009-01-26 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.23.
+2009-02-13 Fred Gleason <fredg@paravelsystems.com>
+	* Added an 'MLM_VERSION' define in 'mlm/mlm.h', and set it to '0'.
+	* Added a UDP packet delay plugin in 'mlm/mlm_udpdelay.c'.
+2009-02-26 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.24.
+2009-02-26 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a typo in 'mlm/Makefile.am' that broke the 'make rpm'
+	target.
+2009-04-06 Fred Gleason <fredg@paravelsystems.com>
+	* Added '#include <stdlib.h>' to various source file to fix broken
+	build under OpenSuSE 11.1.
+2009-04-14 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed bug in 'mlm/Makefile.am' that broke the 'make install'
+	target.
+2009-04-14 Fred Gleason <fredg@paravelsystems.com>
+	* Added the ability to specify multiple data destinations in
+	'mlm/mlm_udedelay.c'.
+2009-04-14 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.26.
+2009-04-15 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlm/Makefile.am' that was failing to install
+	'mlm.h'.
+2009-05-07 Fred Gleason <fredg@paravelsystems.com>
+	* Applied a fix from Derek Jackson <derek.jackson@salemdenver.com>
+	in 'libp/ts612_driver.cpp' that broke line control on a TS-612.
+2009-06-05 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mcidmd/process_id.cpp' that caused 'Last Call
+	Received' value to be incorrect.
+2009-06-05 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mcidmd/process_id.cpp' that caused Call
+	Counter value to be always '0'.
+2009-06-05 Fred Gleason <fredg@paravelsystems.com>
+	* Added '#include <stdlib.h>' declarations to fix broken builds
+	under certain glibc versions.
+2009-06-05 Fred Gleason <fredg@paravelsystems.com>
+	* Removed unused functions from 'libp/mlconf.cpp' and
+	'libp/mlconf.h'.
+2009-06-05 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.27.
+2009-06-11 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mcidmd/process_id.cpp' that caused 'Last Call
+	Received' value to be incorrect.
+2009-06-05 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.28.
+2009-08-03 Fred Gleason <fredg@paravelsystems.com>
+	* Refactored 'mlm/mlm_udpdelay.c' to support multiple delay
+	queues.
+	* Changed 'samples/mlm_udpdelay.conf' to reflect new [Delay<n>]
+	section syntax.
+2009-08-03 Fred Gleason <fredg@paravelsystems.com>
+	* Removed support for the [Logging] section in ml.conf(5).
+2009-08-03 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.29.
+2009-08-05 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mcidmd/process_id.cpp' that caused 'Last Call
+	Received' value to be incorrect.
+2009-08-05 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.30.
+2009-09-04 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'ShowDelay=' and 'DelayThreshold=' parameters to the
+	[DelayButton] section of ml.conf(5).
+2009-09-04 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'libp/mlpushbutton.cpp' and 'libp/mlpushbutton.h' to
+	'libp/libp.pro'.
+2009-09-04 Fred Gleason <fredg@paravelsystems.com>
+	* Modified ml(1) to allow passing long messages through the
+	Message Box widget without breakinig it into multiple parts.
+2009-09-04 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'SendLines=' parameter to the [MessageBox] section of
+	ml.conf(5).
+2009-09-08 Fred Gleason <fredg@paravelsystems.com>
+	* Updated the 'NEWS' file.
+	* Incremented the package version to 1.5.31.
+2009-09-08 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that caused a segfault when
+	'ShowUpdate=' was set to 'yes' and 'ShowButton=' to 'no' in the
+	[DumpButton] section of ml.conf(5).
+2009-09-08 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the default value for the 'ShowUpdate=' parameter in the
+	[DumpButton] section of ml.conf(5) from 'No' to 'Yes'.
+2009-09-08 Fred Gleason <fredg@paravelsystems.com>
+	* Updated the location of the man pages in
+	'callcommander.spec.in'.
+2009-09-08 Fred Gleason <fredg@paravelsystems.com>
+	* Renamed mcs(1) to mskimmer(1).
+	* Incremented the package version to 1.5.32.
+2010-02-19 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'LOGIC_MODULES.USE_REALTIME' field to the database.
+	* Incremented the database version to 18.
+	* Added a '--use-realtime' switch to mlmh(8) in 'mlmh/mlmh.cpp'
+	and 'mlmh/mlmh.h'.
+	* Added a 'Use Realtime Permissions' control to the 'Edit Log
+	Module' dialog in 'mdbadmin/edit_log.cpp' and
+	'mdbadmin/edit_logic.h'.
+	* Implemented realtime permissions support for mlmld(8) in
+	'mlmld/mlmld.cpp'.
+2010-02-19 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'FixedDelay=' parameter to the configuration file for
+	the 'mlm_udpdelay' plug-in.
+	* Modified 'mlmh/mlmh.cpp' so that realtime permissions are set
+	only after the host connection was successfully established.
+2010-02-19 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.34.
+2010-05-04 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/cmdswitch.cpp' that caused the build to
+	break under OpenSuSE 11.2.
+	* Fixed a bug in 'mlhpi/mlhpisoundcard.cpp' that caused the build to
+	break under OpenSuSE 11.2.
+2010-05-04 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.35.
+2010-06-25 Fred Gleason <fredg@paravelsystems.com>
+	* Added icons for fvwm(1) in 'callcommander.spec.in'.
+	* Added a '--with-debug' switch in 'configure.in'.
+2010-06-25 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.36.
+2010-08-12 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlm/mlm_udpdelay.c' that caused time offsets to
+	be incorrectly applied when using multiple delay queues.
+2010-08-12 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.37.
+2010-11-11 Fred Gleason <fredg@paravelsystems.com>
+	* Added a LastOnAirDatetimeElement value to 'BusDriver::Element'
+	in 'libp/bus_driver.h'.
+	* Added a field to indicate time since a caller was last on-air in
+	the Caller dialog in 'ml/callers.cpp'.
+2010-11-16 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'SHOW_SLOTS.FILTER_POLICY' field to the database.
+	* Added a 'CID_FILTERS' table to the database.
+	* Incremented the database version to 19.
+	* Added Filter Policy and Filter List controls to the Edit Slot
+	dialog in 'mdbadmin/edit_show_slot.cpp' and
+	'mdbadmin/edit_show_slot.h'.
+	* Added an Edit Filter dialog in 'mdbadmin/edit_filter.cpp' and
+	'mdbadmin/edit_filter.h'.
+	* Implemented filter polcy routing for mcidmd(8) in
+	'mcidmd/process_id.cpp' and 'midmd/mcidmd.h'.
+2010-11-16 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mdbadmin/edit_show_slot.cpp' that caused start
+	and end times to be displayed in 12 hour format under Windows.
+2010-11-16 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 1.5.38.
+2010-11-23 Fred Gleason <fredg@paravelsystems.com>
+	* Ported to Qt4.
+2010-11-28 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'samples/small_clock.conf'.
+	* Ported 'libp'mlttydevice_win32.cpp' to Qt-4.
+	* Modifed local #include statements to use quotes rather than
+	angle brackets.
+2010-11-28 Fred Gleason <fredg@paravelsystems.com>
+	* Added configuration instructions for CentOS/RedHat in 'INSTALL'.
+2010-11-30 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlsegclock.cpp' that caused the segment
+	label to display with the incorrect color.
+2010-11-30 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'BusDriver::scanDevice()' virtual method in
+	'libp/bus_driver.h'.
+	* Fixed a bug in 'libp/list_consoles.cpp' that caused the List
+	Console dialog to fail to receive available consoles from the
+	telephone device.
+2010-12-01 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlttydevice.cpp' that caused invalid word
+	length parameters to be used.
+2010-12-01 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/drawcaps.cpp' that broke line button
+	color-coding.
+2010-12-06 Fred Gleason <fredg@paravelsystems.com>
+	* Removed FLAC support from 'mlhpi/mlwavefile.cpp' and
+	'mlhpi/mlwavefile.h'.
+	* Fixed digit alignment problem in the segment timer on
+	RedHat/CentOS in 'libp/mlsegclock.cpp'.
+2010-12-06 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that caused uninitialized bitmaps
+	to be displayed on buttons for unavilable lines.
+2010-12-15 Fred Gleason <fredg@paravelsystems.com>
+	* Refactored the desktop menus in 'xdg/' to be compliant with LSB
+	guidelines.
+2010-12-15 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mlhpi/mlhpisoundcard.cpp' that broke the build
+	with ASI driver v4.04.07.
+2010-12-15 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that caused button edges to appear
+	ragged when floating the cursor over them.
+2010-12-15 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed the layout of the 'Callers' dialog for Qt4 in
+	'ml/callers.cpp'.
+2010-12-18 Fred Gleason <fredg@paravelsystems.com>
+	* Added '--check-db', '--admin-username' and --admin-password'
+	switches to mdbadmin(1) in 'mdbadmin/mdbadmin.cpp'.
+2010-12-19 Fred Gleason <fredg@paravelsystems.com>
+	* Cleaned up various layout oddities in mdbadmin(1).
+2010-12-19 Fred Gleason <fredg@paravelsystems.com>
+	* Cleaned up various layout oddities in mcallman(1).
+2010-12-19 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/virtual_driver.cpp' and 'libp/list_shows.cpp'
+	that caused the Connection Wizard to hang when selecting a show with
+	the Virtual System driver.
+2010-12-30 Fred Gleason <fredg@paravelsystems.com>
+	* Added a new 'CallInfo' widget in 'ml/callinfo.cpp' and
+	'ml/callinfo.h'.
+	* Added 'ShowFrame=', 'AllowScrolling=' and 'CommentLines='
+	parameters to ml.conf(5).
+	* Updated the ml.conf(5) man page.
+2011-02-09 Fred Gleason <fredg@paravelsystems.com>
+	* Modifed the source paths for DLLs in 'callcommander.ism' to
+	point to the home library trees rather than the local Windows system32
+	directory.
+2011-03-09 Fred Gleason <fredg@paravelsystems.com>
+	* Updated 'get_distro.sh' to properly detect RedHat/CentOS.
+2011-07-10 Fred Gleason <fredg@paravelsystems.com>
+	* Removed debugging printf in 'libp/telos2101_driver.cpp'.
+2011-07-11 Fred Gleason <fredg@paravelsystems.com>
+	* Modified 'libp/libp.pro', 'mcallman/mcallman.pro' and
+	'mdbadmin/mdbadmin.pro' to build on Windows.
+2011-07-11 Fred Gleason <fredg@paravelsystems.com>
+	* Relocated 'ml/ml.ico' to 'icons/callcommander.ico'.
+	* Added 'icons/callcommander.rc'.
+2011-07-13 Fred Gleason <fredg@paravelsystems.com>
+	* Modified 'libp/libp.pro' to generate a DLL instread of linking
+	statically on Windows.
+2011-07-13 Fred Gleason <fredg@paravelsystems.com>
+	* Cleaned up build system warnings under Windows.
+2011-07-14 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlsegclock.cpp' that caused improper
+	positioning of time and segment fields in the clock widget under
+	Windows.
+2011-07-14 Fred Gleason <fredg@paravelsystems.com>
+	* Updated the copyright notice in 'docs/win32_license.rtf'.
+	* Updated 'callcommander.ism'.
+2011-07-15 Fred Gleason <fredg@paravelsystems.com>
+	* Widened button on the List Connections dialog in
+	'libp/list_connections.cpp so as to fit properly under OS-X.
+	* Added a 'LineButton' widget in 'ml/line_button.cpp' and
+	'ml/line_button.h'.
+2011-07-16 Fred Gleason <fredg@paravelsystems.com>
+	* Reenabled line button icon animation in 'ml/mithlond.cpp' and
+	'ml/line_button.cpp'.
+2011-07-16 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlconfig.cpp' that caused incorrect default
+	font to be used for the 'Name' field in the Caller Box widgets.
+2011-07-16 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlconfig.cpp' that caused incorrect default
+	'Lines=' value to be used for the Comment field in the Caller Box
+	widgets.
+2011-07-16 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'LINUX' and 'OS_X' platform identifier defines in
+	'configure.in'.
+2011-07-16 Fred Gleason <fredg@paravelsystems.com>
+	* Corrected layout of the segment clock elements under OS-X in
+	'libp/mlsegclock.cpp'.
+2011-07-17 Fred Gleason <fredg@paravelsystems.com>
+	* Moved the default vertical position of the caller comment field up
+	5 pixels in 'libp/mlconfig.cpp' and 'samples/default.conf'.
+2011-07-17 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlconfig.cpp' that broke display of the
+	Call Quality and Cellphone icons in the Caller Boxes.
+2011-07-17 Fred Gleason <fredg@paravelsystems.com>
+	* Restored operation of the call timers in 'ml/mithlond.cpp'.
+2011-07-17 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed detection of OggVorbis in 'configure.in'.
+2011-07-18 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/line_buttons.cpp' where the borders of line
+	buttons would appear in a different color from the center under
+	Windows.
+2011-07-18 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' where the borders of function
+	buttons would appear in a different color from the center under
+	Windows.
+2011-07-18 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the default height of ml(1) in 'libp/mlconfig.cpp' and
+	'samples/default.conf'.
+2011-07-18 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed bugs in 'ml/mithlond.cpp' and 'ml/line_button.cpp' that
+	caused ragged edges to appear around buttons.
+2011-07-18 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the default position of the call quality icon in
+	'libp/mlconfig.cpp' and 'samples/default.conf'.
+2011-07-19 Fred Gleason <fredg@paravelsystems.com>
+	* Tweaked the layout of the Edit Virtual System dialog in
+	'mdbadmin/edit_system.cpp' for display under OS-X.
+	* Tweaked the layout of the Edit Show dialog in
+	'mdbadmin/edit_show.cpp' for display under OS-X.
+	* Tweaked the layout of the Edit Module dialog in
+	'mdbadmin/edit_module.cpp' for display under OS-X.
+2011-07-20 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed bugs in 'libp/mldconfig.cpp' that broke the build under
+	Windows.
+2011-07-20 Fred Gleason <fredg@paravelsystems.com>
+	* Updated build rules to remove products from building under
+	Windows.
+2011-07-20 Fred Gleason <fredg@paravelsystems.com>
+	* Updated 'samples/ml-sample.ini'.
+	* Updated 'samples/mld-sample.ini'.
+	* Updated callcommander.ism'.
+2011-07-20 Fred Gleason <fredg@paravelsystems.com>
+	* Modified registry key paths in 'ml.h' to be compatible with
+	new processing rules in Qt4.under Windows.
+2011-07-20 Fred Gleason <fredg@paravelsystems.com>
+	* Adjusted the default position of the CityState, Station and
+	Gender fields in 'libp/mlconfig.cpp' and 'samples/default.conf'.
+2011-07-20 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.0beta00.
+2011-07-20 Fred Gleason <fredg@paravelsystems.com>
+	Removed the 'AC_CONFIG_MACRO_DIR([m4])' macro from 'configure.in'.
+2011-07-20 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'callcommander.spec.in'.
+2011-07-20 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.0beta01.
+2011-07-20 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'make dmg' target.
+2011-07-21 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mldconfig.cpp' that caused loading of the
+	installation directory location from the registry fail under
+	Windows.
+2011-07-21 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'icons/CallCommander.icns'.
+	* Modified 'make_bundle.sh.in' to load library dependencies
+	properly.
+2011-07-21 Fred Gleason <fredg@paravelsystems.com>
+	* Refactored 'make_bundle.sh.in' to put all components into a
+	single DMG image.
+2011-07-21 Fred Gleason <fredg@paravelsystems.com>
+	* Moved '<app>-Info.plist' files into their respective application
+	directories.
+2011-07-25 Fred Gleason <fredg@paravelsystems.com>
+	* Reimplemented the message box widget in ml(1) to use QTextEdit
+	instead of Q3TextEdit.
+2011-07-25 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/message.cpp' and 'ml/message.h' that broke
+	display of the "Look Up!" message on Linux.
+2011-07-25 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/drawcaps.cpp' that caused incorrect
+	background colors on buttons.
+2011-07-25 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'DB Connection Parameters' dialog in 'libp/dbdialog.cpp'
+	and 'libp/dbdialog.h'.
+2011-07-25 Fred Gleason <fredg@paravelsystems.com>
+	* Added code to allow configuration of DB connection parameters
+	under OS-X.
+2011-07-25 Fred Gleason <fredg@paravelsystems.com>
+	* Tweaked the position of the 'OK' button in 'libp/login.cpp'.
+2011-07-26 Fred Gleason <fredg@paravelsystems.com>
+	* Modified 'libp/mldconfig.cpp' to load values directly from the
+	registry under Windows.
+2011-07-26 Fred Gleason <fredg@paravelsystems.com>
+	* Refactored 'mdbadmin/opendb.cpp' to create a new database schema
+	on an empty database instance.
+	* Added instructions for creating a new database in 'INSTALL'.
+2011-07-26 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed up button layout for OS-X in 'libp/dbdialog.cpp'.
+2011-07-26 Fred Gleason <fredg@paravelsystems.com>
+	* Added build rules for Win32 and OS-X binaries in 'configure.in',
+	'Makefile.am' and 'callcommander.spec.in'.
+2011-07-26 Fred Gleason <fredg@paravelsystems.com>
+	* Modified the name of the generated DMG image to conform to
+	standard conventions.
+2011-07-26 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'callcommander.spec.in' that broke the build
+	when including a DMG image.
+2011-07-26 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.0beta02.
+2011-07-27 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'BusDriver::SegclockGlobalElement' to 'BusDriver::Element' in
+	'libp/bus_driver.h'.
+	* Added 'ClientData::segmentSource()' and
+	'ClientData::setSegmentSource()' methods in 'libp/client_data.cpp'
+	and 'libp/client_data.h'.
+	* Refactored the 'ClientData::load()' method in 'libp/client_data.cpp'
+	so as to be upward compatible with future protocol changes.
+	* Added 'BusDriver::dumpString()', 'BusDriver::setDumpStrings()' and
+	'BusDriver::setSegmentSource()' methods in 'libp/bus_driver.cpp' and
+	'libp/bus_driver.h'.
+	* Added a '--dump-strings' switch to ml(1) in 'ml/mithlond.cpp' and
+	'ml/mithlond.h'.
+	* Implemented '--dump-strings' functionality in
+	'libp/virtual_driver.cpp'.
+	* Updated the ml(1) man page.
+	* Added 'icons/client_segment.xpm'.
+2011-07-27 Fred Gleason <fredg@paravelsystems.com>
+	* Removed debugging printf's from 'ml/mithlond.cpp'.
+2011-07-28 Fred Gleason <fredg@paravelsystems.com>
+	* Cleaned up 'Comment' field in the 'Callers' dialog on OS-X in
+	'ml/comment.cpp' and 'ml/comment.h'.
+2011-07-28 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed up caller box layout for OS-X in 'libp/mlconfig.cpp'.
+2011-07-28 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed video corruption on non-line buttons under Linux.
+2011-07-29 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'WINNERS' table to the database.
+	* Incremented the database version to 20.
+	* Added a 'ListWinners' dialog in 'mcallman/list_winners.cpp' and
+	'mcallman/list_winners.h'.
+	* Added an 'EditWinner' dialog in 'libp/edit_winner.cpp' and
+	'libp/edit_winner.h'.
+2011-07-30 Fred Gleason <fredg@paravelsystems.com>
+	* Modified location of 'Close' button in
+	'mcallman/select_operation.cpp'.
+2011-07-30 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlttydevice.cpp', libp/mlttydevice.h' and
+	'mcidmd/mcidmd.cpp' that broke caller id processing from external
+	modems.
+2011-07-31 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in the caller dialog that caused the Last Called and
+	Last On Air to be displayed in the incorrect location.
+2011-07-31 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'BusDriver::LastAwardDatetimeElement' to 'BusDriver::Element'
+	in 'libp/bus_driver.h'.
+	* Implemented Last Award Date/Time notification in
+	'mcidmd/process_id.cpp' and 'ml/callers.cpp'.
+2011-07-31 Fred Gleason <fredg@paravelsystems.com>
+	* Added a BusDriver-based saving method in 'libp/edit_winner.cpp' and
+	'libp/edit_winner.h'.
+2011-08-01 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/call_meta_data.cpp' that caused Award events
+	to be transmitted by 'CallMetaData::sendData()'.
+	* Added a 'DETAILS_<showcode>.COMPLETE' field to the database.
+	* Incremented the database version to 21.
+	* Implemented prize accounting in 'mcidmd(8).
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Modified 'mcallman/filter_dialog.cpp' to use Qt4-based date/time
+	edit widgets.
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Added filter options to the List Winners dialog in
+	'mcallman/list_winners.cpp' and 'mcallman/list_winners.h'.
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Implemented the 'Dump Data' button in the List Winners dialog in
+	'mcallman/list_winners.cpp'.
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in the Edit Winners dialog in 'libp/edit_winner.cpp'
+	that caused the gender value to initialized incorrectly.
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Removed the 'WINNERS.STATION' field from the database.
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Hid the 'Reports' button in the List Winners dialog in
+	'mcallman/list_winners.cpp'.
+	* Cleaned up Show Detail dialog in 'mcallman/show_detail.cpp' and
+	'mcallman/show_details.h'
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Added a work-around in 'libp/telos2101_driver.cpp' for a bug in the
+	Nx12 that causes line state updates to be generated for 'phantom'
+	banks.
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Adjusted the size of the 'Age' control on the Edit Winner dialog
+	in 'libp/edit_winner.cpp' for better appeareance under OS-X.
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlttydevice_win32.cpp' that broke the build
+	under Windows.
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Added an ml(1) only package to the 'make dmg' target.
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'callcommander-screener.ism'.
+2011-08-02 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.0beta03.
+2011-08-04 Fred Gleason <fredg@paravelsystems.com>
+	* Added a 'qt4-mysql' dependency in 'callcommander.spec.in'.
+2011-08-04 Fred Gleason <fredg@paravelsystems.com>
+	* Added an MLM for the Cunctator Delay Control System in
+	'mlm/mlm_cunctator.c'
+2011-08-04 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.0beta04.
+2011-08-15 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the 'Name:' field from 'Call Manager' to 'Call Administrator'
+	in 'xdg/callcommander-mdbadmin.desktop'.
+2011-08-15 Fred Gleason <fredg@paravelsystems.com>
+	* Commented out the [Segments] section in 'samples/default.conf' and
+	'samples/ml-sample.ini'.
+2011-08-15 Fred Gleason <fredg@paravelsystems.com>
+	* Refactored 'callcommander.spec.in' to manage sample configurations
+	by means of the post-installation script.
+2011-08-15 Fred Gleason <fredg@paravelsystems.com>
+	* Renamed dialog in mdbadmin(1) to be identified as
+	'Call Administrator'.
+	* Renamed dialog in mcallman(1) to be identified as 'Call Manager'.
+2011-08-15 Fred Gleason <fredg@paravelsystems.com>
+	* Modified the Edit Module dialog in 'mdbadmin/edit_module.cpp' to
+	default to the MLM module directory.
+2011-08-16 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.0beta05.
+2011-08-16 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mdbadmin/edit_module.cpp' that broke the build
+	under Windows and OS-X.
+2011-08-16 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.0beta06.
+2011-08-16 Fred Gleason <fredg@paravelsystems.com>
+	* Removed unpackaged files from 'callcommander.spec.in'.
+2011-08-18 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/drawcaps.cpp' that caused the background
+	of the delay dump button to be rendered with the incorrect color.
+	* Modified 'ml/drawcaps.cpp' and 'ml/mithlond.cpp' so that the
+	Busy All button changes color to show busy all state.
+2011-08-18 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that caused incorrect color
+	border on the Busy All button under OS-X.
+2011-08-18 Fred Gleason <fredg@paravelsystems.com>
+	* Updated 'INSTALL'.
+	* Updated 'NEWS'.
+	* Incremented the package version to 2.0.1.
+2011-08-19 Fred Gleason <fredg@paravelsystems.com>
+	* Added code to enforce window size in 'ml/mithlond.cpp'.
+2011-08-25 Fred Gleason <fredg@paravelsystems.com>
+	* Added code in 'ml/mithlond.cpp' to look for a configuration in
+	the application bundle under OS-X.
+	* Added code in 'libp/connection_data.cpp' to look for connection
+	profiles in the application bundle under OS-X.
+2011-08-25 Fred Gleason <fredg@paravelsystems.com>
+	* Added support for a $CALLCOMMANDER_CONFIGS environmental
+	variable for use by the 'make dmg' target.
+2011-08-25 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.2.
+2011-08-26 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mcidmd/mcidmd.cpp' that caused a segfault when
+	reloading the configuration.
+2011-08-26 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.3.
+2011-09-15 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'mi/mithlond.cpp' that caused Off-hook and
+	Speakerphone states on an associated desktop director to show as
+	Busy Elsewhere on a 2101 system.
+	* Added a 'MaxBank=' directive to the [Mcidmd] section of
+	mld.conf(5).
+2011-09-15 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlconfig.cpp' that caused hot key assignments
+	for ml(1) to be in error.
+2011-09-15 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.4.
+2012-05-13 Fred Gleason <fredg@paravelsystems.com>
+	* Changed the value of $(MOC) from 'moc' to 'moc-qt4'.
+2012-06-26 Fred Gleason <fredg@paravelsystems.com>
+	* Removed 'mlhpi/mlhpicardselector.cpp', 'mlhpi/mlhpicardselector.h',
+	'mlhpi/mlhpisoundselector.cpp' 'mlhpi/mlhpisoundselector.h'.
+2012-06-26 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.5.
+2012-08-24 Fred Gleason <fredg@paravelsystems.com>
+	* Added registry string value \\HKEY_LOCAL_MACHINE\SOFTWARE\SalemRadioLabs\CallCommander\ConnectionManagerScope in 'libp/connection_data.cpp'
+	and 'libp/connection_data.h'.
+2012-08-24 Fred Gleason <fredg@paravelsystems.com>
+	* Added code to identify the correct version of moc(1).
+2012-08-24 Fred Gleason <fredg@paravelsystems.com>
+	* Eliminated conditional compilation in 'libp/mlsegclock.cpp'.
+2012-08-24 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'samples/segments.conf'.
+2012-08-28 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.6.
+2012-09-19 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that broke delay offset processing
+	when no Dump button was configured.
+2012-09-19 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.7.
+2012-12-05 Fred Gleason <fredg@paravelsystems.com>
+	* Added the 'AM_SILENT_RULES' macro in 'configure.in'.
+	* Cleaned up warnings in 'lib/mlcmdswitch.cpp' and
+	'lib/mlcmdswitch.h'.
+2012-12-05 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that caused screen corruption
+	when one or more message boxes were disabled.
+2012-12-05 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.0.8.
+2013-04-03 Fred Gleason <fredg@paravelsystems.com>
+	* Added '/dev/ttyUSB<n>' devices to the set of scanned serial
+	devices in 'libp/edit_connection.cpp'.
+2013-04-15 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/telos100_driver.cpp' that caused serial
+	communications to peg CPU utilization.
+2013-04-15 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that broke line lock indications.
+2013-04-15 Fred Gleason <fredg@paravelsystems.com>
+	* Touched up the padlock icon in ml/line_button.cpp'.
+2013-04-15 Fred Gleason <fredg@paravelsystems.com>
+	* Modified database schema to store plaintext passwords in the DB.
+2013-04-15 Fred Gleason <fredg@paravelsystems.com>
+	* Added chkconfig headers to 'rc.mld.in', 'rc.mcidmd.in' and
+	'rc.mlmld.in'.
+2013-04-15 Fred Gleason <fredg@paravelsystems.com>
+	* Updated 'NEWS'.
+	* Updated the package version to 2.1.0.
+2013-04-22 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/ml_config.cpp' that caused incorrect
+	Caller Info box sizes to be used in ml(1).
+2013-04-24 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/drawcaps.cpp' that caused garbage to be
+	displayed around the edges of the Hold and Drop buttons
+	under Linux.
+2013-04-24 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed bugs in 'ml/drawcaps.cpp' and 'ml/mithlond.cpp' that
+	caused various graphic rendering artifacts on the edges of the
+	Dump, BusyAll, Keypad and Record buttons under Linux.
+2013-04-24 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed bugs in 'ml/keybox.cpp' that caused graphic rendering
+	artifacts on the edges of the numeric keys under Linux.
+2013-04-24 Fred Gleason <fredg@paravelsystems.com>
+	* Tweaked number buttons for proper layout under OS X in
+	'ml/keybox.cpp'.
+2013-04-24 Fred Gleason <fredg@paravelsystems.com>
+	* Added an 'BusDriver::ClearMessageGlobalElement' value to the
+	'BusDriver::Element' enumeration in 'libp/bus_driver.h'.
+	* Added a 'Clear' item to the right-click menu on the Message Box
+	widget in 'ml/message.cpp', 'ml/message.h', 'ml/msg_textedit.cpp'
+	and 'ml/msg_textedit.h'.
+2013-04-24 Fred Gleason <fredg@paravelsystems.com>
+	* Added code in 'ml/mithlond.cpp' to make the KeyBox dialog size
+	correctly under Windows.
+2013-04-26 Fred Gleason <fredg@paravelsystems.com>
+	* Updated 'NEWS'.
+	* Updated the package version to 2.1.1.
+2013-04-26 Fred Gleason <fredg@paravelsystems.com>
+	* Alphabeticized file entries in the Makefiles.

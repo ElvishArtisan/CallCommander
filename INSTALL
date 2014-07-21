@@ -1,0 +1,143 @@
+This is the installation file for the Call Commander package.
+
+CallCommander is known to build successfully on Linux, Mac OS X (Tiger) and 
+Microsoft Windows (2000/XP).  It likely will build properly on other 
+POSIX-compliant platforms for which the prerequisites have been met as well.
+
+PREREQUISITES
+You will need the following installed and configured properly on your 
+system before building Call Commander.  Not every package is required for every supported platform -- exceptions are noted below.
+
+X11 Window System
+Needed for building on Un*x-type systems, including Linux.  Virtually 
+all Linux distros should include this.
+
+Qt Toolkit, v4.4 or better
+Most modern Linux distros include this.  It's typically installed as part
+of the KDE Desktop Environment, although KDE is by no means required.
+It can also be downloaded directly from TrollTech (ftp://ftp.trolltech.com/).
+(NOTE: Qt 4.x is currently NOT supported).
+
+On Windows, you may need to purchase a Qt/Windows license from
+TrollTech (http://www.trolltech.com/).
+
+OpenSSL Cryptography Library
+Included in most Linux distros.  Also available at http://www.openssl.org/.
+
+MySQL Relational Database System
+Included in most Linux distros.  Also available at http://www.mysql.com/.
+
+100 DPI X11 Fonts (X11 systems)
+While not strictly required, 100 DPI fonts will make some of the
+widgets in Call Commander (in particular, the clock) look better if
+you are running on a Un*x-type system.  These are available in most 
+distros as a binary package.
+
+INSTALLATION
+For Un*x and OS X, installation is largely just a matter of cd'ing to the
+top-level directory of the distribution and doing:
+   ./configure
+   make
+   make install
+
+For Windows with VC++, simply cd to the top of the source tree and do:
+    build_win32
+
+QT-4 NOTES
+Some distros may require that the CPPFLAGS and LDFLAGS environmental
+variables be set prior to running ./configure in order for Qt 4 to be detected
+properly.  Some known case are:
+
+CentOS/RedHat (i386):  	export CPPFLAGS=-I/usr/lib/qt4/include
+                	export LDFLAGS=-L/usr/lib/qt4/lib
+                	export PATH=/usr/lib/qt4/bin:$PATH
+
+CentOS/RedHat (x86_64): export CPPFLAGS=-I/usr/lib64/qt4/include
+                	export LDFLAGS=-L/usr/lib64/qt4/lib64
+                	export PATH=/usr/lib64/qt4/bin:$PATH
+
+OTHER INFLUENTIAL ENVIRONMENT VARIABLES
+CALLCOMMANDER_CONFIGS=<path>
+    Look for configuration files to include in the Resources directory of the
+    application bundle in <path> (implemented only when building under OS X).
+
+OSX_SETUPS=<path>
+    Look for an OS X DMG file to include in the RPM created by the 'make rpm'
+    target in the directory pointed to by <path>.  The file should have a name
+    of the form 'callcommander-<version>-1.dmg'.
+
+WIN32_SETUPS=<path>
+    Look for a Windows setup executable file to include in the RPM created by
+    the 'make rpm' target in the directory pointed to by <path>.  The file
+    should have a name of the form 'callcommander-<version>-1.exe'.
+
+
+
+REQUIRED FIRMWARE VERSIONS
+Following is the recommended minimum firmware version for each of the
+platforms Call Commander supports.  Contact the vendor directly if you
+need an upgrade.  Please be sure you meet these requirements *before*
+submitting any bug reports!
+
+Comrex/Gentner TS-612: 3.0
+Telos TWOx12:  v3.x
+Telos 1A2 Interface Module: v5.41
+Telos Direct Interface Module: v1.48
+Telos ONEx6: ??
+
+GENTNER TS-612 CONFIGURATION
+In order for things to work correctly with the Gentner TS-612 unit,
+the unit's serial port  must be configured to operate in 'Master Mode 
+Emulation' mode.  To do this, proceed as follows:
+
+1) Remove power from the unit, loosen the four screws holding on the top
+   cover, and lift the cover off.  Near the center of the main circuit
+   board will be a large, 28 pin integrated circuit, containing the
+   system firmware.  Verify that the version of the firmware (printed
+   on the chip) is 3.0 or above.  If it is not, call Comrex and order
+   an upgrade.  Do *not* proceed with the rest of this proceedure
+   until you've verified the firmware to be 3.0 or above!  Replace the
+   cover on the unit.
+
+2) Remove power from the unit (if not already done from step 1
+   above).  Loosen the two thumbscrews on the front of the unit and
+   remove the door covering the level controls and configuration
+   dipswitches.  Move dipswitches number '4' and '10' to the
+   'down' position.  Restore power to the unit.
+
+3) Go to the control surface that is connected to the 'Main/Studio #1'
+   port.  Press the 'MODE' button, followed by the digits '0', '0',
+   '1' on the DTMF keypad.  Next, press Line Button '4'.  The
+   corresponding LED should light up red.  Finally, press the 'FLSH'
+   button to store the configuration.
+
+4)  Remove power from the unit, and place dipswitch '10' (*not* '4'!)
+    back in the 'up' position.
+
+5)  Replace the cover over the dipswitches and restore power to the
+    unit.  The TS-612 should now be properly configured to work with
+    CallCommander.
+
+For further information on programming configuration from the control
+surface, see the Gentner documentation for further details.
+
+DATABASE CONFIGURATION
+To initialize a database for use with the Call Administrator [mdbadmin(1)]
+and Call Manager [mcallman(1)] components, create an empty database in MySQL,
+along with a user to access it.  The user should have the following
+permissions:
+
+	Select
+	Insert
+	Update
+	Delete
+	Create
+	Drop
+	Index
+	Alter
+	Create Temp Table
+	Lock Tables
+
+DB access parameters (Hostname, Username, Password, DB Name) can be entered
+in the "DB Connection Parameters" dialog, accessed from the Login dialog in
+the Call Administrator.

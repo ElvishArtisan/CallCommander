@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|'
+# on the right side marks the last column you can put a character in.  You must
+# make exactly 11 lines for the formatting to be correct.  It's also
+# customary to leave one space after the ':'.
+
+                                          |-----handy-ruler------------------------------------------------------|
+callcommander-@VERSION@-i586-@RPM_RELEASE@: callcommander (A call screener system for professional talk radio
+callcommander-@VERSION@-i586-@RPM_RELEASE@: environments.)
+callcommander-@VERSION@-i586-@RPM_RELEASE@: 
+callcommander-@VERSION@-i586-@RPM_RELEASE@: Call Commander is a high performance call management and screener
+callcommander-@VERSION@-i586-@RPM_RELEASE@: system targeted for use in professional talk radio environments.
+callcommander-@VERSION@-i586-@RPM_RELEASE@: It supports a variety of popular broadcast telephone systems, and
+callcommander-@VERSION@-i586-@RPM_RELEASE@: features a comfortable, graphical control interface that is also
+callcommander-@VERSION@-i586-@RPM_RELEASE@: highly configurable.
+callcommander-@VERSION@-i586-@RPM_RELEASE@: 
+callcommander-@VERSION@-i586-@RPM_RELEASE@: 
+callcommander-@VERSION@-i586-@RPM_RELEASE@:

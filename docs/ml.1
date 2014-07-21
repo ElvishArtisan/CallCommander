@@ -1,0 +1,225 @@
+.TH ml 1 "August 2007" Linux "Linux Audio Manual"
+.SH NAME
+ml \- The Call Commander Telephone Screening System user interface
+
+.SH SYNOPSIS
+ml [OPTION] [config-file]
+
+.SH DESCRIPTION
+\fBMl\fP is the user interface component of the Call Commander Telephone
+Screening System.  It is extensively customizable, with virtually
+every aspect of its operation controlled by means of a configuration
+file.
+
+.SH OPTIONS
+.TP
+.B --dump-strings
+Start normally and dump raw communication strings to standard output.
+Basically useless except for debugging purposes.
+.TP
+.B --help
+Print a short usage message and exit.
+.TP
+.B -v, --version
+Output version information and exit.
+
+.SH USER INTERFACE ELEMENTS
+\fBMl\fP provides many of the same controls found on a modern Telos
+Desktop Director, plus facilities for displaying caller information,
+Host/Producer communication and precise timekeeping/cueing.  These
+elements include:
+.TP
+.B Line Buttons
+These are used both to command a phone line into a particular state as
+well as to show the current state of a line.
+.TP
+.B Hold Buttons
+These are used to place all of the active, unlocked lines on a
+particular bank on HOLD.
+.TP
+.B Drop Buttons
+These are used to hang up all of the active, unlocked lines on a
+bank. 
+.TP
+.B Busy Out Button
+Places all unused lines on the system into BUSYOUT mode.
+.TP
+.B Delay Dump Button
+Causes the associated profanity delay system to dump (if so
+configured).
+.TP
+.B Record Button
+Places the associated recording device into RECORD mode (if so
+configured).
+.TP
+.B Next Button
+Put the call currently designated as NEXT (indicated by a flashing
+check mark on it's corresponding Line Button) on-air on the Main Bank.
+.TP
+.B Keypad Button
+Pulls up a touch-tone keypad for dialing a call (see the BUGS section,
+though).
+.TP
+.B Flash Button
+Causes the currently selected line to go briefly on-hook (often used
+to access functions on an underlying PBX system).  NOTE:  This button
+is applicable only for use with a Gentner/Comrex TS-612 system.  It
+has no function with other systems.
+.TP
+.B Screen Button
+Toggle the screening mode of the attached telephone interface.  NOTE:  
+This button is applicable only for use with a Gentner/Comrex TS-612 
+system.  It has no function with other systems.
+.TP
+.B Mute Button
+Mute the on-air caller audio of the attached telephone interface.  NOTE:  
+This button is applicable only for use with a Gentner/Comrex TS-612 
+system.  It has no function with other systems.
+.TP
+.B Conf Button
+Place the attached telephone interface into conference mode.  NOTE:  
+This button is applicable only for use with a Gentner/Comrex TS-612 
+system.  It has no function with other systems.
+.TP
+.B VIP Button
+Place the attached telephone interface into VIP mode.  NOTE:  
+This button is applicable only for use with a Gentner/Comrex TS-612 
+system.  It has no function with other systems.
+.TP
+.B Broadcast Segment Clock
+A combined twenty-four hour clock and segment timer, the Segment Clock
+is capable of providing accurate and precise cueing information to
+both Talent and Producers by means of information passed to it in the
+configuration file.
+.TP
+.B Message Box
+A chatroom-style interface widget, the Message Box provides a means
+for Talent, Producer and any other interested party to maintain
+communications even when mics are open. 
+
+.SH CONFIGURATION FILE 
+Upon startup, \fBml\fP will look for a configuration file in the
+following locations/order.
+.RS
+.TP
+Command Line
+The file whose name is passed as the last argument on the command
+line.
+.TP
+$HOME/.mlrc
+The file \fB.mlrc\fP in the user's home directory.
+.TP
+/etc/ml.conf
+The file \fBml.conf\fP in the /etc/ directory.
+.TP
+<bundle-dir>/Contents/Resources/ml.conf
+The file \fBml.conf\fP in the application bundle (OS X only).
+.RE
+.RE
+
+If no configuration file is found at any of the above locations,
+\fBml\fP will use a default configuration compiled into the program.
+When a configuration file is found, further searching
+stops.  The format of this file is documented in the ml.conf(5) man
+page.
+
+.SH
+HOTKEYS
+Every button displayed by \fBml\fP is capable of being mapped to a 
+corresponding hotkey, thus allowing operation independently of a mouse or
+other pointing device.  These mappings are defined in the configuration 
+file (see the \fBCONFIGURATION FILE\fP section above).
+
+In its default configuration, the hotkey mapping for \fBml\fP is as
+follows:
+
+.TP
+.B F1 - F12
+Place lines 1 through 12 on the air on the Main Bank.
+
+.TP
+.B SHIFT-F1 - SHIFT-F12
+Place lines 1 through 12 on the air on the Conference Bank.
+
+.TP
+.B CONTROL-F1 - CONTROL-F12
+Display the Caller Information dialog box for lines 1 through 12.
+
+.TP
+.B HOME
+Place all active, unlocked calls on the Main Bank into Hold.
+
+.TP
+.B END
+Drop all active unlocked calls on the Main Bank
+
+.TP
+.B SHIFT-HOME
+Place all active, unlocked calls on the Conference Bank into Hold.
+
+.TP
+.B SHIFT-END
+Drop all active unlocked calls on the Conference Bank
+
+.TP
+.B ALT-D
+Dump the profanity delay (if so configured).
+
+.TP
+.B ALT-N
+Place the next screened call on air on the Main Bank.
+
+.TP
+.B ALT-R
+Toggle the associated recording device on/off (if so configured).
+
+.TP
+.B ALT-B
+Toggle the busy-out status of all idle lines.
+
+.TP
+.B ALT-K
+Bring up the DTMF keypad for dialing.  You should make sure you've
+selected a line before doing this.
+
+.TP
+.B ALT-F
+Flash the switchhook on the currently selected line.  This works only with
+the Gentner/Comrex TS-612, and has no effect with other systems.
+
+.TP
+.B ALT-S
+Toggle the screening mode on the telephone interface.  This works only
+with the Gentner/Comrex TS-612, and has no effect with other systems.
+
+.TP
+.B ALT-M
+Mute caller output audio on the telephone interface.  This works only with
+the Gentner/Comrex TS-612, and has no effect with other systems.
+
+.TP
+.B ALT-C
+Toggle the conferencing mode on the telephone interface.  This works
+only with the Gentner/Comrex TS-612, and has no effect with other systems.
+
+.TP
+.B ALT-V
+Toggle VIP mode on the telephone interface.  This works only with
+the Gentner/Comrex TS-612, and has no effect with other systems.
+
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR callcommander(1),
+.BR ml.conf(5),
+.BR mcs(1),
+.BR mld(8),
+.BR mld.conf(5)
+
+
+
+
+
+
+
+

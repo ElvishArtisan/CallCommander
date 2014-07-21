@@ -1,0 +1,20 @@
+              SHOW_SLOTS Table Layout for CallCommander
+
+The SHOW_SLOTS table holds data concerning each time slot for which a
+show is considered active on the system.  Following is the layout of a 
+record in the SHOW_SLOTS table:
+
+FIELD NAME           TYPE              REMARKS
+----------------------------------------------------------------------
+ID                   int(11)           Primary key, auto incrementing
+SHOW_CODE            char(3)
+FILTER_POLICY        int               0=Default Accept, 1=Default Deny
+START_TIME           time
+END_TIME             time
+SUN                  enum('N','Y')
+MON                  enum('N','Y')
+TUE                  enum('N','Y')
+WED                  enum('N','Y')
+THU                  enum('N','Y')
+FRI                  enum('N','Y')
+SAT                  enum('N','Y')

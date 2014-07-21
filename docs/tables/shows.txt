@@ -1,0 +1,29 @@
+                   SHOWS Table Layout for CallCommander
+
+The SHOWS table holds data concerning each individual show configured
+on the system.  Following is the layout of a record in the SHOWS table:
+
+FIELD NAME           TYPE              REMARKS
+---------------------------------------------------------------
+SHOW_CODE            char(3)           Primary key
+TITLE                char(64)
+DEFAULT_LABEL_ACTION int(11) signed    0=Blank, 1=UseFirstKnown,
+                                       2=UseLastKnown,3 =UseSpecified
+IS_ACTIVE            enum('N','Y')
+CID_HOSTNAME         char(255)
+CID_CONNECTION       char(255)         Name of connection to use for
+                                       Caller ID monitoring
+CID_CONNECTION_PATH  char(255)         Full path to connection data.
+CID_SOURCE_ID        int(11)
+START_TIME           time
+END_TIME             time
+SUN                  enum('N','Y')
+MON                  enum('N','Y')
+TUE                  enum('N','Y')
+WED                  enum('N','Y')
+THU                  enum('N','Y')
+FRI                  enum('N','Y')
+SAT                  enum('N','Y')
+LOCAL_AREA_CODE      char(10)          Area code to prepend to
+                                       qualified pnums
+KILL_CALLS           enum('N','Y')

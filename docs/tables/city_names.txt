@@ -1,0 +1,10 @@
+                CITY_NAMES Table Layout for CallCommander
+
+The CITY_NAMES table holds the names of all known rate center names that
+should be converted upon import.  Following is the layout of a record
+in the CITY_NAMES table:
+
+FIELD NAME           TYPE             REMARKS
+--------------------------------------------------------------------------
+NAME                 char(20)         Primary key
+FULL_NAME            char(20)

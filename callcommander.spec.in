@@ -1,0 +1,416 @@
+## callcommander.spec.in
+##
+##    The CallCommander Call Management System
+##    Copyright (C) 2002-2005 Fred Gleason <fredg@paravelsystems.com>
+##
+##    This program is free software; you can redistribute it and/or modify
+##    it under the terms of version 2 of the GNU General Public License as
+##    published by the Free Software Foundation;
+##
+##    This program is distributed in the hope that it will be useful,
+##    but WITHOUT ANY WARRANTY; without even the implied warranty of
+##    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##    GNU General Public License for more details.
+##
+##    You should have received a copy of the GNU General Public License
+##    along with this program; if not, write to the Free Software
+##    Foundation, Inc., 59 Temple Place, Suite 330, 
+##    Boston, MA  02111-1307  USA
+##
+
+Summary: Call screener system for professional talk radio environments.
+Name: callcommander
+Version: @VERSION@
+Release: @RPM_RELEASE@
+License: GPL
+Group: Hardware/Other
+Source: ftp://ftp.salemradiolabs.com/pub/srlabs/callcommander/callcommander-@VERSION@.tar.gz
+BuildRoot: /var/tmp/callcommander-@VERSION@
+Requires: qt4-mysql
+
+%description
+Call Commander is a high performance call management and screener system 
+targeted for use in professional talk radio environments.  It supports a 
+variety of popular broadcast telephone systems, and features a comfortable,
+graphical control interface that is also highly configurable.
+
+%package audio
+Summary: The Audio Call Skimmer Component for CallCommander 
+Group: Hardware/Other
+Requires: callcommander
+
+%description audio
+The Audio Call Skimmer is an audio recorder that can be configured to
+automatically capture caller audio.
+
+%package devel
+Summary: Sample source code for CallCommander Logic Modules 
+Group: Hardware/Other
+Requires: callcommander
+
+%description devel
+This package contains sample source code and Makefiles for building
+CallCommander Logic Module plugins.
+
+%prep
+%setup
+./configure --prefix=@LOCAL_PREFIX@ @SOUND_FLAG@
+
+%build
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@
+cp libp/.libs/libml-@VERSION@.so $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/
+ln -s @LOCAL_PREFIX@/@CALL_LIB_PATH@/libml-@VERSION@.so $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/libml.so
+cp libp/.libs/libml.a $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/
+cp libp/.libs/libml.la $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/
+cp mlhpi/.libs/libmlhpi-@VERSION@.so $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/
+ln -s @LOCAL_PREFIX@/@CALL_LIB_PATH@/libmlhpi-@VERSION@.so $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/libmlhpi.so
+cp mlhpi/.libs/libmlhpi.a $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/
+cp mlhpi/.libs/libmlhpi.la $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin
+cp ml/.libs/ml $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
+cp mdbadmin/.libs/mdbadmin $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
+cp mcallman/.libs/mcallman $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
+cp mcs/.libs/mskimmer $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin
+cp mld/.libs/mld $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/
+cp mcidmd/.libs/mcidmd $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/
+cp mlmh/.libs/mlmh $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/
+cp mlmld/.libs/mlmld $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/
+cp scripts/twinkle_hybrid.sh $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/
+cp scripts/twinkle_answer.sh $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/
+cp scripts/twinkle_call.sh $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/include/mlm
+cp mlm/mlm.h $RPM_BUILD_ROOT@LOCAL_PREFIX@/include/mlm/
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/src/mlm
+cp mlm/mlm_test.c $RPM_BUILD_ROOT@LOCAL_PREFIX@/src/mlm
+cp mlm/mlm_dump_calls.c $RPM_BUILD_ROOT@LOCAL_PREFIX@/src/mlm/
+cp mlm/mlm_remora.c $RPM_BUILD_ROOT@LOCAL_PREFIX@/src/mlm/
+cp mlm/mlm_airtools.c $RPM_BUILD_ROOT@LOCAL_PREFIX@/src/mlm/
+cp mlm/mlm_udpdelay.c $RPM_BUILD_ROOT@LOCAL_PREFIX@/src/mlm/
+cp mlm/mlm_cunctator.c $RPM_BUILD_ROOT@LOCAL_PREFIX@/src/mlm/
+cp mlm/Makefile-example $RPM_BUILD_ROOT@LOCAL_PREFIX@/src/mlm/
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/man/man1
+cp docs/callcommander.1 $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/man/man1/
+cp docs/ml.1 $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/man/man1/
+cp docs/mskimmer.1 $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/man/man1/
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/man/man5
+cp docs/ml.conf.5 $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/man/man5/
+cp docs/mld.conf.5 $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/man/man5/
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/man/man8
+cp docs/mcidmd.8 $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/man/man8/
+cp docs/mld.8 $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/man/man8/
+mkdir -p $RPM_BUILD_ROOT/etc/mlm
+
+mkdir -p $RPM_BUILD_ROOT/etc/init.d
+cp rc.mcidmd $RPM_BUILD_ROOT/etc/init.d/mcidmd
+cp rc.mld $RPM_BUILD_ROOT/etc/init.d/mld
+cp rc.mlmld $RPM_BUILD_ROOT/etc/init.d/mlmld
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm
+cp mlm/mlm_test.mlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm
+cp mlm/mlm_dump_calls.mlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm
+cp mlm/mlm_remora.mlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm
+cp mlm/mlm_airtools.mlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm
+cp mlm/mlm_udpdelay.mlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm
+cp mlm/mlm_cunctator.mlm $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/callcommander
+cp scripts/twinkle.sys $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/callcommander/
+cp scripts/twinkle.cfg $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/callcommander/
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/icons/hicolor/16x16/apps
+cp icons/callcommander-16x16.png $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/icons/hicolor/16x16/apps/callcommander.png
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/icons/hicolor/22x22/apps
+cp icons/callcommander-22x22.png $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/icons/hicolor/22x22/apps/callcommander.png
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/icons/hicolor/32x32/apps
+cp icons/callcommander-32x32.png $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/icons/hicolor/32x32/apps/callcommander.png
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/icons/hicolor/48x48/apps
+cp icons/callcommander-48x48.png $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/icons/hicolor/48x48/apps/callcommander.png
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/X11/fvwm2/pixmaps
+cp icons/callcommander-16x16.xpm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/X11/fvwm2/pixmaps/mini.callcommander.xpm
+cp icons/callcommander-32x32.xpm $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/X11/fvwm2/pixmaps/callcommander.xpm
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/applications
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/applications
+cp xdg/callcommander-ml.desktop $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/applications/callcommander-ml.desktop
+cp xdg/callcommander-mdbadmin.desktop $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/applications/callcommander-mdbadmin.desktop
+cp xdg/callcommander-mcallman.desktop $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/applications/callcommander-mcallman.desktop
+cp xdg/callcommander-mskimmer.desktop $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/applications/callcommander-mskimmer.desktop
+mkdir -p $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/desktop-directories
+cp xdg/callcommander-callcommander.directory $RPM_BUILD_ROOT@LOCAL_PREFIX@/share/desktop-directories/
+mkdir -p $RPM_BUILD_ROOT/etc/xdg/menus/applications-merged
+cp xdg/callcommander-callcommander.menu $RPM_BUILD_ROOT/etc/xdg/menus/applications-merged/
+if test "@WIN32_SOURCE@" ; then
+  mkdir -p $RPM_BUILD_ROOT/var/win32
+  cp @WIN32_SOURCE@ $RPM_BUILD_ROOT/var/win32/
+fi
+if test "@OSX_SOURCE@" ; then
+  mkdir -p $RPM_BUILD_ROOT/var/osx
+  cp @OSX_SOURCE@ $RPM_BUILD_ROOT/var/osx/
+fi
+
+if test "@STRIP_DEBUG@" = "yes" ; then
+  strip $RPM_BUILD_ROOT@LOCAL_PREFIX@/@CALL_LIB_PATH@/libml-@VERSION@.so
+  strip $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/ml
+  strip $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/mdbadmin
+  strip $RPM_BUILD_ROOT@LOCAL_PREFIX@/bin/mcallman
+  strip $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/mld
+  strip $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/mcidmd
+  strip $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/mlmh
+  strip $RPM_BUILD_ROOT@LOCAL_PREFIX@/sbin/mlmld
+fi
+
+%post
+ldconfig
+if test "@DISTRO@" = "suse" ; then
+  PACKAGE_DOC_DIR=%_docdir/%{name}
+fi
+if test "@DISTRO@" = "redhat" ; then
+  PACKAGE_DOC_DIR=%_docdir/%{name}-@VERSION@
+fi
+if test ! -e /etc/ml.conf ; then
+  cp $PACKAGE_DOC_DIR/default.conf /etc/ml.conf
+fi
+if test ! -e /etc/mld.conf ; then
+  cp $PACKAGE_DOC_DIR/mld.conf /etc/mld.conf
+fi
+if test ! -e /etc/mlm/mlm_airtools.conf ; then
+  cp $PACKAGE_DOC_DIR/mlm_airtools.conf /etc/mlm/
+fi
+if test ! -e /etc/mlm/mlm_cunctator.conf ; then
+  cp $PACKAGE_DOC_DIR/mlm_cunctator.conf /etc/mlm/
+fi
+if test ! -e /etc/mlm/mlm_remora.conf ; then
+  cp $PACKAGE_DOC_DIR/mlm_remora.conf /etc/mlm/
+fi
+if test ! -e /etc/mlm/mlm_udpdelay.conf ; then
+  cp $PACKAGE_DOC_DIR/mlm_udpdelay.conf /etc/mlm/
+fi
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root)
+%doc README 
+%doc INSTALL 
+%doc NEWS 
+%doc AUTHORS 
+%doc ChangeLog 
+%doc COPYING 
+%doc samples/encode_call
+%doc samples/default.conf 
+%doc samples/dks-screen.conf 
+%doc samples/gallagher-host.conf 
+%doc samples/jpa-host.conf 
+%doc samples/jpa-screener.conf 
+%doc samples/medved.conf
+%doc samples/mld.conf
+%doc samples/null.conf
+%doc samples/ra.conf
+%doc samples/swcons.conf
+%doc samples/ts612.conf
+%doc samples/srn_clock.conf
+%doc samples/ra-auxprod.conf
+%doc samples/four_banks.conf
+%doc samples/segments.conf
+%doc samples/small_clock.conf
+%doc samples/chat.conf
+%doc samples/mlm_airtools.conf
+%doc samples/mlm_cunctator.conf
+%doc samples/mlm_remora.conf
+%doc samples/mlm_udpdelay.conf
+%doc icons/callcommander-16x16.png
+%doc icons/callcommander-22x22.png
+%doc icons/callcommander-32x32.png
+%doc icons/callcommander-48x48.png
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/libml-@VERSION@.so
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/libml.so
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/libml.a
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/libml.la
+@LOCAL_PREFIX@/bin/ml
+@LOCAL_PREFIX@/bin/mdbadmin
+@LOCAL_PREFIX@/bin/mcallman
+@LOCAL_PREFIX@/sbin/mld
+@LOCAL_PREFIX@/sbin/mcidmd
+@LOCAL_PREFIX@/sbin/mlmh
+@LOCAL_PREFIX@/sbin/mlmld
+@LOCAL_PREFIX@/sbin/twinkle_hybrid.sh
+@LOCAL_PREFIX@/sbin/twinkle_answer.sh
+@LOCAL_PREFIX@/sbin/twinkle_call.sh
+@LOCAL_PREFIX@/include/mlm/mlm.h
+%attr(755,root,root) /etc/init.d/mld
+%attr(755,root,root) /etc/init.d/mcidmd
+%attr(755,root,root) /etc/init.d/mlmld
+%attr(755,root,root) /etc/mlm
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm/mlm_test.mlm
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm/mlm_dump_calls.mlm
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm/mlm_remora.mlm
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm/mlm_airtools.mlm
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm/mlm_udpdelay.mlm
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/mlm/mlm_cunctator.mlm
+@LOCAL_PREFIX@/share/callcommander/twinkle.sys
+@LOCAL_PREFIX@/share/callcommander/twinkle.cfg
+@LOCAL_PREFIX@/share/man/man1/callcommander.1.gz
+@LOCAL_PREFIX@/share/man/man1/ml.1.gz
+@LOCAL_PREFIX@/share/man/man1/mskimmer.1.gz
+@LOCAL_PREFIX@/share/man/man5/ml.conf.5.gz
+@LOCAL_PREFIX@/share/man/man5/mld.conf.5.gz
+@LOCAL_PREFIX@/share/man/man8/mld.8.gz
+@LOCAL_PREFIX@/share/man/man8/mcidmd.8.gz
+@LOCAL_PREFIX@/share/icons/hicolor/16x16/apps/callcommander.png
+@LOCAL_PREFIX@/share/icons/hicolor/22x22/apps/callcommander.png
+@LOCAL_PREFIX@/share/icons/hicolor/32x32/apps/callcommander.png
+@LOCAL_PREFIX@/share/icons/hicolor/48x48/apps/callcommander.png
+@LOCAL_PREFIX@/share/X11/fvwm2/pixmaps/mini.callcommander.xpm
+@LOCAL_PREFIX@/share/X11/fvwm2/pixmaps/callcommander.xpm
+@LOCAL_PREFIX@/share/applications/callcommander-ml.desktop
+@LOCAL_PREFIX@/share/applications/callcommander-mdbadmin.desktop
+@LOCAL_PREFIX@/share/applications/callcommander-mcallman.desktop
+@LOCAL_PREFIX@/share/desktop-directories/callcommander-callcommander.directory
+/etc/xdg/menus/applications-merged/callcommander-callcommander.menu
+@WIN32_PATH@
+@OSX_PATH@
+
+%files audio
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/libmlhpi-@VERSION@.so
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/libmlhpi.so
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/libmlhpi.a
+@LOCAL_PREFIX@/@CALL_LIB_PATH@/libmlhpi.la
+@LOCAL_PREFIX@/bin/mskimmer
+@LOCAL_PREFIX@/share/man/man1/mskimmer.1.gz
+@LOCAL_PREFIX@/share/applications/callcommander-mskimmer.desktop
+
+%files devel
+@LOCAL_PREFIX@/src/mlm/mlm_test.c
+@LOCAL_PREFIX@/src/mlm/mlm_dump_calls.c
+@LOCAL_PREFIX@/src/mlm/mlm_remora.c
+@LOCAL_PREFIX@/src/mlm/mlm_airtools.c
+@LOCAL_PREFIX@/src/mlm/mlm_udpdelay.c
+@LOCAL_PREFIX@/src/mlm/mlm_cunctator.c
+@LOCAL_PREFIX@/src/mlm/Makefile-example
+
+%changelog
+* Mon Apr 15 2013 Fred Gleason <fredg@paravelsystems.com>
+-- Changed icons to PNG format.
+* Fri Aug 24 2012 Fred Gleason <fredg@paravelsystems.com>
+-- Added 'samples/segments.conf'.
+* Mon Aug 15 2011 Fred Gleason <fredg@paravelsystems.com>
+-- Moved configuration file management to the post install script.
+-- Added 'mlm_cunctator.mlm'.
+* Thu Aug 04 2011 Fred Gleason <fredg@paravelsystems.com>
+-- Added a 'qt4-mysql' dependency.
+* Tue Jul 26 2011 Fred Gleason <fredg@paravelsystems.com>
+-- Added support for win32 and OS-X setup packages.
+* Wed Dec 15 2010 Fred Gleason <fredg@paravelsystems.com>
+-- Refactored XDG files.
+* Sun Nov 28 2010 Fred Gleason <fredg@paravelsystems.com>
+-- Added 'small_clock.conf'.
+* Fri Jun 25 2010 Fred Gleason <fredg@paravelsystems.com>
+-- Added icons for fvwm(1).
+-- Added code to strip binaries.
+* Tue Sep 08 2009 Fred Gleason <fredg@paravelsystems.com>
+-- Renamed mcs(1) to mskimmer(1).
+* Tue Sep 08 2009 Fred Gleason <fredg@paravelsystems.com>
+-- Updated the man page location to '/usr/share/man/'.
+* Fri Sep 04 2009 Fred Gleason <fredg@paravelsystems.com>
+-- Added the 'samples/chat.conf' example configuration.
+* Fri Feb 13 2009 Fred Gleason <fredg@paravelsystems.com>
+-- Added the 'mlm_udpdelay' plugin.
+* Fri Oct 24 2008 Fred Gleason <fredg@paravelsystems.com>
+-- Removed the 'cc_create_db' script.
+* Mon Feb 19 2008 Fred Gleason <fredg@paravelsystems.com>
+-- Added soft hybrid scripts for twinkle(1).
+* Fri Dec 14 2007 Fred Gleason <fredg@paravelsystems.com>
+-- Added support for x86_64 architecture.
+* Mon Sep 03 2007 Fred Gleason <fredg@paravelsystems.com>
+-- Integrated LibRadio, LibRHpi and LibTelos2101 packages.
+* Fri Aug 24 2007 Fred Gleason <fredg@paravelsystems.com>
+-- Added the 'mlm_airtools.conf' Logic Module configuration file.
+-- Added the 'mlm_remora.conf' Logic Module configuration file.
+-- Added the 'mld.conf' configuration file.
+* Wed Aug 22 2007 Fred Gleason <fredg@paravelsystems.com>
+-- Added the 'mlm_airtools' Logic Module plugin.
+* Fri Aug 17 2007 Fred Gleason <fredg@paravelsystems.com>
+-- Added the 'mlm_remora' Logic Module plugin.
+* Thu Aug 16 2007 Fred Gleason <fredg@paravelsystems.com>
+-- Added the 'devel' package.
+* Mon Aug 13 2007 Fred Gleason <fredg@paravelsystems.com>
+-- Added CallCommander Logic Module components.
+* Thu Aug 09 2007 Fred Gleason <fredg@paravelsystems.com>
+-- Changed the 'Copyright:' tag to 'License:'
+-- Added the 'mcs(1)', 'mld.conf(5)', 'mld(8)' and 'mcidmd(8)' man pages.
+* Tue May 23 2006 Fred Gleason <fredg@salemradiolabs.com>
+-- Added an 'audio' subpackage containing mcs(1).
+* Wed May 17 2006 Fred Gleason <fredg@salemradiolabs.com>
+-- Fixed a bug whereby the init script for mcidmd(8) was being
+installed in place of the proper one for mld(8).
+* Fri May 12 2006 Fred Gleason <fredg@salemradiolabs.com>
+-- Added mld(8)
+-- Added mcidmd(8)
+* Fri May 05 2006 Fred Gleason <fredg@salemradiolabs.com>
+-- Removed mld(8)
+-- Removed the public library components.
+-- Removed the 'devel' subpackage.
+* Mon Feb 13 2006 Fred Gleason <fredg@salemradiolabs.com>
+-- Altered the install section so as not to use 'make install'.
+* Wed Feb 08 2006 Fred Gleason <fredg@salemradiolabs.com>
+-- Altered install paths to use $prefix value from Autoconf.
+* Thu Nov 03 2005 Fred Gleason <fredg@salemradiolabs.com>
+- Added icons.
+* Tue Jun 07 2005 Fred Gleason <fredg@salemradiolabs.com>
+- Added rtelos2101.h.
+* Tue Jun 07 2005 Fred Gleason <fredg@salemradiolabs.com>
+- Fixed libtelco version info.
+* Mon Feb 21 2005 Fred Gleason <fredg@salemradiolabs.com>
+- Added 'ldconfig' to the %post rule.
+* Wed Feb 02 2005 Fred Gleason <fredg@salemradiolabs.com>
+- Added MCallMan
+- Added MDbAdmin
+- Added libml
+* Mon Nov 29 2004 Fred Gleason <fredg@salemradiolabs.com>
+- Added 'rcalleridtrap.h'.
+- Added 'rcalleriddetail.h'.
+* Fri Jul 09 2004 Fred Gleason <fredg@salemradiolabs.com>
+- Added 'samples/encode_call'.
+* Fri May 28 2004 Fred Gleason <fredg@salemradiolabs.com>
+- Added 'samples/ra-auxprod.conf'.
+- Added librtelco.
+* Fri Apr 30 2004 Fred Gleason <fredg@salemradiolabs.com>
+- Set the attributes for '/etc/init.d/mld'.
+* Wed Feb 25 2004 Fred Gleason <fredg@salemradiolabs.com>
+- Added '/etc/ml.conf' and '/etc/mld.conf' configuration files to the
+files list.
+* Thu Jan 15 2004 Fred Gleason <fredg@salemradiolabs.com>
+- Add install rule for the mld(8) init script.
+* Fri Jun 20 2003 Fred Gleason <fredg@salemradiolabs.com>
+- Modified for integration into Call Commander's build system.
+* Fri May 02 2003 Fred Gleason <fredg@salemradiolabs.com>
+- Modified for libradio-0.14.2 on SuSE 8.x.
+* Thu Apr 17 2003 Fred Gleason <fredg@salemradiolabs.com>
+- Modified for callcommander-1.1.1 on SuSE 8.x.
+* Fri Mar 14 2003 Fred Gleason <fredg@salemradiolabs.com>
+- Modified for mithlond-1.1.0 on SuSE 8.x.
+- Added 'samples/null.conf' to the doc group.
+- Added '/usr/local/bin/mcs'
+- Added '/usr/local/man/man1/mcs.1.gz'
+- Added the '--enable-alsa' flag to './configure'.
+* Mon Dec 09 2002 Fred Gleason <fredg@wava.com>
+- Modified for mithlond-1.0.1 on SuSE 8.x.
+* Mon Dec 09 2002 Fred Gleason <fredg@wava.com>
+- Modified for mithlond-1.0.0 on SuSE 8.x.
+* Thu Dec 05 2002 Fred Gleason <fredg@wava.com>
+- Changed product name from 'Mithlond' to 'Call Commander'
+- Renamed 'mithlond.1' man page to 'callcommander.1'.
+* Thu Nov 14 2002 Fred Gleason <fredg@wava.com>
+- Rebuilt from release 2 using libradio-0.12.2.
+- Changed installation prefix from '/usr' to '/usr/local'.
+* Thu Nov 14 2002 Fred Gleason <fredg@wava.com>
+- Rebuilt from release 1 using libradio-0.12.2.
+* Sun Nov 10 2002 Fred Gleason <fredg@wava.com>
+- Modified for mithlond-0.5.1 on SuSE 8.1.
+* Wed Nov 6 2002 Fred Gleason <fredg@wava.com>
+- Modified for mithlond-0.5.0 on SuSE 8.1.
+* Wed Sep 19 2002 Fred Gleason <fredg@wava.com>
+- Copied from mithlond-0.4.0-1.spec for Red Hat and modified for 0.4.1
+on SuSE 8.0.

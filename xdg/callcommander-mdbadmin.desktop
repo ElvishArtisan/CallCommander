@@ -1,0 +1,10 @@
+[Desktop Entry]
+Categories=Call Commander;
+Encoding=UTF-8
+Name=Call Administrator
+GenericName=Call Database Configuration
+Exec=mdbadmin
+Icon=callcommander
+Path=
+Type=Application
+Terminal=false

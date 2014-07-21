@@ -1,0 +1,72 @@
+.TH Call\ Commander 1 "August 2007" Linux "Linux Audio Manual"
+.SH NAME
+Call Commander \- A Telephone Caller Management System
+
+.SH DESCRIPTION
+\fBCall Commander\fP is a high-performance call management and screening system
+targeted for use in professional talk radio environments.  Facilities
+for the monitoring and control of a range of popular broadcast telephone
+systems are provided, as well as means of communication between talent,
+producers and other interested parties.
+
+.SH SUPPORTED TELEPHONE SYSTEMS
+At present, \fBCall Commander\fP supports the following broadcast 
+telephone systems:
+
+.TP
+.B Gentner/Comrex TS-612 Multiline Telephone System
+.TP
+.B Telos 100 1A2 Key Interface Module
+.TP
+.B Telos 100 Direct Interface Module
+.TP
+.B Telos ONEx6 Broadcast Telephone Interface
+.TP
+.B Telos TWOx12 Multiline Broadcast Telephone System
+.TP
+.B Telos Series 2101 Multi-line Multi-studio Broadcast Telephone System
+
+.SH COMPONENTS
+\fBCall Commander\fP consists of four seperate component programs, as 
+follows:
+
+.TP
+.B ml
+The Call Commander User Interface Program.  Provides a comfortable, graphical
+interface for communications, call management and precise timekeeping and 
+cueing.
+
+\fBMl\fP is highly configurable, with virtually every aspect of its
+operation and appearance customizable by means of configuration file 
+directives.  For more information, see the \fBml(1)\fP manpage.
+
+.TP
+.B mcs
+The Call Commander Call Skimmer.  A specialized audio recorder that
+can be used to automatically record telephone conversations under the 
+control of the associated telephone interface.  See the \fBmcs(1)\fP 
+manpage for further details.
+
+.TP
+.B mcidmd
+The Call Commander Caller ID Monitoring Daemon.  A specialized screening
+client, this runs in the background and is responsible for recording and
+taking action Caller ID information from incoming calls.
+
+.TP
+.B mld
+The Call Commander Virtualization Daemon.  Provides a mechanism by which
+telephone systems that lack a native TCP/IP interface can be interfaced
+to \fBml\fP, \fBmcs\fP, \fBmcidmd\fP and \fBmcs\fP.  One host system 
+running \fBmld\fP can provide virtualization services for up to eight 
+telephone systems attached via local serial ports.  See the \fBmld(8)\fP 
+manpage for further details.
+
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR ml(1),
+.BR mcs(1),
+.BR ml.conf(5),
+.BR mld(8),
+.BR mld.conf(5)

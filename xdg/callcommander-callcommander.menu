@@ -1,0 +1,11 @@
+<!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN" "http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd">
+<Menu>
+<Name>Applications</Name>
+<Menu>
+  <Name>Call Commander</Name>
+  <Directory>callcommander-callcommander.directory</Directory>
+  <Include>
+    <Category>Call Commander</Category>
+  </Include>
+</Menu>
+</Menu>

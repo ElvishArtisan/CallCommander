@@ -1,0 +1,29 @@
+                 WINNERS Table Layout for CallCommander
+
+The WINNERS table holds data concerning contest winners.
+in the VERSION table:
+
+FIELD NAME           TYPE             REMARKS
+--------------------------------------------------------------------------
+ID                     int(11)           Primary key, auto increment
+SHOW_CODE              char(3)           from SHOWS.SHOW_CODE
+NUMBER                 char(14)
+DETAIL_ID              int(10) unsigned  From DETAILS_<code>.ID
+STATUS                 int(11)           0=Complete, 1=Pending, 2=Cancelled
+FIRST_NAME             char(32)
+LAST_NAME              char(32)
+GENDER                 enum('M','F')
+AGE                    int(11)
+STATION                char(10)
+EMAIL                  char(64)
+PHONE                  char(14)
+ADDRESS1               char(64)
+ADDRESS2               char(64)
+CITY                   char(64)
+STATE                  char(2)
+ZIPCODE                char(10)
+ORIGIN_LOGIN_NAME      char(32)           from USERS.LOGIN_NAME
+ORIGIN_DATETIME        datetime
+DISPOSITION_LOGIN_NAME char(32)           from USERS.LOGIN_NAME
+DISPOSITION_DATETIME   datetime
+PRIZE_DESCRIPTION      text

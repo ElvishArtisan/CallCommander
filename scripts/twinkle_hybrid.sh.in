@@ -1,0 +1,80 @@
+#!/bin/sh
+
+# twinkle_hybrid.sh
+#
+# Launch a soft hybrid using the 'twinkle' SIP softphone.
+#
+#   (C) Copyright 2008 Fred Gleason <fredg@paravelsystems.com>
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2 of
+#   the License, or (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public
+#   License along with this program; if not, write to the Free Software
+#   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#
+# Usage:
+#  twinkle_hybrid <base-dir> <sip-proxy> <sip-port> <sip-user> <sip-passwd> 
+#     <capture-dev> <playout-dev> [<uri>]
+#
+#    <base-dir> Base directory to use for psuedo-user.
+#   <sip-proxy> Hostname of the SIP proxy agent.
+#    <sip-port> The TCP port to use for SIP communications (5060 is customary,
+#               but must be unique for each soft hybrid instance).
+#    <sip-user> The SIP user to use when authenticating to Asterisk.
+#  <sip-passwd> The SIP password to use when authenticating to Asterisk.
+# <capture-dev> The capture device [e.g. 'alsa:hw:0,0,0'].
+# <playout-dev> The playout device [e.g. 'alsa:hw:0,0,0'].
+#         <url> Dial the specified URL after startup (optional).
+
+#
+# Config Values
+#
+BASE_DIR=$1
+SIP_PROXY=$2
+SIP_PORT=$3
+SIP_USER=$4
+SIP_PASSWD=$5
+CAPTURE_DEV=$6
+PLAYOUT_DEV=$7
+URI=$8
+
+#
+# Create the twinkle configuration
+#
+mkdir -p $BASE_DIR/.twinkle
+rm -f $BASEDIR/.twinkle/*
+sed -e s/%DEV_RINGTONE%/$PLAYOUT_DEV/ \
+    -e s/%DEV_SPEAKER%/$CAPTURE_DEV/ \
+    -e s/%DEV_MIC%/$PLAYOUT_DEV/ \
+    -e s/%SIP_UDP_PORT%/$SIP_PORT/ \
+    < @prefix@/share/callcommander/twinkle.sys > $BASE_DIR/.twinkle/twinkle.sys
+sed -e s/%AUTH_NAME%/$SIP_USER/ \
+    -e s/%AUTH_PASS%/$SIP_PASSWD/ \
+    -e s/%OUTBOUND_PROXY%/$SIP_PROXY/ \
+    < @prefix@/share/callcommander/twinkle.cfg > $BASE_DIR/.twinkle/twinkle.cfg
+
+#
+# Invoke Twinkle
+#
+export HOME=$BASE_DIR
+if test $URI ; then
+  @prefix@/sbin/twinkle_call.sh $URI &
+fi
+twinkle -c
+
+#
+# Attempt to Clean up
+#
+rm -f $BASE_DIR/.twinkle/*
+rmdir $BASE_DIR/.twinkle
+rmdir $BASE_DIR
+

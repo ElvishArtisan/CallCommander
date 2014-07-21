@@ -1,0 +1,52 @@
+.TH mld 8 "August 2007" Linux "Linux Audio Manual"
+.SH NAME
+mld \- The Call Commander Telephone Screening System Virtualization Daemon
+
+.SH SYNOPSIS
+mld [OPTION]
+
+.SH DESCRIPTION
+\fBMld\fP is a program for virtualizing the control interfaces of various
+broadcast telephone systems so that they can be accessed by the Call 
+Commander User Interface (\fBml(1)\fP), Caller ID Monitoring Daemon (\fBmcidmd(8)\fP) or Call Skimmer (\fBmcs(1)\fP) programs, via TCP/IP protocols.
+
+Upon startup, \fBmld\fP places itself 
+in the background, ready to service requests from connecting processes.
+\fBMld\fP is configured by means of the file \fB/etc/mld.conf\fP and
+the CallCommander Database Administrator \fBmdbadmin(1)\fP.  See 
+the \fBmld.conf(5)\fP manpage for more details.
+ 
+.SH OPTIONS
+.TP
+.B -v, --version
+output version information and exit.
+
+.TP
+.B -d
+Upon startup, don't run in the background as is normally done, but remain
+attached and print debugging information.
+
+.SH SUPPORTED TELEPHONE SYSTEMS
+At present, \fBmld\fP supports the following broadcast telephone systems:
+
+.TP
+.B Gentner/Comrex TS-612 Multiline Telephone System
+.TP
+.B Telos 100 1A2 Key Interface Module
+.TP
+.B Telos 100 Direct Interface Module
+.TP
+.B Telos ONEx6 Broadcast Telephone Interface
+.TP
+.B Telos TWOx12 Multiline Broadcast Telephone System
+.TP
+.B Telos Series 2101 Multi-line Multi-studio Broadcast Telephone System
+
+.SH AUTHOR
+Fred Gleason <fredg@paravelsystems.com>
+.SH "SEE ALSO"
+.BR callcommander(1),
+.BR mld.conf(5),
+.BR ml(1),
+.BR mcs(1),
+.BR ml.conf(5)

@@ -1,0 +1,30 @@
+              DETAILS Table Layout for CallCommander
+
+The DETAILS_<show> tables hold data concerning each individual call
+received by a given show.  Following is the layout of a record in the 
+DETAILS_<show> tables:
+
+FIELD NAME         TYPE                REMARKS
+-------------------------------------------------------------------
+ID                 int(10) unsigned    Primary Key, Auto Increment
+COMPLETE           enum('N','Y')
+GROUP_NUMBER       int(11) signed
+LINE_NUMBER        int(11) signed
+NUMBER             char(14)            From Caller ID Service
+ID_NAME            char(15)            From Caller ID Service
+CALL_DATE          date
+CALL_TIME          time
+ROUTE_ACTION       int(11) signed
+NAME               char(16)
+AGE                int(11) signed
+QUALITY            int(11) signed
+CELLPHONE          enum('N','Y')
+CITY               char(20)
+STATE              char(2)
+ZIPCODE            char(10)
+STATION            char(4)
+GENDER             enum('M','F')
+COMMENT            char(94)
+RING_TIMER         int(11) signed
+HOLD_TIMER         int(11) signed
+AIR_TIMER          int(11) signed

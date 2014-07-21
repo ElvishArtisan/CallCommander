@@ -1,0 +1,8 @@
+              WIRELESS_NAMES Table Layout for CallCommander
+
+The WIRELESS_NAMES table holds the names of all known cellphone provider
+companies.  Following is the layout of a record in the WIRELESS_NAMES table:
+
+FIELD NAME           TYPE             REMARKS
+--------------------------------------------------------------------------
+NAME                 char(60)         Primary key
