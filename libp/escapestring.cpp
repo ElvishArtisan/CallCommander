@@ -49,10 +49,6 @@ QString EscapeString(QString const &str)
 	  res+=QString("\\\"");
 	  break;
 
-	case '´':
-	  res+=QString("\\´");
-	  break;
-
 	case '`':
 	  res+=QString("\\`");
 	  break;

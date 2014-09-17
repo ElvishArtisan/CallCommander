@@ -458,7 +458,7 @@ void EditShow::editSlotData()
   else {
     slot.setFilterPolicy(MlTimeslot::AcceptPolicy);
   }
-  for(unsigned i=0;i<item->filterList()->size();i++) {
+  for(int i=0;i<item->filterList()->size();i++) {
     slot.addFilter((*item->filterList())[i]);
   }
   EditShowSlot *edit_slot=new EditShowSlot(&slot,this);
@@ -582,7 +582,7 @@ void EditShow::okData()
 			  item->id());
     q=new QSqlQuery(sql);
     delete q;
-    for(unsigned i=0;i<item->filterList()->size();i++) {
+    for(int i=0;i<item->filterList()->size();i++) {
       sql=QString().sprintf("insert into CID_FILTERS set \
                              SLOT_ID=%d,\
                              FILTER=\"%s\"",

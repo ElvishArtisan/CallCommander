@@ -384,7 +384,7 @@ QString VGuest::PadString(QString str,unsigned len)
 {
   QString out;
   out=str.left(len);
-  while(out.length()<len) {
+  while(out.length()<(int)len) {
     out+=" ";
   }
   return out;

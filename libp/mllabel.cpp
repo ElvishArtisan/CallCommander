@@ -102,7 +102,7 @@ QString MLLabel::WrapText()
   if(label_wrap&&!label_text.isEmpty()) {
     while(!residue.isEmpty()) {
       space_found=false;
-      for(unsigned i=residue.length();i>=0;i--) {
+      for(int i=residue.length();i>=0;i--) {
 	if((i==(residue.length()))||(residue.at(i).isSpace())) {
 	  if(fm.boundingRect(residue.left(i)).width()<=width()) {
 	    space_found=true;
@@ -119,7 +119,7 @@ QString MLLabel::WrapText()
       }
       if(!space_found) {
 	l=residue.length();
-	for(unsigned i=l;i>=0;i--) {
+	for(int i=l;i>=0;i--) {
 	  if(fm.boundingRect(residue.left(i)).width()<=width()) {
 	    if(!str.isEmpty()) {
 	      str+="\n";

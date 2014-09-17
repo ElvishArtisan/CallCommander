@@ -48,9 +48,6 @@ int delay_unit_address;
 
 void MLMStartup(const char *args)
 {
-  int i;
-  int j;
-
   /*
    * Load the configuration
    */

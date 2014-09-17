@@ -575,12 +575,11 @@ int MLSetTimeLength(QString str)
   int istate=2;
   QString field;
   int res=0;
-  bool decimalpt=false;
 
   if(str.isEmpty()) {
     return -1;
   }
-  for(unsigned i=0;i<str.length();i++) {
+  for(int i=0;i<str.length();i++) {
     if(str.at(i)==':') {
       istate--;
     }
@@ -588,7 +587,7 @@ int MLSetTimeLength(QString str)
   if(istate<0) {
     return -1;
   }
-  for(unsigned i=0;i<str.length();i++) {
+  for(int i=0;i<str.length();i++) {
     if(str.at(i).isNumber()) {
       field+=str.at(i);
     }
@@ -609,9 +608,6 @@ int MLSetTimeLength(QString str)
 	    case 2:
 	      res+=1000*field.toInt();
 	      break;
-	}
-	if(str.at(i)=='.') {
-	  decimalpt=true;
 	}
 	istate++;
 	field="";
@@ -769,7 +765,7 @@ QString MLTruncateAfterWord(QString str,int word,bool add_dots)
   int quan=0;
   int point;
 
-  for(unsigned i=0;i<simple.length();i++) {
+  for(int i=0;i<simple.length();i++) {
     if(simple.at(i).isSpace()) {
       quan++;
       point=i;

@@ -58,7 +58,7 @@ bool MessageData::update(BusDriver::Element elem,const QString &packet)
   if(elem!=BusDriver::MessageGlobalElement) {
     return false;
   }
-  for(unsigned i=0;i<packet.length();i++) {
+  for(int i=0;i<packet.length();i++) {
     if(packet.at(i)=='|') {
       msg_nick=packet.left(i);
       msg_message=packet.right(packet.length()-i-1);
@@ -71,7 +71,7 @@ bool MessageData::update(BusDriver::Element elem,const QString &packet)
 
 void MessageData::sendData(BusDriver *driver) const
 {
-  for(unsigned i=0;i<msg_message.length();i+=ML_MAX_MESSAGE_LENGTH) {
+  for(int i=0;i<msg_message.length();i+=ML_MAX_MESSAGE_LENGTH) {
     if(i==0) {
       driver->sendString(BusDriver::MessageGlobalElement,0,
 			 QString().sprintf("%s|%s",

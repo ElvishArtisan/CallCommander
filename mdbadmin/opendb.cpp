@@ -53,7 +53,6 @@ bool OpenDb(const QString &dbname,const QString &login,const QString &pwd,
   QString sql;
   QSqlQuery *q;
   QString msg;
-  MySqlLogin *mysql_login;
 
   //
   // Open Database

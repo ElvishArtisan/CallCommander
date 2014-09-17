@@ -146,7 +146,7 @@ bool MlTimeslot::filterMatch(const QString &str)
   QRegExp *regex=new QRegExp();
 
   regex->setWildcard(true);
-  for(unsigned i=0;i<slot_filters.size();i++) {
+  for(int i=0;i<slot_filters.size();i++) {
     regex->setPattern(slot_filters[i]);
     ret|=regex->exactMatch(str);
   }

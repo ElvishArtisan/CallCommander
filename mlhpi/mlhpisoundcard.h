@@ -168,6 +168,7 @@ class MLHPISoundCard : public QObject
   
  private:
   void HPIProbe();
+  hpi_err_t LogHpi(hpi_err_t err);
   uint16_t card_input_streams[HPI_MAX_ADAPTERS];
   uint16_t card_output_streams[HPI_MAX_ADAPTERS];
   uint16_t card_input_ports[HPI_MAX_ADAPTERS];

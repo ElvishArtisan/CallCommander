@@ -139,17 +139,17 @@ void PrintReport::SARWriteLine(QPainter *p,int start_age,int end_age,
     }
   }
   if(total==0) {
-    str=QString().sprintf("0.0%");
+    str="0.0%";
     p->drawText(45*width/80-p->fontMetrics().width(str),ypos,str);
     str=QString().sprintf("[0]");
     p->drawText(45*width/80-p->fontMetrics().width(str),ypos+height/45,str);
     
-    str=QString().sprintf("0.0%");
+    str="0.0%";
     p->drawText(55*width/80-p->fontMetrics().width(str),ypos,str);
     str=QString().sprintf("[0]");
     p->drawText(55*width/80-p->fontMetrics().width(str),ypos+height/45,str);
     
-    str=QString().sprintf("0.0%");
+    str="0.0%";
     p->drawText(65*width/80-p->fontMetrics().width(str),ypos,str);
     str=QString().sprintf("[0]");
     p->drawText(65*width/80-p->fontMetrics().width(str),ypos+height/45,str);

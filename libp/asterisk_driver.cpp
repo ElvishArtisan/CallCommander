@@ -90,7 +90,7 @@ QString AsteriskDriver::escapeString(const QString &str)
 {
   QString ret;
 
-  for(unsigned i=0;i<str.length();i++) {
+  for(int i=0;i<str.length();i++) {
     switch(((const char *)str)[i]) {
 	case ' ':
 	case '!':
@@ -113,7 +113,7 @@ QString AsteriskDriver::restoreString(const QString &str)
   bool esc=false;
   QString ret;
 
-  for(unsigned i=0;i<str.length();i++) {
+  for(int i=0;i<str.length();i++) {
     switch(((const char *)str)[i]) {    
 	case '\\':
 	  if(esc) {

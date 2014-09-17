@@ -245,80 +245,84 @@ EditConnectionData::EditConnectionData(ConnectionData *conn,QStringList *slist,
   // Load Device Values
   //
   switch(conn->systemType()) {
-      case ConnectionData::TypeVirtual:
-	edit_type_label->setText("CallCommander Virtual Telephone System");
-	break;
+  case ConnectionData::TypeVirtual:
+    edit_type_label->setText("CallCommander Virtual Telephone System");
+    break;
 
-      case ConnectionData::TypeGentnerTs612:
-	edit_type_label->
-	  setText("Comrex/Gentner TS-612 Multi-Line, On-Air Telephone System");
-	break;
+  case ConnectionData::TypeGentnerTs612:
+    edit_type_label->
+      setText("Comrex/Gentner TS-612 Multi-Line, On-Air Telephone System");
+    break;
 
-      case ConnectionData::TypeTelos100Key:
-	edit_type_label->setText("Telos 100 1A2 Interface Module");
-	break;
+  case ConnectionData::TypeTelos100Key:
+    edit_type_label->setText("Telos 100 1A2 Interface Module");
+    break;
 
-      case ConnectionData::TypeTelos100Dim:
-	edit_type_label->setText("Telos 100 Direct Interface Module");
-	break;
+  case ConnectionData::TypeTelos100Dim:
+    edit_type_label->setText("Telos 100 Direct Interface Module");
+    break;
 
-      case ConnectionData::TypeTelos100OneXSix:
-	edit_type_label->setText("Telos ONE-x-Six Talk Show Telephone System");
-	break;
+  case ConnectionData::TypeTelos100OneXSix:
+    edit_type_label->setText("Telos ONE-x-Six Talk Show Telephone System");
+    break;
 
-      case ConnectionData::TypeTelos2101:
-	switch(conn->subType()) {
-	    case 1:
-	      edit_type_label->
-		setText("Telos TWOx12 Multiline Broadcast Telephone System");
-	      break;
+  case ConnectionData::TypeTelos2101:
+    switch(conn->subType()) {
+    case 1:
+      edit_type_label->
+	setText("Telos TWOx12 Multiline Broadcast Telephone System");
+      break;
 
-	    case 0:
-	      edit_type_label->
-		setText("Telos Series 2101 Multi-line Multi-studio Broadcast Telephone System");
-	      break;
+    case 0:
+      edit_type_label->
+	setText("Telos Series 2101 Multi-line Multi-studio Broadcast Telephone System");
+      break;
 
-	    default:
-	      edit_type_label->setText("Unknown/Undefined Type");
-	      break;
-	}
-	break;
+    default:
+      edit_type_label->setText("Unknown/Undefined Type");
+      break;
+    }
+    break;
 
-      case ConnectionData::TypeUnknown:
-	edit_type_label->setText("Unknown/Undefined Type");
-	break;
+  case ConnectionData::TypeAsterisk:
+    break;
+
+  case ConnectionData::TypeUnknown:
+    edit_type_label->setText("Unknown/Undefined Type");
+    break;
   }
   switch(conn->systemType()) {
-      case ConnectionData::TypeVirtual:
-      case ConnectionData::TypeTelos2101:
-	edit_serialport_edit->setDisabled(true);
-	break;
+  case ConnectionData::TypeVirtual:
+  case ConnectionData::TypeTelos2101:
+    edit_serialport_edit->setDisabled(true);
+    break;
 
-      case ConnectionData::TypeGentnerTs612:
-      case ConnectionData::TypeTelos100Key:
-      case ConnectionData::TypeTelos100Dim:
-      case ConnectionData::TypeTelos100OneXSix:
-	edit_hostname_edit->setDisabled(true);
-	edit_tcpport_spin->setDisabled(true);
-	edit_username_edit->setDisabled(true);
-	edit_userpasswd1_edit->setDisabled(true);
-	edit_userpasswd2_edit->setDisabled(true);
-	break;
+  case ConnectionData::TypeGentnerTs612:
+  case ConnectionData::TypeTelos100Key:
+  case ConnectionData::TypeTelos100Dim:
+  case ConnectionData::TypeTelos100OneXSix:
+    edit_hostname_edit->setDisabled(true);
+    edit_tcpport_spin->setDisabled(true);
+    edit_username_edit->setDisabled(true);
+    edit_userpasswd1_edit->setDisabled(true);
+    edit_userpasswd2_edit->setDisabled(true);
+    break;
 
-      case ConnectionData::TypeUnknown:
-	edit_serialport_edit->setDisabled(true);
-	edit_hostname_edit->setDisabled(true);
-	edit_tcpport_spin->setDisabled(true);
-	edit_username_edit->setDisabled(true);
-	edit_userpasswd1_edit->setDisabled(true);
-	edit_userpasswd2_edit->setDisabled(true);
-	edit_showname_edit->setDisabled(true);
-	edit_showpasswd1_edit->setDisabled(true);
-	edit_showpasswd2_edit->setDisabled(true);
-	edit_location_edit->setDisabled(true);
-	edit_console_spin->setDisabled(true);
-	edit_consolename_edit->setDisabled(true);
-	break;
+  case ConnectionData::TypeAsterisk:
+  case ConnectionData::TypeUnknown:
+    edit_serialport_edit->setDisabled(true);
+    edit_hostname_edit->setDisabled(true);
+    edit_tcpport_spin->setDisabled(true);
+    edit_username_edit->setDisabled(true);
+    edit_userpasswd1_edit->setDisabled(true);
+    edit_userpasswd2_edit->setDisabled(true);
+    edit_showname_edit->setDisabled(true);
+    edit_showpasswd1_edit->setDisabled(true);
+    edit_showpasswd2_edit->setDisabled(true);
+    edit_location_edit->setDisabled(true);
+    edit_console_spin->setDisabled(true);
+    edit_consolename_edit->setDisabled(true);
+    break;
   }
   edit_description_edit->setText(conn->description());
   edit_hostname_edit->setText(conn->hostName());

@@ -486,7 +486,7 @@ QString McsWidget::WildcardDecode(QString spec,int line,QDateTime datetime,
 	   &age,&cell,&quality);
   }
 */
-  for(unsigned i=0;i<spec.length();i++) {
+  for(int i=0;i<spec.length();i++) {
     if(spec.at(i)!='%') {
       str+=spec.at(i);
     }

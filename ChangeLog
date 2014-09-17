@@ -2630,3 +2630,24 @@
 2014-09-17 Fred Gleason <fredg@paravelsystems.com>
 	* Added 'html_gpl2.cpp' to the 'MAINTAINERCLEANFILES' rule in
 	'libp/Makefile.am'.
+2014-09-17 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed warnings in 'libp/asterisk_driver.cpp'.
+	* Fixed warnings in 'libp/edit_connection_data.cpp'.
+	* Fixed warnings in 'libp/escapestring.cpp'.
+	* Fixed warnings in 'libp/message_data.cpp'.
+	* Fixed warnings in 'libp/ml_timeslot.cpp'.
+	* Fixed warnings in 'libp/mlconf.cpp'.
+	* Fixed warnings in 'libp/mllabel.cpp'.
+	* Fixed warnings in 'libp/mlttydevice.cpp'.
+	* Fixed warnings in 'mlhpi/mlplaystream.cpp'.
+	* Fixed warnings in 'mlhpi/mlsoundcard.cpp'.
+	* Fixed warnings in 'mlhpi/mlrecordstream.cpp'.
+	* Fixed warnings in 'mlhpi/mlwavefile.cpp'.
+	* Fixed warnings in 'mdbadmin/edit_show.cpp'.
+	* Fixed warnings in 'mdbadmin/opendb.cpp'.
+	* Fixed warnings in 'mcallman/standard_age_report.cpp'.
+	* Fixed warnings in 'mlm/mlm_airtools.c'.
+	* Fixed warnings in 'mlm/mlm_remora.c'.
+	* Fixed warnings in 'mlmh/mlm_functions.cpp'.
+	* Fixed warnings in 'mlmh/vguest.cpp'.
+	* Fixed warnings in 'mcs/mskimmer_widget.cpp'.

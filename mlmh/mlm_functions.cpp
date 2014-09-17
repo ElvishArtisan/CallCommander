@@ -299,7 +299,7 @@ int MLMOpenSerial(const char *port,int speed,int parity,int word_length)
 
 void MLMSendSerial(int handle,const char *data,int len)
 {
-  if((handle<0)||(handle>=global_tty_devices.size())) {
+  if((handle<0)||(handle>=(int)global_tty_devices.size())) {
     return;
   }
   global_tty_devices[handle]->writeBlock(data,len);

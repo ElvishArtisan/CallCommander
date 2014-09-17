@@ -1036,9 +1036,10 @@ class MLWaveFile
    bool IsAtx(int);
    bool IsTmc(int fd);
    bool IsFlac(int fd);
-   off_t FindChunk(int,char *,unsigned *);
-   bool GetChunk(int,char *,unsigned *,unsigned char *,size_t);
-   void WriteChunk(int,char *,unsigned char *,unsigned);
+   off_t FindChunk(int fd,const char *chunk_name,unsigned *chunk_size);
+   bool GetChunk(int fd,const char *chunk_name,unsigned *chunk_size,
+		 unsigned char *chunk,size_t size);
+   void WriteChunk(int fd,const char *cname,unsigned char *buf,unsigned size);
    bool GetFmt(int);
    bool GetFact(int);
    bool GetCart(int);

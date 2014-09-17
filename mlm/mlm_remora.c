@@ -374,7 +374,6 @@ void MLMCallerElementReceived(int line,int elem,const char *str)
 void MLMTimerExpired(int timernum)
 {
   int i;
-  int j;
   char buffer[256];
 
   switch(timernum) {

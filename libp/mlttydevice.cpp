@@ -590,7 +590,7 @@ void MLTTYDevice::writeTtyData()
 
   ioctl(tty_fd,TIOCOUTQ,&bytes);
   int n=2048-bytes;
-  if(tty_write_queue.size()<n) {
+  if((int)tty_write_queue.size()<n) {
     n=tty_write_queue.size();
   }
   if(n==0) {

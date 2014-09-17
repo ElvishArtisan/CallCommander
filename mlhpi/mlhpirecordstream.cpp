@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <syslog.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -33,7 +34,6 @@ MLHPIRecordStream::MLHPIRecordStream(MLHPISoundCard *card,
 			     QWidget *parent,const char *name) 
   :QObject(parent,name),MLWaveFile()
 { 
-  hpi_err_t hpi_err;
   int quan;
   uint16_t type[HPI_MAX_ADAPTERS];
 
@@ -73,9 +73,9 @@ MLHPIRecordStream::MLHPIRecordStream(MLHPISoundCard *card,
     card_index[i]=i;
   }
 #else
-  hpi_err=HPI_SubSysGetNumAdapters(NULL,&quan);
+  LogHpi(HPI_SubSysGetNumAdapters(NULL,&quan));
   for(int i=0;i<quan;i++) {
-    hpi_err=HPI_SubSysGetAdapter(NULL,i,card_index+i,type+i);
+    LogHpi(HPI_SubSysGetAdapter(NULL,i,card_index+i,type+i));
   }
 #endif  // HPI_VER
 
@@ -173,7 +173,6 @@ bool MLHPIRecordStream::formatSupported(MLWaveFile::Format format)
   struct hpi_format hformat;
 #endif
   hpi_handle_t histream;
-  hpi_err_t hpi_err;
   bool found=false;
 
   if(card_number<0) {
@@ -201,34 +200,34 @@ bool MLHPIRecordStream::formatSupported(MLWaveFile::Format format)
   }
   switch(format) {
       case MLWaveFile::Pcm8:
-	hpi_err=HPI_FormatCreate(&hformat,getChannels(),
-				 HPI_FORMAT_PCM8_UNSIGNED,
-				 getSamplesPerSec(),getHeadBitRate(),0);
+	LogHpi(HPI_FormatCreate(&hformat,getChannels(),
+				HPI_FORMAT_PCM8_UNSIGNED,
+				getSamplesPerSec(),getHeadBitRate(),0));
 	state=HPI_InStreamQueryFormat(NULL,histream,&hformat);
 	break;
 
       case MLWaveFile::Pcm16:
-	hpi_err=HPI_FormatCreate(&hformat,getChannels(),
-				 HPI_FORMAT_PCM16_SIGNED,
-				 getSamplesPerSec(),getHeadBitRate(),0);
+	LogHpi(HPI_FormatCreate(&hformat,getChannels(),
+				HPI_FORMAT_PCM16_SIGNED,
+				getSamplesPerSec(),getHeadBitRate(),0));
 	state=HPI_InStreamQueryFormat(NULL,histream,&hformat);
 	break;
 
       case MLWaveFile::MpegL1:
-	hpi_err=HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L1,
-				 getSamplesPerSec(),getHeadBitRate(),0);
+	LogHpi(HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L1,
+				getSamplesPerSec(),getHeadBitRate(),0));
 	state=HPI_InStreamQueryFormat(NULL,histream,&hformat);
 	break;
 
       case MLWaveFile::MpegL2:
-	hpi_err=HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L2,
-				 getSamplesPerSec(),getHeadBitRate(),0);
+	LogHpi(HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L2,
+				getSamplesPerSec(),getHeadBitRate(),0));
 	state=HPI_InStreamQueryFormat(NULL,histream,&hformat);
 	break;
 
       case MLWaveFile::MpegL3:
-	hpi_err=HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L3,
-				 getSamplesPerSec(),getHeadBitRate(),0);
+	LogHpi(HPI_FormatCreate(&hformat,getChannels(),HPI_FORMAT_MPEG_L3,
+				getSamplesPerSec(),getHeadBitRate(),0));
 	state=HPI_InStreamQueryFormat(NULL,histream,&hformat);
 	break;
 
@@ -237,7 +236,7 @@ bool MLHPIRecordStream::formatSupported(MLWaveFile::Format format)
 	break;
   }
   if(!is_open) {
-    hpi_err=HPI_InStreamClose(NULL,histream);
+    LogHpi(HPI_InStreamClose(NULL,histream));
   }
   if(state!=0) {
     return false;
@@ -359,9 +358,6 @@ unsigned MLHPIRecordStream::samplesRecorded() const
 
 bool MLHPIRecordStream::recordReady()
 {
-  hpi_err_t hpi_error=0;
-  char hpi_text[200];
-
   if(debug) {
     printf("MLHPIRecordStream: received recordReady()\n");
   }
@@ -401,19 +397,19 @@ bool MLHPIRecordStream::recordReady()
 	  }
 	  switch(getBitsPerSample()) {
 	      case 8:
-		hpi_error=HPI_FormatCreate(&format,getChannels(),
-				 HPI_FORMAT_PCM8_UNSIGNED,getSamplesPerSec(),
-				 0,0);
+		LogHpi(HPI_FormatCreate(&format,getChannels(),
+					HPI_FORMAT_PCM8_UNSIGNED,
+					getSamplesPerSec(),0,0));
 		break;
 	      case 16:
-		hpi_error=HPI_FormatCreate(&format,getChannels(),
-				 HPI_FORMAT_PCM16_SIGNED,getSamplesPerSec(),
-				 0,0);
+		LogHpi(HPI_FormatCreate(&format,getChannels(),
+					HPI_FORMAT_PCM16_SIGNED,
+					getSamplesPerSec(),0,0));
 		break;
 	      case 32:
-		hpi_error=HPI_FormatCreate(&format,getChannels(),
-				 HPI_FORMAT_PCM32_SIGNED,getSamplesPerSec(),
-				 0,0);
+		LogHpi(HPI_FormatCreate(&format,getChannels(),
+					HPI_FORMAT_PCM32_SIGNED,
+					getSamplesPerSec(),0,0));
 		break;
 	      default:
 		if(debug) {
@@ -429,22 +425,22 @@ bool MLHPIRecordStream::recordReady()
 	  }
 	  switch(getHeadLayer()) {
 	      case 1:
-		hpi_error=HPI_FormatCreate(&format,getChannels(),
-				 HPI_FORMAT_MPEG_L1,getSamplesPerSec(),
-				 getHeadBitRate(),getHeadFlags());
+		LogHpi(HPI_FormatCreate(&format,getChannels(),
+					HPI_FORMAT_MPEG_L1,getSamplesPerSec(),
+					getHeadBitRate(),getHeadFlags()));
 		break;
 	      case 2:
-		hpi_error=HPI_FormatCreate(&format,getChannels(),
-				 HPI_FORMAT_MPEG_L2,getSamplesPerSec(),
-				 getHeadBitRate(),getHeadFlags());
+		LogHpi(HPI_FormatCreate(&format,getChannels(),
+					HPI_FORMAT_MPEG_L2,getSamplesPerSec(),
+					getHeadBitRate(),getHeadFlags()));
 		break;
 	      case 3:
-		hpi_error=HPI_FormatCreate(&format,getChannels(),
-				 HPI_FORMAT_MPEG_L3,getSamplesPerSec(),
-				 getHeadBitRate(),getHeadFlags());
+		LogHpi(HPI_FormatCreate(&format,getChannels(),
+					HPI_FORMAT_MPEG_L3,getSamplesPerSec(),
+					getHeadBitRate(),getHeadFlags()));
 		break;
 	      default:
-		hpi_error=HPI_AdapterClose(NULL,card_index[card_number]);
+		LogHpi(HPI_AdapterClose(NULL,card_index[card_number]));
 		if(debug) {
 		  printf("MLHPIRecordStream: invalid MPEG-1 layer\n");
 		}
@@ -472,9 +468,9 @@ bool MLHPIRecordStream::recordReady()
 	  if(debug) {
 	    printf("MLHPIRecordStream: using OggVorbis\n");
 	  }
-	  hpi_error=HPI_FormatCreate(&format,getChannels(),
-			   HPI_FORMAT_PCM16_SIGNED,getSamplesPerSec(),
-			   0,0);
+	  LogHpi(HPI_FormatCreate(&format,getChannels(),
+				  HPI_FORMAT_PCM16_SIGNED,getSamplesPerSec(),
+				  0,0));
 	  break;
 
 	default:
@@ -484,22 +480,15 @@ bool MLHPIRecordStream::recordReady()
 	  return false;
 	  break;
     }
-    if((hpi_error=HPI_InStreamQueryFormat(NULL,hpi_stream,
-			       &format))!=0) {
-      if(debug) {
-	HPI_GetErrorText(hpi_error,hpi_text);
-	printf("Num: %d\n",hpi_error);
-	printf("MLHPIRecordStream: %s\n",hpi_text);
-      }
+    if(LogHpi(HPI_InStreamQueryFormat(NULL,hpi_stream,&format))!=0) {
       return false;
     }
   }
 #if HPI_VER < 0x00030500
   HPI_DataCreate(&hpi_data,&format,pdata,fragment_size);
 #endif
-  hpi_error=HPI_InStreamSetFormat(NULL,hpi_stream,&format);
-  hpi_error=HPI_InStreamStart(NULL,hpi_stream);
-//  clock->start(2*fragment_time/3);
+  LogHpi(HPI_InStreamSetFormat(NULL,hpi_stream,&format));
+  LogHpi(HPI_InStreamStart(NULL,hpi_stream));
   clock->start(100);
   is_ready=true;
   is_recording=false;
@@ -520,8 +509,6 @@ bool MLHPIRecordStream::recordReady()
 
 void MLHPIRecordStream::record()
 {
-  hpi_err_t hpi_err;
-
   if(debug) {
     printf("MLHPIRecordStream: received record()\n");
   }
@@ -532,8 +519,8 @@ void MLHPIRecordStream::record()
     recordReady();
   }
   record_started=false;
-  hpi_err=HPI_InStreamReset(NULL,hpi_stream);
-  hpi_err=HPI_InStreamStart(NULL,hpi_stream);
+  LogHpi(HPI_InStreamReset(NULL,hpi_stream));
+  LogHpi(HPI_InStreamStart(NULL,hpi_stream));
   is_recording=true;
   is_paused=false;
   emit isStopped(false);
@@ -550,21 +537,19 @@ void MLHPIRecordStream::record()
 
 void MLHPIRecordStream::pause()
 {
-  hpi_err_t hpi_err;
-
   if(debug) {
     printf("MLHPIRecordStream: received pause()\n");
   }
   if(!is_recording) {
     return;
   }
-  hpi_err=HPI_InStreamStop(NULL,hpi_stream);
+  LogHpi(HPI_InStreamStop(NULL,hpi_stream));
   tickClock();
-  hpi_err=HPI_InStreamGetInfoEx(NULL,hpi_stream,&state,&buffer_size,
-				&data_recorded,&samples_recorded,&reserved);
+  LogHpi(HPI_InStreamGetInfoEx(NULL,hpi_stream,&state,&buffer_size,
+			       &data_recorded,&samples_recorded,&reserved));
   is_recording=false;
   is_paused=true;
-  hpi_err=HPI_InStreamStart(NULL,hpi_stream);
+  LogHpi(HPI_InStreamStart(NULL,hpi_stream));
   emit paused();
   emit stateChanged(card_number,stream_number,2);  // Paused
   if(debug) {
@@ -576,13 +561,11 @@ void MLHPIRecordStream::pause()
 
 void MLHPIRecordStream::stop()
 {
-  hpi_err_t hpi_err;
-
   if(debug) {
     printf("MLHPIRecordStream: received stop()\n");
   }
   if(is_ready|is_recording|is_paused) {
-    hpi_err=HPI_InStreamStop(NULL,hpi_stream);
+    LogHpi(HPI_InStreamStop(NULL,hpi_stream));
     tickClock();
     clock->stop();
     is_recording=false;
@@ -620,11 +603,9 @@ void MLHPIRecordStream::setRecordLength(int length)
 
 void MLHPIRecordStream::tickClock()
 {
-  hpi_err_t hpi_err;
-
-  hpi_err=HPI_InStreamGetInfoEx(NULL,hpi_stream,
-				&state,&buffer_size,&data_recorded,
-				&samples_recorded,&reserved);
+  LogHpi(HPI_InStreamGetInfoEx(NULL,hpi_stream,
+			       &state,&buffer_size,&data_recorded,
+			       &samples_recorded,&reserved));
   if((!record_started)&&(is_recording)) {
     if(samples_recorded>0) {
       if(record_length>0) {
@@ -641,23 +622,23 @@ void MLHPIRecordStream::tickClock()
   }
   while(data_recorded>fragment_size) {
 #if HPI_VER > 0x00030500
-    hpi_err=HPI_InStreamReadBuf(NULL,hpi_stream,pdata,fragment_size);
+    LogHpi(HPI_InStreamReadBuf(NULL,hpi_stream,pdata,fragment_size));
 #else
-    hpi_err=HPI_InStreamRead(NULL,hpi_stream,&hpi_data);
+    LogHpi(HPI_InStreamRead(NULL,hpi_stream,&hpi_data));
 #endif
     if(is_recording) {
       writeWave(pdata,fragment_size);
     }
-    hpi_err=HPI_InStreamGetInfoEx(NULL,hpi_stream,
-			  &state,&buffer_size,&data_recorded,
-			  &samples_recorded,&reserved);
+    LogHpi(HPI_InStreamGetInfoEx(NULL,hpi_stream,
+				 &state,&buffer_size,&data_recorded,
+				 &samples_recorded,&reserved));
   }
   if(state==HPI_STATE_STOPPED) {
 #if HPI_VER > 0x00030500
-    hpi_err=HPI_InStreamReadBuf(NULL,hpi_stream,pdata,data_recorded);
+    LogHpi(HPI_InStreamReadBuf(NULL,hpi_stream,pdata,data_recorded));
 #else
-    hpi_err=HPI_DataCreate(&hpi_data,&format,pdata,data_recorded);
-    hpi_err=HPI_InStreamRead(NULL,hpi_stream,&hpi_data);
+    LogHpi(HPI_DataCreate(&hpi_data,&format,pdata,data_recorded));
+    LogHpi(HPI_InStreamRead(NULL,hpi_stream,&hpi_data));
 #endif
     if(is_recording) {
       writeWave(pdata,data_recorded);
@@ -673,15 +654,8 @@ void MLHPIRecordStream::tickClock()
 
 bool MLHPIRecordStream::GetStream()
 {
-  hpi_err_t hpi_err;
-  char hpi_text[100];
-
-  if((hpi_err=
-      HPI_InStreamOpen(NULL,card_index[card_number],stream_number,&hpi_stream))!=0) {
-    if(debug) {
-      HPI_GetErrorText(hpi_err,hpi_text);
-      fprintf(stderr,"*** HPI Error: %s ***\n",hpi_text);
-    }
+  if(LogHpi(HPI_InStreamOpen(NULL,card_index[card_number],stream_number,
+			     &hpi_stream))!=0) {
     return false;
   }
   return true;
@@ -690,8 +664,17 @@ bool MLHPIRecordStream::GetStream()
 
 void MLHPIRecordStream::FreeStream()
 {
-  hpi_err_t hpi_err;
-
-  hpi_err=HPI_InStreamClose(NULL,hpi_stream);
+  LogHpi(HPI_InStreamClose(NULL,hpi_stream));
 }
 
+
+hpi_err_t MLHPIRecordStream::LogHpi(hpi_err_t err)
+{
+  char err_txt[200];
+
+  if(err!=0) {
+    HPI_GetErrorText(err,err_txt);
+    syslog(LOG_NOTICE,"HPI Error: %s",err_txt);
+  }
+  return err;
+}

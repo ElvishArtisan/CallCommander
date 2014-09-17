@@ -97,6 +97,7 @@ class MLHPIRecordStream : public QObject,public MLWaveFile
  private:
   bool GetStream();
   void FreeStream();
+  hpi_err_t LogHpi(hpi_err_t err);
   MLHPISoundCard *sound_card;
   bool debug;
   bool xrun;

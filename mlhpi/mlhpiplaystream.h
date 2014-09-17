@@ -92,6 +92,7 @@ class MLHPIPlayStream : public QObject,public MLWaveFile
   void Drained();
   int GetStream();
   void FreeStream();
+  hpi_err_t LogHpi(hpi_err_t err);
   MLHPISoundCard *sound_card;
   MLHPIPlayStream::State stream_state;
   QString wave_name;
