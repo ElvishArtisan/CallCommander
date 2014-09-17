@@ -151,5 +151,6 @@ MAINTAINERCLEANFILES = *~\
                        *.tar.gz\
                        aclocal.m4\
                        configure\
+                       html_gpl2.cpp\
                        Makefile.in\
                        moc_*

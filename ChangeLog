@@ -2627,3 +2627,6 @@
 	fix broken compilation under RHEL 7.
 	* Added '-ldl' to the list of linked libraries in 'mlmh/Makefile.am'
 	to fix broken compilation under RHEL 7.
+2014-09-17 Fred Gleason <fredg@paravelsystems.com>
+	* Added 'html_gpl2.cpp' to the 'MAINTAINERCLEANFILES' rule in
+	'libp/Makefile.am'.
