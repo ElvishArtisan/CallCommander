@@ -121,7 +121,7 @@ fi
 #
 # Configure Linker Flags
 #
-if test $ar_gcc_os = "darwin10" ; then
+if test $ar_gcc_distro = "apple" ; then
   AC_SUBST(QTLIBS,"")
   AC_SUBST(QTFLAGS,"-framework QtCore -framework QtGui -framework QtNetwork -framework QtSql -framework Qt3Support")
 else

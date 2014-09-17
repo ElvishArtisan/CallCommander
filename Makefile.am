@@ -84,4 +84,4 @@ DISTCLEANFILES = *~ moc_* *.tar.gz *.spec make_slack slack-desc rc.mld\
                  rc.mcidmd rc.mlmld make_bundle.sh
 MAINTAINERCLEANFILES = *~ Makefile.in configure aclocal.m4 moc_* *.tar.gz\
                        depcomp install-sh missing mkinstalldirs\
-                       config.guess config.sub
+                       config.guess config.sub compile ltmain.sh

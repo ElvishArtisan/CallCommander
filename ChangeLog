@@ -2651,3 +2651,10 @@
 	* Fixed warnings in 'mlmh/mlm_functions.cpp'.
 	* Fixed warnings in 'mlmh/vguest.cpp'.
 	* Fixed warnings in 'mcs/mskimmer_widget.cpp'.
+2014-09-17 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'libp/mlpushbutton.cpp' that broke compilation
+	on OS X MAvericks.
+	* Fixed a bug in 'configure.ac' that broke compilation
+	on OS X MAvericks.
+	* Added 'compile' and 'ltmain.sh' to the MAINTAINERCLEANFILES list
+	in 'Makefile.am'.
