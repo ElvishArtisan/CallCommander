@@ -21,8 +21,7 @@
 ##   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ##
 
-AM_CPPFLAGS = -Wall -DPREFIX=\"$(prefix)\" -DQT3_SUPPORT
-INCLUDES = -I$(top_srcdir)/libp -I$(top_srcdir)/mlhpi
+AM_CPPFLAGS = -Wall -DPREFIX=\"$(prefix)\" -DQT3_SUPPORT -I$(top_srcdir)/libp -I$(top_srcdir)/mlhpi
 LIBS = -L$(top_srcdir)/libp -L$(top_srcdir)/mlhpi
 MOC = @MOC@
 

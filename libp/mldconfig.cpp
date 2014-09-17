@@ -20,6 +20,7 @@
 //
 
 #include <stdio.h>
+#include <unistd.h>
 
 #include <QtGui/QMessageBox>
 #include <QtCore/QSettings>

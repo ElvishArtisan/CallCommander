@@ -1,5 +1,6 @@
+dnl configure.ac
 dnl
-dnl   (C) Copyright 2002-2007 Fred Gleason <fredg@paravelsystems.com>
+dnl   (C) Copyright 2002-2014 Fred Gleason <fredg@paravelsystems.com>
 dnl
 dnl   This program is free software; you can redistribute it and/or modify
 dnl   it under the terms of the GNU General Public License as
@@ -16,10 +17,11 @@ dnl   License along with this program; if not, write to the Free Software
 dnl   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 dnl
 dnl Use autoconf to process this into a configure script
-AC_INIT(callcommander,`cat VERSION`,fredg@paravelsystems.com)
-AM_INIT_AUTOMAKE(callcommander,`cat VERSION`)
+AC_INIT(callcommander,m4_esyscmd(cat VERSION))
+AM_INIT_AUTOMAKE
 AC_SUBST(RPM_RELEASE,1)
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
+AC_CONFIG_MACRO_DIR([m4])
 
 #
 # Some Fully Resolved Install Paths
@@ -169,14 +171,14 @@ else
   AC_SUBST(CALL_LIB_PATH,lib)
 fi
 
-AC_OUTPUT(./Makefile \
-          ./callcommander.spec \
-          ./rc.mld \
-          ./rc.mcidmd \
-          ./rc.mlmld \
-          ./make_slack \
-          ./slack-desc \
-          ./make_bundle.sh \
+AC_OUTPUT(Makefile \
+          callcommander.spec \
+          rc.mld \
+          rc.mcidmd \
+          rc.mlmld \
+          make_slack \
+          slack-desc \
+          make_bundle.sh \
           helpers/Makefile \
           docs/Makefile \
           docs/tables/Makefile \

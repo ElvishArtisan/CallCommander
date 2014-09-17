@@ -5,7 +5,9 @@
 # Try to determine the distribution name and version of the host machine.
 # Used as part of the AR_GET_DISTRO() macro.
 #
-#   (C) Copyright 2007 Fred Gleason <fredg@salemradiolabs.com>
+#   (C) Copyright 2012 Fred Gleason <fredg@salemradiolabs.com>
+#
+#    $Id: get_distro.sh,v 1.1.1.1 2014/02/17 13:26:17 cvs Exp $
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as
@@ -36,6 +38,10 @@ case "$1" in
 	  echo -n "RedHat"
 	  exit 0
 	fi
+	if test `uname` = "Darwin" ; then
+          echo -n "OS X"
+          exit 0
+        fi
 	echo -n "unknown"
     ;;
     VERSION)
@@ -48,7 +54,52 @@ case "$1" in
 	  exit 0
         fi
 	if test -f /etc/redhat-release ; then
-	  cat /etc/redhat-release
+	  VER=`awk '/release/ {print $3}' /etc/redhat-release`
+	  if test $VER = "release" ; then
+	    VER=`awk '/release/ {print $4}' /etc/redhat-release`
+	  fi
+	  echo $VER
+          exit 0
+	fi
+	if test `uname` = "Darwin" ; then
+	  echo -n `uname -r`
+          exit 0
+	fi
+    ;;
+    MAJOR)
+	if test -f /etc/SuSE-release ; then
+          cat /etc/SuSE-release | sed "/SE/ d;s/VERSION = //" | awk -F '.' '{print $1}'
+	  exit 0
+        fi
+	if test -f /etc/debian_version ; then
+          cat /etc/debian_version | awk -F '.' '{print $1}'
+	  exit 0
+        fi
+	if test -f /etc/redhat-release ; then
+	  VER=`awk '/release/ {print $3}' /etc/redhat-release`
+	  if test $VER = "release" ; then
+	    VER=`awk '/release/ {print $4}' /etc/redhat-release`
+	  fi
+	  echo $VER | awk -F '.' '{print $1}'
+          exit 0
+	fi
+    ;;
+    MINOR)
+	if test -f /etc/SuSE-release ; then
+          cat /etc/SuSE-release | sed "/SE/ d;s/VERSION = //" | awk -F '.' '{print $2}'
+	  exit 0
+        fi
+	if test -f /etc/debian_version ; then
+          cat /etc/debian_version | awk -F '.' '{print $2}'
+	  exit 0
+        fi
+	if test -f /etc/redhat-release ; then
+	  VER=`awk '/release/ {print $3}' /etc/redhat-release`
+	  if test $VER = "release" ; then
+	    VER=`awk '/release/ {print $4}' /etc/redhat-release`
+	  fi
+	  echo $VER | awk -F '.' '{print $2}'
+          exit 0
 	fi
     ;;
 esac

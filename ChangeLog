@@ -2615,3 +2615,15 @@
 	* Updated the package version to 2.1.1.
 2013-04-26 Fred Gleason <fredg@paravelsystems.com>
 	* Alphabeticized file entries in the Makefiles.
+2014-09-17 Fred Gleason <fredg@paravelsystems.com>
+	* Moved 'configure.in' to 'configure.ac'.
+	* Modernized the invocation of AM_INIT() and AC_INIT() in
+	'configure.ac'.
+	* Removed 'INCLUDES' definition from 'mcallman/Makefile.am',
+	'mcidmd/Makefile.am', 'mcs/Makefile.am', 'mdbadmin/Makefile.am',
+	'ml/Makefile.am', 'mld/Makefile.am', 'mlmh/Makefile.am',
+	'mlmld/Makefile.am' and 'scripts/Makefile.am'.
+	* Added an include for 'unistd.h' in 'libp/mldconfig.cpp' to
+	fix broken compilation under RHEL 7.
+	* Added '-ldl' to the list of linked libraries in 'mlmh/Makefile.am'
+	to fix broken compilation under RHEL 7.

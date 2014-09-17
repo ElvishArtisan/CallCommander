@@ -21,8 +21,7 @@
 ##   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ##
 
-CFLAGS = -Wall
-INCLUDES = -I$(QTDIR)/include
+CFLAGS = -Wall -I$(QTDIR)/include
 LIBS = -L$(QTDIR)/lib
 MOC = $(QTDIR)/bin/moc
 

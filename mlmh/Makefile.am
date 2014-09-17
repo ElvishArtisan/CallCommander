@@ -21,8 +21,7 @@
 ##   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ##
 
-AM_CPPFLAGS = -Wall -DPREFIX=\"$(prefix)\" -DQT3_SUPPORT -I../mlhpi -I../mlm
-INCLUDES = -I$(top_srcdir)/libp
+AM_CPPFLAGS = -Wall -DPREFIX=\"$(prefix)\" -DQT3_SUPPORT -I../mlhpi -I../mlm -I$(top_srcdir)/libp
 LIBS = -L$(top_srcdir)/libp
 MOC = @MOC@
 
@@ -38,7 +37,7 @@ dist_mlmh_SOURCES = globals.h\
 
 nodist_mlmh_SOURCES = moc_mlmh.cpp
 
-mlmh_LDADD = @QTLIBS@ -lml -lssl
+mlmh_LDADD = @QTLIBS@ -lml -lssl -ldl
 mlmh_LDFLAGS = @QTFLAGS@ -rdynamic
 
 CLEANFILES = *~\

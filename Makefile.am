@@ -29,6 +29,11 @@ SUBDIRS = helpers samples docs icons xdg libp ml mld mcidmd scripts mdbadmin\
           mcallman asterisk
 endif
 
+ACLOCAL_AMFLAGS = -I m4
+
+maintainer-clean-local:	
+	rm -rf m4
+
 install-exec-local:	
 	cp rc.mld /etc/init.d/mld
 	cp rc.mcidmd /etc/init.d/mcidmd
