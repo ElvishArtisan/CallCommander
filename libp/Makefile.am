@@ -6,7 +6,7 @@
 ##
 ## Use automake to process this into a Makefile.in
 
-AM_CPPFLAGS = -Wall -I../mlhpi -DQT3_SUPPORT
+AM_CPPFLAGS = -Wall -I../mlhpi -DQT3_SUPPORT @LOCAL_CPPFLAGS@
 MOC = @MOC@
 CWRAP = ../helpers/cwrap
 

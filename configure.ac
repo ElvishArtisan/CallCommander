@@ -51,18 +51,14 @@ AC_ARG_WITH(debug,[  --with-debug            include debugging symbols in RPMs],
 # Determine the target architecture
 #
 AR_GCC_TARGET()
+AR_GET_DISTRO()
 AC_SUBST(VENDOR,$ar_gcc_distro)
 AC_SUBST(ARCH,$ar_gcc_arch)
-if test $ar_gcc_os = "darwin10" ; then
+if test $ar_gcc_distro = "apple" ; then
    AC_DEFINE(OS_X)
 else
    AC_DEFINE(LINUX)
 fi
-
-#
-# Determine Distro
-#
-AR_GET_DISTRO()
 
 #
 # Check for Qt
@@ -123,10 +119,12 @@ fi
 #
 if test $ar_gcc_distro = "apple" ; then
   AC_SUBST(QTLIBS,"")
-  AC_SUBST(QTFLAGS,"-framework QtCore -framework QtGui -framework QtNetwork -framework QtSql -framework Qt3Support")
+  AC_SUBST(QTFLAGS,"-mmacosx-version-min=10.5 -framework QtCore -framework QtGui -framework QtNetwork -framework QtSql -framework Qt3Support")
+  AC_SUBST(LOCAL_CPPFLAGS,"-mmacosx-version-min=10.5")
 else
   AC_SUBST(QTLIBS,"-lQtCore -lQtGui -lQtNetwork -lQtSql -lQt3Support")
   AC_SUBST(QTFLAGS,"")
+  AC_SUBST(LOCAL_CPPFLAGS,"")
 fi
 
 #

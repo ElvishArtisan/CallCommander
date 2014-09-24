@@ -130,7 +130,7 @@ QString GetConfFile(int argc,char *argv[])
 #ifdef OS_X
   if(!file_found) {
     QString filename=
-      QDir::currentPath()+"/CallScreener.app/Contents/Resources/ml.conf";
+      QCoreApplication::applicationDirPath()+"/../Resources/ml.conf";
     if(QFile::exists(filename)) {
       config=filename;
       file_found=true;

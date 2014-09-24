@@ -2658,3 +2658,6 @@
 	on OS X MAvericks.
 	* Added 'compile' and 'ltmain.sh' to the MAINTAINERCLEANFILES list
 	in 'Makefile.am'.
+2014-09-23 Fred Gleason <fredg@paravelsystems.com>
+	* Fixed a bug in 'ml/mithlond.cpp' that broke detection of bundled
+	configuration under OS X.

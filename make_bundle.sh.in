@@ -110,7 +110,7 @@ function MakeBundle
     #
     if test ! -z $CALLCOMMANDER_CONFIGS ; then
 	cp $CALLCOMMANDER_CONFIGS/ml.conf temp/CallCommander/$BUNDLE_NAME.app/Contents/Resources/
-	cp $CALLCOMMANDER_CONFIGS/*.ccc temp/CallCommander/$BUNDLE_NAME.app/Contents/Resources/
+    #	cp $CALLCOMMANDER_CONFIGS/*.ccc temp/CallCommander/$BUNDLE_NAME.app/Contents/Resources/
     fi
 }
 
