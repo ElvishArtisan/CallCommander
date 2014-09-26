@@ -2664,3 +2664,5 @@
 2014-09-26 Fred Gleason <fredg@paravelsystems.com>
 	* Fixed a bug in 'libp/mldconfig.cpp' that broke the build under
 	Windows.
+2014-09-26 Fred Gleason <fredg@paravelsystems.com>
+	* Incremented the package version to 2.1.2.
