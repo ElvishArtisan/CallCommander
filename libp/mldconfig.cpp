@@ -20,7 +20,9 @@
 //
 
 #include <stdio.h>
+#ifndef WIN32
 #include <unistd.h>
+#endif  // WIN32
 
 #include <QtGui/QMessageBox>
 #include <QtCore/QSettings>
