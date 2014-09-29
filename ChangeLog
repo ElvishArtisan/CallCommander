@@ -2666,3 +2666,5 @@
 	Windows.
 2014-09-26 Fred Gleason <fredg@paravelsystems.com>
 	* Incremented the package version to 2.1.2.
+2014-09-29 Fred Gleason <fredg@paravelsystems.com>
+	* Modified the 'make rpm' target to use home based build tree.

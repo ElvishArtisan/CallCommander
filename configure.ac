@@ -59,6 +59,7 @@ if test $ar_gcc_distro = "apple" ; then
 else
    AC_DEFINE(LINUX)
 fi
+AC_SUBST(RPM_DATESTAMP,`date +%a\ %b\ %d\ %Y`)
 
 #
 # Check for Qt

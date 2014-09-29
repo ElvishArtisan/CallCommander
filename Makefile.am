@@ -50,14 +50,14 @@ dmg:
 	./make_bundle.sh
 
 rpm:	dist
-	cp callcommander-$(VERSION).tar.gz $(RPM_ROOT)/SOURCES/
+	cp callcommander-$(VERSION).tar.gz $(HOME)/rpmbuild/SOURCES/
 	$(RPMBUILD) -ba callcommander.spec
-	mv $(RPM_ROOT)/RPMS/$(ARCH)/callcommander-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
-	mv $(RPM_ROOT)/RPMS/$(ARCH)/callcommander-audio-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
-	mv $(RPM_ROOT)/RPMS/$(ARCH)/callcommander-devel-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
-	mv $(RPM_ROOT)/SRPMS/callcommander-$(VERSION)-@RPM_RELEASE@.src.rpm $(top_srcdir)/
-	rm $(RPM_ROOT)/SOURCES/callcommander-$(VERSION).tar.gz
-	rm -rf $(RPM_ROOT)/BUILD/callcommander-$(VERSION)
+	mv $(HOME)/rpmbuild/RPMS/$(ARCH)/callcommander-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
+	mv $(HOME)/rpmbuild/RPMS/$(ARCH)/callcommander-audio-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
+	mv $(HOME)/rpmbuild/RPMS/$(ARCH)/callcommander-devel-$(VERSION)-@RPM_RELEASE@.$(ARCH).rpm $(top_srcdir)/
+	mv $(HOME)/rpmbuild/SRPMS/callcommander-$(VERSION)-@RPM_RELEASE@.src.rpm $(top_srcdir)/
+	rm $(HOME)/rpmbuild/SOURCES/callcommander-$(VERSION).tar.gz
+	rm -rf $(HOME)/rpmbuild/BUILD/callcommander-$(VERSION)
 
 EXTRA_DIST = callcommander.spec.in callcommander.pro autogen.sh\
              slack_doinst.sh make_slack.in slack-desc.in rc.mcidmd.in\
