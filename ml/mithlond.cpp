@@ -416,6 +416,7 @@ MainWidget::MainWidget(QWidget *parent,const char *name,Qt::WFlags f)
     telos_message_edit->setSendLines(ml_config->msgboxSendLines());
     telos_message_edit->setScrollback(ml_config->msgboxScrollbackLines());
     telos_message_edit->setNickname(ml_config->msgboxNickname());
+    telos_message_edit->setPreserveText(ml_config->msgboxPreserveText());
     connect(telos_message_edit,SIGNAL(message(QString)),
 	    this,SLOT(messageData(QString)));
     connect(telos_message_edit,SIGNAL(touched()),this,SLOT(touchedData()));

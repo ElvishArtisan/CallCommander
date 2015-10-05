@@ -131,6 +131,7 @@ class MlConfig
   int msgboxSendLines() const;
   int msgboxScrollbackLines() const;
   int msgboxHangTime() const;
+  bool msgboxPreserveText() const;
   QFont msgboxFont() const;
 
   //
@@ -252,6 +253,7 @@ class MlConfig
   int ml_msgbox_send_lines;
   int ml_msgbox_scrollback_lines;
   int ml_msgbox_hangtime;
+  bool ml_msgbox_preserve_text;
   QFont ml_msgbox_font;
 
   Qt::Orientation ml_clock_orientation;

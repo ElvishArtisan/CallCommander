@@ -1,4 +1,4 @@
-.TH ml.conf 5 "August 2007" Linux "Linux Audio Manual"
+.TH ml.conf 5 "October 2015" Linux "Linux Audio Manual"
 .SH ml.conf
 ml.conf \- Configuration file for the Call Commander Telephone Screening
 System User Interface
@@ -619,6 +619,12 @@ HangTime = \fI<msecs>\fP
 .RS
 Where \fI<msecs>\fP is the number of milliseconds to display the "Look Up!"
 message when touching the widget.
+.RE
+
+PreserveText = \fBYes\fP|\fBNo\fP
+.RS
+Do not obscure the contents of the message widget during the "Look Up!"
+message.
 .RE
 
 FontFace = \fI<font-face>\fP

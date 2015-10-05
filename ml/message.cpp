@@ -2,7 +2,7 @@
 //
 // Message Passing Widget for the Mithlond Project.
 //
-//   (C) Copyright 2002-2005 Fred Gleason <fredg@paravelsystems.com>
+//   (C) Copyright 2002-2015 Fred Gleason <fredg@paravelsystems.com>
 //
 //   This program is free software; you can redistribute it and/or modify
 //   it under the terms of the GNU General Public License as
@@ -63,14 +63,14 @@ Message::Message(QColor base,unsigned hang_time,
   //
   // The Backdrop
   //
-  msg_backdrop_label=new QLabel(this);
-  DrawBackdrop();
-  msg_backdrop_label->hide();
+  //  msg_backdrop_label=new QLabel(this);
+  //DrawBackdrop();
+  //msg_backdrop_label->hide();
 
   //
   // The Hang Timer
   //
-  msg_hang_timer=new QTimer(this,"msg_hang_timer");
+  msg_hang_timer=new QTimer(this);
   connect(msg_hang_timer,SIGNAL(timeout()),this,SLOT(timerData()));
 }
 
@@ -122,6 +122,12 @@ void Message::setScrollback(int lines)
 }
 
 
+void Message::setPreserveText(bool state)
+{
+  msg_preserve_text=state;
+}
+
+
 void Message::setMessage(QString msg)
 {
   //msg_rcv_box->clear();
@@ -153,7 +159,13 @@ void Message::setMessageBuffer(QString buffer)
 void Message::doubleClickedData()
 {
   if(!msg_hanging) {
-    msg_backdrop_label->show();
+    msg_send_box->setStyleSheet("background-color: red;color: yellow;");
+    msg_rcv_box->setStyleSheet("background-color: red;color: yellow;");
+    if(!msg_preserve_text) {
+      msg_hang_text=msg_rcv_box->text();
+      msg_rcv_box->setText("<center><font size=\"36\"><br>Look Up!</font></center>");
+    }
+    //    msg_backdrop_label->show();
     msg_hang_timer->start(msg_hang_time,true);
     msg_hanging=true;
     emit touched();
@@ -189,8 +201,8 @@ void Message::setGeometry(int x,int y,int w,int h)
   msg_send_box->setGeometry(0,h-msg_send_lines*send_height,
 			    w,msg_send_lines*send_height);
   msg_rcv_box->setGeometry(0,0,w,h-msg_send_lines*send_height);
-  msg_backdrop_label->setGeometry(0,0,w,h);
-  DrawBackdrop();
+  //  msg_backdrop_label->setGeometry(0,0,w,h);
+  //  DrawBackdrop();
   QWidget::setGeometry(x,y,w,h);
 }
 
@@ -213,7 +225,12 @@ void Message::sendData()
 
 void Message::timerData()
 {
-  msg_backdrop_label->hide();
+  msg_send_box->setStyleSheet("");
+  msg_rcv_box->setStyleSheet("");
+  if(!msg_preserve_text) {
+    msg_rcv_box->setText(msg_hang_text);
+  }
+  //msg_backdrop_label->hide();
   msg_hanging=false;
 }
 
@@ -230,7 +247,7 @@ void Message::clearClickedData()
   emit cleared();
 }
 
-
+/*
 void Message::DrawBackdrop()
 {
   QFont font("helvetica",36,QFont::Bold);
@@ -248,3 +265,4 @@ void Message::DrawBackdrop()
 
   msg_backdrop_label->setPixmap(pix);
 }
+*/

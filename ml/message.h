@@ -51,6 +51,7 @@ class Message : public QWidget
   void setFont(const QFont &font);
   void setSendLines(int lines);
   void setScrollback(int lines);
+  void setPreserveText(bool state);
   void setMessage(QString msg);
   void appendMessage(QString msg);
   QString messageBuffer() const;
@@ -78,16 +79,18 @@ class Message : public QWidget
   void clearClickedData();
   
  private:
-  void DrawBackdrop();
+  //void DrawBackdrop();
   QString msg_nickname;
   SendMsgTextEdit *msg_send_box;
   MsgTextEdit *msg_rcv_box;
-  QLabel *msg_backdrop_label;
+  //  QLabel *msg_backdrop_label;
   QTimer *msg_hang_timer;
   QColor msg_base_color;
   unsigned msg_hang_time;
   bool msg_hanging;
   int msg_send_lines;
+  bool msg_preserve_text;
+  QString msg_hang_text;
 };
 
 

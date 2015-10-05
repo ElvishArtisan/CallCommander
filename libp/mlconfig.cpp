@@ -268,6 +268,12 @@ int MlConfig::msgboxHangTime() const
 }
 
 
+bool MlConfig::msgboxPreserveText() const
+{
+  return ml_msgbox_preserve_text;
+}
+
+
 QFont MlConfig::msgboxFont() const
 {
   return ml_msgbox_font;
@@ -843,6 +849,7 @@ void MlConfig::load()
   }
   ml_msgbox_hangtime=
     parser->intValue("MessageBox","HangTime",ml_msgbox_hangtime);
+  ml_msgbox_preserve_text=parser->boolValue("MessageBox","PreserveText");
   face=parser->stringValue("MessageBox","FontFace",ml_msgbox_font.family());
   size=parser->intValue("MessageBox","FontSize",12);
   weight=parser->stringValue("MessageBox","FontWeight",
@@ -1344,6 +1351,7 @@ void MlConfig::clear()
   ml_msgbox_send_lines=2;
   ml_msgbox_scrollback_lines=100;
   ml_msgbox_hangtime=5000;
+  ml_msgbox_preserve_text=false;
   ml_msgbox_font=QFont("hevetica",16,QFont::Normal);
   ml_msgbox_font.setPixelSize(16);
   
